@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: managex-school-dev
+  labels:
+    app: managex-school-dev
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: managex-school-dev
+  template:
+    metadata:
+      labels:
+        app: managex-school-dev
+    spec:
+     containers:
+        - name: managex-school-dev
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:latest-0-12
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
