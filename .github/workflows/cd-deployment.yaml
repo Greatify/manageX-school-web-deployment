@@ -92,7 +92,7 @@ jobs:
 
       - name: Restart deployments
         run: |
-          kubectl rollout restart deployment managex-dev -n dev-managex-school
+          kubectl rollout restart deployment managex-school-dev -n dev-managex-school
 
       - name: Push changes using GitHub App token
         env:
