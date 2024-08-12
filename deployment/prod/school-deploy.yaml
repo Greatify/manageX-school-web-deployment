@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: managex-school-dev
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-laravel-6a7e21c0ac127b57fd14efebb7ebaae8f208e755
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-laravel-22afd4489522bd9ef0c25b353e13e24e72461905
           imagePullPolicy: Always
           ports:
             - containerPort: 80
