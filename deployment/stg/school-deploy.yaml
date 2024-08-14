@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: managex-school-stg
+  labels:
+    app: managex-school-stg
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: managex-school-stg
+  template:
+    metadata:
+      labels:
+        app: managex-school-stg
+    spec:
+      containers:
+        - name: managex-school-stg
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:stg-laravel-2202f2cb61003dc0534dfa51090678105b490b50
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
