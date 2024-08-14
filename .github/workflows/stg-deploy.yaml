@@ -3,7 +3,7 @@ name: ManageX-School-Deploy
 on:
   push:
     branches:
-      - main
+      - stg
  
 jobs:  
   build-docker-images:
