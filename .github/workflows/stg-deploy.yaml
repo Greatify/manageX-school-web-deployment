@@ -8,13 +8,13 @@ on:
 jobs:  
   build-docker-images:
     runs-on: ubuntu-latest
-    environment: dev
+    environment: stg
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
           repository: 'Greatify/school-web-heycampus'
-          ref: 'greatify-dev'
+          ref: 'stage'
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
 
       - name: Configure AWS credentials
@@ -32,8 +32,8 @@ jobs:
         id: build-laravel-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: managex_school
-          IMAGE_TAG_LARAVEL: dev-laravel-${{ github.sha }}
+          ECR_REPOSITORY: stage-managex-school
+          IMAGE_TAG_LARAVEL: stg-laravel-${{ github.sha }}
         run: |
           echo "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_LARAVEL" > laravel_image_tag.txt
           docker build -f Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_LARAVEL .
@@ -50,12 +50,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: [build-docker-images]
-    environment: dev
+    environment: stg
     steps:
       - uses: actions/checkout@v3
         with:
           repository: 'Greatify/ManageX-School-Deployment'
-          ref: 'main'
+          ref: 'stg'
 
       - name: Download image tag files
         uses: actions/download-artifact@v2
@@ -69,7 +69,7 @@ jobs:
 
       - name: Update PHP Laravel deployment image tag
         run: |
-          yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/prod/school-deploy.yaml
+          yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/stg/school-deploy.yaml
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -83,16 +83,16 @@ jobs:
 
       - name: Apply PHP Laravel deployment
         run: |
-          kubectl apply -f deployment/prod/school-deploy.yaml -n dev-managex-school
+          kubectl apply -f deployment/stg/school-deploy.yaml -n stage-managex-school
 
       - name: Apply PHP Laravel service
         run: |
-          kubectl apply -f deployment/prod/managex-service.yaml -n dev-managex-school
-          kubectl apply -f deployment/prod/managex-ingress.yaml -n dev-managex-school
+          kubectl apply -f deployment/stg/managex-service.yaml -n stage-managex-school
+          kubectl apply -f deployment/stg/managex-ingress.yaml -n stage-managex-school
 
-      - name: Restart deployments
-        run: |
-          kubectl rollout restart deployment managex-school-dev -n dev-managex-school
+      # - name: Restart deployments
+      #   run: |
+      #     kubectl rollout restart deployment managex-school-stg -n stage-managex-school
 
       - name: Push changes using GitHub App token
         env:
@@ -100,6 +100,6 @@ jobs:
         run: |
           git config --global user.email "github-actions@example.com"
           git config --global user.name "greatify-code-merger"
-          git add -f deployment/prod/school-deploy.yaml
+          git add -f deployment/stg/school-deploy.yaml
           git commit -m "Update deployment image"
-          git push origin main
+          git push origin stg
