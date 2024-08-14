@@ -102,4 +102,4 @@ jobs:
           git config --global user.name "greatify-code-merger"
           git add -f deployment/stg/school-deploy.yaml
           git commit -m "Update deployment image"
-          git push origin stage
+          git push origin stg
