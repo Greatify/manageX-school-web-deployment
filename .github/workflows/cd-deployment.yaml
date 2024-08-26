@@ -93,7 +93,7 @@ jobs:
 
       - name: Apply Managex Secret-ProviderClass
         run: |
-          kubectl apply -f deployment/dev/managex-secret-provider-class.yaml -n dev-managex-school
+          kubectl apply -f deployment/dev/managex-secretprovider.yaml -n dev-managex-school
 
       # - name: Restart deployments
       #   run: |
