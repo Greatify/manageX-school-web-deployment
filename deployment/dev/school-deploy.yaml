@@ -14,7 +14,7 @@ spec:
     metadata:
       labels:
         app: managex-school-dev
-  spec:
+    spec:
       serviceAccountName: school-dev-service
       volumes:
         - name: school-secrets-dev
