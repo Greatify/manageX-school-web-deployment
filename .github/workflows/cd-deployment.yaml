@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - dev
+  workflow_dispatch:
  
 jobs:  
   build-docker-images:
@@ -89,6 +90,10 @@ jobs:
         run: |
           kubectl apply -f deployment/dev/managex-service.yaml -n dev-managex-school
           kubectl apply -f deployment/dev/managex-ingress.yaml -n dev-managex-school
+
+      - name: Apply Managex Secret-ProviderClass
+        run: |
+          kubectl apply -f deployment/dev/managex-secret-provider-class.yaml -n dev-managex-school
 
       # - name: Restart deployments
       #   run: |
