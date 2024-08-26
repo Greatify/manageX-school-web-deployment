@@ -1,9 +1,9 @@
 name: ManageX-School-Deploy
 
-# on:
-#   push:
-#     branches:
-#       - dev
+on:
+  push:
+    branches:
+      - dev
  
 jobs:  
   build-docker-images:
