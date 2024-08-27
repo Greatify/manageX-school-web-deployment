@@ -1,22 +1,39 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: managex-school-stg
+  name: managex-school-stage
+  namespace: stage-managex-school
   labels:
-    app: managex-school-stg
+    app: managex-school-stage
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: managex-school-stg
+      app: managex-school-stage
   template:
     metadata:
       labels:
-        app: managex-school-stg
+        app: managex-school-stage
     spec:
+      serviceAccountName: school-stage-service
+      volumes:
+        - name: school-secrets-stage
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "school-stage-secrets"
       containers:
         - name: managex-school-stg
           image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stg-laravel-81a0dd768d2c7c845e166b6740f51f3697209a0d
           imagePullPolicy: Always
           ports:
             - containerPort: 80
+          volumeMounts:
+            - name: secrets-school-stage
+              mountPath: "/mnt/secret-store"
+              readOnly: true
+          lifecycle:
+            postStart:
+              exec:
+                command: ['cp', '-R', '/mnt/secret-store/.env', '/var/www/html/.env']
