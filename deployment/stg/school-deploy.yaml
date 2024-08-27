@@ -25,7 +25,7 @@ spec:
       #         secretProviderClass: "school-stage-secrets"
       containers:
         - name: managex-school-stg
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stg-laravel-4d8fb37c5bca0354ee11aa08a7e8d2138e7d143d
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stg-laravel-c5fcc47447eea8eb4307bfeec91f8750708e0d5f
           imagePullPolicy: Always
           ports:
             - containerPort: 80
