@@ -15,25 +15,25 @@ spec:
       labels:
         app: managex-school-stage
     spec:
-      serviceAccountName: school-stage-service
-      volumes:
-        - name: school-secrets-stage
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: "school-stage-secrets"
+      # serviceAccountName: school-stage-service
+      # volumes:
+      #   - name: school-secrets-stage
+      #     csi:
+      #       driver: secrets-store.csi.k8s.io
+      #       readOnly: true
+      #       volumeAttributes:
+      #         secretProviderClass: "school-stage-secrets"
       containers:
         - name: managex-school-stg
           image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stg-laravel-b59d553efa96982dcfd6de1a1ac3928be2678f27
           imagePullPolicy: Always
           ports:
             - containerPort: 80
-          volumeMounts:
-            - name: school-secrets-stage
-              mountPath: "/mnt/secret-store"
-              readOnly: true
-          lifecycle:
-            postStart:
-              exec:
-                command: ['cp', '-R', '/mnt/secret-store/.env', '/var/www/html/.env']
+          # volumeMounts:
+          #   - name: school-secrets-stage
+          #     mountPath: "/mnt/secret-store"
+          #     readOnly: true
+          # lifecycle:
+          #   postStart:
+          #     exec:
+          #       command: ['cp', '-R', '/mnt/secret-store/.env', '/var/www/html/.env']
