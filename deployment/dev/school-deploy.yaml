@@ -25,7 +25,7 @@ spec:
               secretProviderClass: "school-dev-secrets"
       containers:
         - name: managex-school-dev
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-laravel-291fe2b8fef224fe34f8ccf7e48a9d5639cf2eb4
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-laravel-8f0a1dd5499be0ff741f027ecd8b9da4824aac93
           imagePullPolicy: Always
           ports:
             - containerPort: 80
