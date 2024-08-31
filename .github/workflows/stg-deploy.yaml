@@ -13,8 +13,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          repository: 'Greatify/school-web-heycampus'
-          ref: 'greatify-dev'
+          repository: 'Greatify/manageX-school-web '
+          ref: 'stage'
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
 
       - name: Configure AWS credentials
@@ -54,7 +54,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          repository: 'Greatify/ManageX-School-Deployment'
+          repository: 'Greatify/manageX-school-web-deployment'
           ref: 'stg'
 
       - name: Download image tag files
