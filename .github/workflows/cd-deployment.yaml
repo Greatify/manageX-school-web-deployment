@@ -1,4 +1,4 @@
-name: ManageX-School-Deploy
+name: ManageX-School-Web-Deploy
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          repository: 'Greatify/school-web-heycampus'
+          repository: 'Greatify/manageX-school-web'
           ref: 'greatify-dev'
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
 
@@ -55,7 +55,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          repository: 'Greatify/ManageX-School-Deployment'
+          repository: 'Greatify/manageX-school-web-deployment'
           ref: 'dev'
 
       - name: Download image tag files
