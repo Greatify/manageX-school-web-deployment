@@ -1,0 +1,84 @@
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: managex-school-dev
+    namespace: dev-managex-school
+    labels:
+      app: managex-school-dev
+  spec:
+    replicas: 1
+    revisionHistoryLimit: 10
+    strategy:
+      rollingUpdate:
+        maxSurge: 50%
+        maxUnavailable: 50%
+    selector:
+      matchLabels:
+        app: managex-school-dev
+    template:
+      metadata:
+        labels:
+          app: managex-school-dev
+      spec:
+        serviceAccountName: school-dev-service
+        volumes:
+          - name: school-secrets-dev
+            csi:
+              driver: secrets-store.csi.k8s.io
+              readOnly: true
+              volumeAttributes:
+                secretProviderClass: "school-dev-secrets"
+          - name: logs
+            emptyDir: {}
+          - name: cache
+            emptyDir: {}
+          - name: testing
+            emptyDir: {}
+          - name: sessions
+            emptyDir: {}
+          - name: views
+            emptyDir: {}
+          - name: tcpdf
+            emptyDir: {}
+          - name: pending-files
+            emptyDir: {}
+          - name: dev-efs-storage
+            persistentVolumeClaim:
+              claimName: managex-school-dev-pvc
+        containers:
+          - name: managex-school-dev
+            image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-laravel-9db6b657363a0ae79feb1a5d78ffd012e99aada0
+            imagePullPolicy: Always
+            resources:
+            requests:
+              memory: "250Mi"
+              cpu: "100m"
+            limits:
+              memory: "1024Mi"
+              cpu: "200m"
+            ports:
+              - containerPort: 80
+            volumeMounts:
+              - name: logs
+                mountPath: /var/www/html/storage/logs
+              - name: cache
+                mountPath: /var/www/html/storage/framework/cache
+              - name: sessions
+                mountPath: /var/www/html/storage/framework/sessions
+              - name: views
+                mountPath: /var/www/html/storage/framework/views
+              - name: testing
+                mountPath: /var/www/html/storage/framework/testing
+              - name: tcpdf
+                mountPath: /var/www/html/storage/app/tcpdf
+              - name: pending-files
+                mountPath: /var/www/html/resources/pending-files
+              - name: dev-efs-storage
+                mountPath: /var/www/html/storage/app/efs
+              - name: school-secrets-dev
+                mountPath: "/mnt/secret-store"
+                readOnly: true
+            lifecycle:
+              postStart:
+                exec:
+                  command: ['cp', '-R', '/mnt/secret-store/.env', '/var/www/html/.env']
