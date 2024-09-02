@@ -82,3 +82,11 @@
               postStart:
                 exec:
                   command: ['cp', '-R', '/mnt/secret-store/.env', '/var/www/html/.env']
+            livenessProbe:
+              httpGet:
+                port: 80
+                path: /info.php
+            readinessProbe:
+              httpGet:
+                port: 80
+                path: /info.php
