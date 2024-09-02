@@ -50,12 +50,12 @@
             image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-laravel-9db6b657363a0ae79feb1a5d78ffd012e99aada0
             imagePullPolicy: Always
             resources:
-            requests:
-              memory: "250Mi"
-              cpu: "100m"
-            limits:
-              memory: "1024Mi"
-              cpu: "200m"
+              requests:
+                memory: "250Mi"
+                cpu: "100m"
+              limits:
+                memory: "1024Mi"
+                cpu: "200m"
             ports:
               - containerPort: 80
             volumeMounts:
@@ -82,11 +82,3 @@
               postStart:
                 exec:
                   command: ['cp', '-R', '/mnt/secret-store/.env', '/var/www/html/.env']
-            livenessProbe:
-              httpGet:
-                port: 80
-                path: /info.php
-            readinessProbe:
-              httpGet:
-                port: 80
-                path: /info.php
