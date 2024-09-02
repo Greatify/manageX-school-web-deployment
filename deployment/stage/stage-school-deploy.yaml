@@ -47,7 +47,7 @@ spec:
             claimName: managex-school-stage-pvc
       containers:
         - name: managex-school-stg
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stg-laravel-ebd3cb57ec017012063117687782dad32ee5d593
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stage-school-1c24792b0f11f0681d28687dd6167870a6c0f166
           imagePullPolicy: Always
           ports:
             - containerPort: 80
@@ -79,9 +79,9 @@ spec:
               mountPath: "/mnt/secret-store"
               readOnly: true
           lifecycle:
-              postStart:
-                exec:
-                  command: ['cp', '-R', '/mnt/secret-store/.env', '/var/www/html/.env']
+            postStart:
+              exec:
+                command: ['cp', '-R', '/mnt/secret-store/.env', '/var/www/html/.env']
           livenessProbe:
             httpGet:
               port: 80
