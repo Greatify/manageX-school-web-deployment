@@ -70,7 +70,7 @@ jobs:
 
       - name: Update PHP Laravel deployment image tag
         run: |
-          yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/dev/school-deploy.yaml
+          yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/dev/dev-school-deploy.yaml
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -84,16 +84,16 @@ jobs:
 
       - name: Apply PHP Laravel deployment
         run: |
-          kubectl apply -f deployment/dev/school-deploy.yaml -n dev-managex-school
+          kubectl apply -f deployment/dev/dev-school-deploy.yaml -n dev-managex-school
 
       - name: Apply PHP Laravel service
         run: |
-          kubectl apply -f deployment/dev/managex-service.yaml -n dev-managex-school
-          kubectl apply -f deployment/dev/managex-ingress.yaml -n dev-managex-school
+          kubectl apply -f deployment/dev/managex-dev-school-service.yaml -n dev-managex-school
+          kubectl apply -f deployment/dev/managex-dev-school-ingress.yaml -n dev-managex-school
 
       - name: Apply Managex Secret-ProviderClass
         run: |
-          kubectl apply -f deployment/dev/managex-secretprovider.yaml -n dev-managex-school
+          kubectl apply -f deployment/dev/managex-dev-school-secretprovider.yaml -n dev-managex-school
 
       # - name: Restart deployments
       #   run: |
@@ -105,6 +105,6 @@ jobs:
         run: |
           git config --global user.email "github-actions@example.com"
           git config --global user.name "greatify-code-merger"
-          git add -f deployment/dev/school-deploy.yaml
+          git add -f deployment/dev/dev-school-deploy.yaml
           git commit -m "Update deployment image"
           git push origin dev
