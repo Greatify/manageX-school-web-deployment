@@ -75,6 +75,8 @@ spec:
               mountPath: /var/www/html/resources/pending-files
             - name: stage-efs-storage
               mountPath: /var/www/html/storage/app/efs
+            - name: stage-efs-storage
+              mountPath: /var/www/html/storage/app/public
             - name: school-secrets-environment-file
               mountPath: "/mnt/secret-store"
               readOnly: true
