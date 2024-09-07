@@ -30,12 +30,12 @@ spec:
               secretProviderClass: "school-dev-secrets"
         - name: school-dev-nginx-configuration
           configMap:
-            name: managex-school-dev-nginx-config
+            name: managex-school-dev-nginx-config 
             items:
               - key: default
                 path: default
-        - name: logs
-          emptyDir: {}
+        # - name: logs
+        #   emptyDir: {}
         - name: cache
           emptyDir: {}
         - name: testing
@@ -65,8 +65,8 @@ spec:
           ports:
             - containerPort: 80
           volumeMounts:
-            - name: logs
-              mountPath: /var/www/html/storage/logs
+            # - name: logs
+            #   mountPath: /var/www/html/storage/logs
             - name: cache
               mountPath: /var/www/html/storage/framework/cache
             - name: sessions
