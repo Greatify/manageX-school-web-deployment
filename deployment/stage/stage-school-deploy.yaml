@@ -28,8 +28,14 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: "school-stage-secrets"
-        - name: logs
-          emptyDir: {}
+        - name: school-stage-nginx-configuration
+          configMap:
+            name: managex-school-stage-nginx-config
+            items:
+              - key: default
+                path: default
+        # - name: logs
+        #   emptyDir: {}
         - name: cache
           emptyDir: {}
         - name: testing
@@ -59,8 +65,8 @@ spec:
               memory: "1024Mi"
               cpu: "200m"
           volumeMounts:
-            - name: logs
-              mountPath: /var/www/html/storage/logs
+            # - name: logs
+            #   mountPath: /var/www/html/storage/logs
             - name: cache
               mountPath: /var/www/html/storage/framework/cache
             - name: sessions
@@ -73,6 +79,8 @@ spec:
               mountPath: /var/www/html/storage/app/tcpdf
             - name: pending-files
               mountPath: /var/www/html/resources/pending-files
+            - name: school-stage-nginx-configuration
+              mountPath: /etc/nginx/sites-available/
             - name: stage-efs-storage
               mountPath: /var/www/html/storage/app/efs
             - name: stage-efs-storage
