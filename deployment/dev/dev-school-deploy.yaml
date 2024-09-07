@@ -30,7 +30,7 @@ spec:
               secretProviderClass: "school-dev-secrets"
         - name: school-dev-nginx-configuration
           configMap:
-            name: managex-school-dev-nginx-config 
+            name: managex-school-dev-nginx-config
             items:
               - key: default
                 path: default
@@ -53,7 +53,7 @@ spec:
             claimName: managex-school-dev-pvc
       containers:
         - name: managex-school-dev
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-laravel-378c552048df08419aa5bdb0489aa81c365232e7
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-laravel-e84ca6111acb48d7158559f654b377d25a751728
           imagePullPolicy: Always
           resources:
             requests:
