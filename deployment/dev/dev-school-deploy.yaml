@@ -47,7 +47,7 @@ spec:
             claimName: managex-school-dev-pvc
       containers:
         - name: managex-school-dev
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-laravel-95de8c8ba4d041e94acf99d809dc146e0a3c088d
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-laravel-378c552048df08419aa5bdb0489aa81c365232e7
           imagePullPolicy: Always
           resources:
             requests:
