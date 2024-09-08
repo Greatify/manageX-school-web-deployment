@@ -53,7 +53,7 @@ spec:
             claimName: managex-school-stage-pvc
       containers:
         - name: managex-school-stg
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stage-school-95b176acfa04db9ed98ac0febae43114481037ab
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stage-school-6207ec115fee6e10b37bb61fac5fb0d1d20e6e50
           imagePullPolicy: Always
           ports:
             - containerPort: 80
