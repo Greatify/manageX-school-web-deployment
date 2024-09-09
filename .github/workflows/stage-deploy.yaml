@@ -96,6 +96,10 @@ jobs:
         run: |
           kubectl apply -f deployment/stage/managex-school-stage-secretprovider.yaml -n stage-managex-school
 
+      - name: Apply Nginx-ConfigMap
+        run: |
+         kubectl apply -f deployment/stage/managex-school-stage-nginx-configmap.yaml -n stage-managex-school
+      
       # - name: Restart deployments
       #   run: |
       #     kubectl rollout restart deployment managex-school-stg -n stage-managex-school
