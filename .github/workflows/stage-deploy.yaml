@@ -40,7 +40,7 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_LARAVEL
 
       - name: Upload image tag files
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: image-tags
           path: |
@@ -58,7 +58,7 @@ jobs:
           ref: 'stage'
 
       - name: Download image tag files
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: image-tags
           path: .
