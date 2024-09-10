@@ -34,8 +34,6 @@ spec:
             items:
               - key: default
                 path: default
-        # - name: logs
-        #   emptyDir: {}
         - name: cache
           emptyDir: {}
         - name: testing
@@ -59,14 +57,12 @@ spec:
             - containerPort: 80
           resources:
             requests:
-              memory: "250Mi"
-              cpu: "100m"
+              cpu: 500m
+              memory: 1Gi
             limits:
-              memory: "1024Mi"
-              cpu: "200m"
+              cpu: 1
+              memory: 2Gi
           volumeMounts:
-            # - name: logs
-            #   mountPath: /var/www/html/storage/logs
             - name: cache
               mountPath: /var/www/html/storage/framework/cache
             - name: sessions
