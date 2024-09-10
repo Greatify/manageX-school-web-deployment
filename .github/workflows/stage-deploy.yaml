@@ -97,10 +97,6 @@ jobs:
       - name: Apply Nginx-ConfigMap
         run: |
          kubectl apply -f deployment/stage/managex-school-stage-nginx-config.yaml -n stage-managex-school
-      
-      - name: Restart deployments
-        run: |
-          kubectl rollout restart deployment managex-school-stg -n stage-managex-school
 
       - name: Push changes using GitHub App token
         env:
