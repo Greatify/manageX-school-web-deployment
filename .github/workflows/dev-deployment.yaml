@@ -1,4 +1,4 @@
-name: ManageX-School-Web-Deploy
+name: ManageX-School-Dev-Deploy
 
 on:
   push:
