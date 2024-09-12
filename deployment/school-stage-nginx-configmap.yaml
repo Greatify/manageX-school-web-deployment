@@ -72,8 +72,3 @@ data:
       # gzip on;
       # gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
    }
-
-# Optional: Define rate limit zone (Uncomment if using rate limiting)
-# http {
-#     limit_req_zone $binary_remote_addr zone=mylimit:10m rate=5r/s;
-# }

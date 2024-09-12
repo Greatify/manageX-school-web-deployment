@@ -69,7 +69,7 @@ jobs:
 
       - name: Update PHP Laravel deployment image tag
         run: |
-          yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/stage/stage-school-deploy.yaml
+          yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/school-stage-deploy.yaml
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -81,22 +81,14 @@ jobs:
       - name: Update kube config
         run: aws eks update-kubeconfig --name dev-stg-cluster --region ap-south-1
 
-      - name: Apply PHP Laravel deployment
+      - name: Apply Kubernetes manifests
         run: |
-          kubectl apply -f deployment/stage/stage-school-deploy.yaml -n stage-managex-school
-
-      - name: Apply PHP Laravel service
-        run: |
-          kubectl apply -f deployment/stage/managex-school-stage-service.yaml -n stage-managex-school
-          kubectl apply -f deployment/stage/managex-school-stage-ingress.yaml -n stage-managex-school
-
-      - name: Apply Managex Secret-ProviderClass
-        run: |
-          kubectl apply -f deployment/stage/managex-school-stage-secretprovider.yaml -n stage-managex-school
-
-      - name: Apply Nginx-ConfigMap
-        run: |
-         kubectl apply -f deployment/stage/managex-school-stage-nginx-config.yaml -n stage-managex-school
+         kubectl apply -f deployment/school-stage-deploy.yaml -n stage-managex-school
+         kubectl apply -f deployment/school-stage-ingress.yaml -n stage-managex-school
+         kubectl apply -f deployment/school-stage-nginx-configmap.yaml -n stage-managex-school
+         kubectl apply -f deployment/school-stage-pod-autoscaler.yaml -n stage-managex-school
+         kubectl apply -f deployment/school-stage-secretprovider.yaml -n stage-managex-school
+         kubectl apply -f deployment/school-stage-service.yaml -n stage-managex-school
 
       - name: Push changes using GitHub App token
         env:
@@ -104,6 +96,6 @@ jobs:
         run: |
           git config --global user.email "github-actions@example.com"
           git config --global user.name "greatify-code-merger"
-          git add -f deployment/stage/stage-school-deploy.yaml
+          git add -f deployment/school-stage-deploy.yaml
           git commit -m "Update deployment image"
           git push origin stage
