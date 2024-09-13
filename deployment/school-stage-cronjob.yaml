@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: laravel-schedule
+  namespace: stage-managex-school
+spec:
+  schedule: "* * * * *"  # Runs every minute
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: laravel-schedule
+        spec:
+          serviceAccountName: school-stage-service  # Using your existing service account
+          volumes:
+            - name: school-secrets-environment-file
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: "school-stage-secrets"
+          containers:
+            - name: laravel-schedule
+              image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stage-school-a586814c9b66bff60af515949e9735fa8684cd0e
+              command: ["php", "/var/www/html/artisan", "schedule:run"]
+              volumeMounts:
+                - name: school-secrets-environment-file
+                  mountPath: "/mnt/secret-store/"
+                  readOnly: true
+              lifecycle:
+                postStart:
+                  exec:
+                    command: ['sh', '-c', 'cp /mnt/secret-store/.env /var/www/html/.env']
+          restartPolicy: OnFailure

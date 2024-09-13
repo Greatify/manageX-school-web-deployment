@@ -6,7 +6,7 @@ metadata:
   labels:
     app: managex-school-stage
 spec:
-  replicas: 2
+  replicas: 3  # Increased replicas for higher availability
   revisionHistoryLimit: 10
   strategy:
     rollingUpdate:
@@ -20,7 +20,7 @@ spec:
       labels:
         app: managex-school-stage
     spec:
-      serviceAccountName: school-stage-service
+      serviceAccountName: school-stage-service  # Using your existing service account
       volumes:
         - name: school-secrets-environment-file
           csi:
@@ -57,11 +57,11 @@ spec:
             - containerPort: 80
           resources:
             requests:
-              cpu: 1
-              memory: 2Gi
+              cpu: "500m"
+              memory: "512Mi"
             limits:
-              cpu: 2
-              memory: 4Gi
+              cpu: "1"
+              memory: "1Gi"
           volumeMounts:
             - name: cache
               mountPath: /var/www/html/storage/framework/cache
@@ -79,20 +79,31 @@ spec:
               mountPath: /etc/nginx/sites-available/
             - name: stage-efs-storage
               mountPath: /var/www/html/storage/app/efs
+              subPath: efs  # Added subPath to prevent overwriting if necessary
             - name: stage-efs-storage
               mountPath: /var/www/html/storage/app/public
+              subPath: public  # Added subPath
             - name: school-secrets-environment-file
-              mountPath: "/mnt/secret-store"
+              mountPath: "/mnt/secret-store/"
               readOnly: true
+          env:
+            - name: APP_ENV
+              value: "production"
+            - name: APP_DEBUG
+              value: "false"
           lifecycle:
             postStart:
               exec:
-                command: ['cp', '-R', '/mnt/secret-store/.env', '/var/www/html/.env']
+                command: ['sh', '-c', 'cp /mnt/secret-store/.env /var/www/html/.env']
           livenessProbe:
             httpGet:
+              path: /
               port: 80
-              path: /info.php
+            initialDelaySeconds: 30
+            periodSeconds: 30
           readinessProbe:
             httpGet:
+              path: /
               port: 80
-              path: /info.php
+            initialDelaySeconds: 15
+            periodSeconds: 20
