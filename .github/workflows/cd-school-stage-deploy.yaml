@@ -70,6 +70,7 @@ jobs:
       - name: Update PHP Laravel deployment image tag
         run: |
           yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/school-stage-deploy.yaml
+          yq -i '.spec.template.spec.containers[1].image = "${{ env.LARAVEL_IMAGE }}"' deployment/school-stage-cronjob.yaml
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -89,6 +90,7 @@ jobs:
          kubectl apply -f deployment/school-stage-pod-autoscaler.yaml -n stage-managex-school
          kubectl apply -f deployment/school-stage-secretprovider.yaml -n stage-managex-school
          kubectl apply -f deployment/school-stage-service.yaml -n stage-managex-school
+         kubectl apply -f deployment/school-stage-cronjob.yaml -n stage-managex-school
 
       - name: Push changes using GitHub App token
         env:

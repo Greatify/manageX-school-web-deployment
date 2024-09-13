@@ -1,18 +1,18 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: laravel-schedule
+  name: school-stage-cronjob
   namespace: stage-managex-school
 spec:
-  schedule: "* * * * *"  # Runs every minute
+  schedule: "*/1 * * * *"  # Runs every minute
   jobTemplate:
     spec:
       template:
         metadata:
           labels:
-            app: laravel-schedule
+            app: school-stage-cronjob
         spec:
-          serviceAccountName: school-stage-service  # Using your existing service account
+          serviceAccountName: school-stage-service  
           volumes:
             - name: school-secrets-environment-file
               csi:
@@ -21,7 +21,7 @@ spec:
                 volumeAttributes:
                   secretProviderClass: "school-stage-secrets"
           containers:
-            - name: laravel-schedule
+            - name: school-stage-cronjob
               image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stage-school-a586814c9b66bff60af515949e9735fa8684cd0e
               command: ["php", "/var/www/html/artisan", "schedule:run"]
               volumeMounts:
