@@ -4,19 +4,19 @@ on:
   push:
     branches:
       - stage
-
+  
 jobs:  
   build:
     runs-on: ubuntu-latest
     environment: stage
     outputs:
-      image: ${{ steps.build-image.outputs.image }}
+      image: ${{ steps.output_image.outputs.image }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        with: 
+        with:
           repository: 'Greatify/manageX-school-web'
-          ref: 'stage_viewsonic'
+          ref: 'surya'
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
 
       - name: Get commit message
@@ -55,6 +55,7 @@ jobs:
           cache-to: type=gha,mode=max
         
       - name: Output image name
+        id: output_image
         run: echo "image=${{ steps.login-ecr.outputs.registry }}/stage-managex-school:stage-school-${{ steps.get_commit_message.outputs.commit_message }}" >> $GITHUB_OUTPUT
 
   deploy:
@@ -78,11 +79,11 @@ jobs:
       - name: Update Kubernetes manifests
         env:
           LARAVEL_IMAGE: ${{ needs.build.outputs.image }}
-          CHANGE_CAUSE: "Updated to ${{ needs.build.outputs.image }} for commit ${{ github.sha }}"
         run: |
-          yq -i '.spec.template.spec.containers[0].image = env(LARAVEL_IMAGE)' deployment/school-stage-deploy.yaml
-          yq -i '.metadata.annotations."kubernetes.io/change-cause" = env(CHANGE_CAUSE)' deployment/school-stage-deploy.yaml
-          yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = env(LARAVEL_IMAGE)' deployment/school-stage-cronjob.yaml
+          echo "Updating manifests with image: $LARAVEL_IMAGE"
+          yq -i '.spec.template.spec.containers[0].image = strenv(LARAVEL_IMAGE)' deployment/school-stage-deploy.yaml
+          yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = strenv(LARAVEL_IMAGE)' deployment/school-stage-cronjob.yaml
+          yq -i '.metadata.annotations."kubernetes.io/change-cause" = "Updated to " + strenv(LARAVEL_IMAGE) + " for commit ${{ github.sha }}"' deployment/school-stage-deploy.yaml
 
       - name: Update kube config
         run: aws eks update-kubeconfig --name dev-stg-cluster --region ap-south-1
