@@ -6,7 +6,7 @@ metadata:
   labels:
     app: managex-school-stage
 spec:
-  replicas: 2  # Increased replicas for higher availability
+  replicas: 2 # Increased replicas for higher availability
   revisionHistoryLimit: 10
   strategy:
     rollingUpdate:
@@ -51,7 +51,7 @@ spec:
             claimName: managex-school-stage-pvc
       containers:
         - name: managex-school-stg
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stage-school-83f9b385af3e166258c54627afc52b8c86c7c10a
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stage-school-976455ac1c7f2fdec204a0f51f2387ed7e2618b5
           imagePullPolicy: Always
           ports:
             - containerPort: 80
