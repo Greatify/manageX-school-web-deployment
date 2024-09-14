@@ -6,7 +6,7 @@ metadata:
   labels:
     app: managex-school-stage
 spec:
-  replicas: 3  # Increased replicas for higher availability
+  replicas: 3 # Increased replicas for higher availability
   revisionHistoryLimit: 10
   strategy:
     rollingUpdate:
@@ -20,7 +20,7 @@ spec:
       labels:
         app: managex-school-stage
     spec:
-      serviceAccountName: school-stage-service  # Using your existing service account
+      serviceAccountName: school-stage-service # Using your existing service account
       volumes:
         - name: school-secrets-environment-file
           csi:
@@ -51,7 +51,7 @@ spec:
             claimName: managex-school-stage-pvc
       containers:
         - name: managex-school-stg
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stage-school-a586814c9b66bff60af515949e9735fa8684cd0e
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stage-school-83f9b385af3e166258c54627afc52b8c86c7c10a
           imagePullPolicy: Always
           ports:
             - containerPort: 80
@@ -79,10 +79,10 @@ spec:
               mountPath: /etc/nginx/sites-available/
             - name: stage-efs-storage
               mountPath: /var/www/html/storage/app/efs
-              subPath: efs  # Added subPath to prevent overwriting if necessary
+              subPath: efs # Added subPath to prevent overwriting if necessary
             - name: stage-efs-storage
               mountPath: /var/www/html/storage/app/public
-              subPath: public  # Added subPath
+              subPath: public # Added subPath
             - name: school-secrets-environment-file
               mountPath: "/mnt/secret-store/"
               readOnly: true
