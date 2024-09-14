@@ -70,7 +70,7 @@ jobs:
       - name: Update PHP Laravel deployment image tag
         run: |
           yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/school-stage-deploy.yaml
-          yq -i '.spec.template.spec.containers[1].image = "${{ env.LARAVEL_IMAGE }}"' deployment/school-stage-cronjob.yaml
+          yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/school-stage-cronjob.yaml
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
