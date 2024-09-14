@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: 'Greatify/manageX-school-web'
-          ref: 'surya'
+          ref: 'viewsonic-prod'
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
 
       - name: Configure AWS credentials
@@ -70,7 +70,7 @@ jobs:
       - name: Update PHP Laravel deployment image tag
         run: |
           yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/school-stage-deploy.yaml
-          yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/school-stage-cronjob.yaml
+          yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/school-stage-cronjob.yaml
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
