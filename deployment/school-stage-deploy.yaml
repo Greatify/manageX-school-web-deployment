@@ -6,7 +6,7 @@ metadata:
   labels:
     app: managex-school-stage
 spec:
-  replicas: 3  # Increased replicas for higher availability
+  replicas: 2  # Increased replicas for higher availability
   revisionHistoryLimit: 10
   strategy:
     rollingUpdate:
@@ -57,11 +57,11 @@ spec:
             - containerPort: 80
           resources:
             requests:
-              cpu: "500m"
-              memory: "512Mi"
+              cpu: 1
+              memory: 2Gi
             limits:
-              cpu: "1"
-              memory: "1Gi"
+              cpu: 2
+              memory: 4Gi
           volumeMounts:
             - name: cache
               mountPath: /var/www/html/storage/framework/cache
