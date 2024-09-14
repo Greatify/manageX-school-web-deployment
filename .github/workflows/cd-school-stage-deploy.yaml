@@ -90,7 +90,13 @@ jobs:
 
       - name: Apply Kubernetes manifests
         run: |
-          kubectl apply -f deployment/school-stage-*.yaml -n stage-managex-school
+          kubectl apply -f deployment/school-stage-cronjob.yaml -n stage-managex-school
+          kubectl apply -f deployment/school-stage-deploy.yaml -n stage-managex-school
+          kubectl apply -f deployment/school-stage-ingress.yaml -n stage-managex-school
+          kubectl apply -f deployment/school-stage-nginx-configmap.yaml -n stage-managex-school
+          kubectl apply -f deployment/school-stage-pod-autoscaler.yaml -n stage-managex-school
+          kubectl apply -f deployment/school-stage-secretprovider.yaml -n stage-managex-school
+          kubectl apply -f deployment/school-stage-service.yaml -n stage-managex-school
 
       - name: Wait for deployment to complete
         run: |
