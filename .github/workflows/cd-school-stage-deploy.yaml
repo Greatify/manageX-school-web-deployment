@@ -84,6 +84,15 @@ jobs:
           yq -i '.spec.template.spec.containers[0].image = strenv(LARAVEL_IMAGE)' deployment/school-stage-deploy.yaml
           yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = strenv(LARAVEL_IMAGE)' deployment/school-stage-cronjob.yaml
           yq -i '.metadata.annotations."kubernetes.io/change-cause" = "Updated to " + strenv(LARAVEL_IMAGE) + " for commit ${{ github.sha }}"' deployment/school-stage-deploy.yaml
+          
+          # Verify the changes
+          echo "Deployment image:"
+          yq '.spec.template.spec.containers[0].image' deployment/school-stage-deploy.yaml
+          echo "CronJob image:"
+          yq '.spec.jobTemplate.spec.template.spec.containers[0].image' deployment/school-stage-cronjob.yaml
+
+      - name: Print CronJob YAML
+        run: cat deployment/school-stage-cronjob.yaml
 
       - name: Update kube config
         run: aws eks update-kubeconfig --name dev-stg-cluster --region ap-south-1
