@@ -1,0 +1,167 @@
+name: ManageX-School-Build-Dev-Stage
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    types: [closed]
+    branches:
+      - stage
+  workflow_dispatch:
+
+jobs:
+  build-docker-image:
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.build-and-push.outputs.IMAGE }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          repository: 'Greatify/manageX-school-web'
+          ref: 'greatify-dev'
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build and push Docker image
+        id: build-and-push
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: managex_school
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -f Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "IMAGE=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+  deploy-dev:
+    needs: build-docker-image
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - name: Checkout deployment repo
+        uses: actions/checkout@v3
+        with:
+          repository: 'Greatify/manageX-school-web-deployment'
+          ref: 'dev'
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+
+      - name: Update deployment files
+        env:
+          IMAGE: ${{ needs.build-docker-image.outputs.image }}
+        run: |
+          yq -i '.spec.template.spec.containers[0].image = env(IMAGE)' deployment/school-dev-deploy.yaml
+          yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = env(IMAGE)' deployment/school-dev-cronjob.yaml
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Update kube config
+        run: aws eks update-kubeconfig --name dev-stg-cluster --region ap-south-1
+
+      - name: Apply K8s manifests
+        run: |
+          kubectl apply -f deployment/school-dev-cronjob.yaml -n dev-managex-school
+          kubectl apply -f deployment/school-dev-deploy.yaml -n dev-managex-school
+          kubectl apply -f deployment/school-dev-service.yaml -n dev-managex-school
+          kubectl apply -f deployment/school-dev-ingress.yaml -n dev-managex-school
+          kubectl apply -f deployment/school-dev-secretprovider.yaml -n dev-managex-school
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.email "github-actions@example.com"
+          git config --global user.name "greatify-code-merger"
+          git add deployment/school-dev-deploy.yaml deployment/school-dev-cronjob.yaml
+          git commit -m "Update deployment image for dev"
+          git push origin dev
+
+  create-stage-pr:
+    needs: [build-docker-image, deploy-dev]
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          repository: 'Greatify/manageX-school-web-deployment'
+          ref: 'stage'
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+
+      - name: Create Stage Promotion Branch
+        run: |
+          git checkout -b promote-to-stage-${{ github.sha }}
+          
+      - name: Update deployment files
+        env:
+          IMAGE: ${{ needs.build-docker-image.outputs.image }}
+        run: |
+          yq -i '.spec.template.spec.containers[0].image = env(IMAGE)' deployment/school-stage-deploy.yaml
+          yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = env(IMAGE)' deployment/school-stage-cronjob.yaml
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+          commit-message: Update stage deployment to image ${{ needs.build-docker-image.outputs.image }}
+          title: Promote to Stage - ${{ github.sha }}
+          body: |
+            This PR updates the stage deployment to use the image built from commit ${{ github.sha }}.
+            Please review and approve to deploy to stage.
+          branch: promote-to-stage-${{ github.sha }}
+          base: stage
+
+  deploy-stage:
+    needs: [build-docker-image]
+    runs-on: ubuntu-latest
+    environment: stage
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'stage'
+    steps:
+      - name: Checkout deployment repo
+        uses: actions/checkout@v3
+        with:
+          repository: 'Greatify/manageX-school-web-deployment'
+          ref: 'stage'
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Update kube config
+        run: aws eks update-kubeconfig --name dev-stg-cluster --region ap-south-1
+
+      - name: Apply K8s manifests
+        run: |
+          kubectl apply -f deployment/school-stage-deploy.yaml -n stage-managex-school
+          kubectl apply -f deployment/school-stage-ingress.yaml -n stage-managex-school
+          kubectl apply -f deployment/school-stage-nginx-configmap.yaml -n stage-managex-school
+          kubectl apply -f deployment/school-stage-pod-autoscaler.yaml -n stage-managex-school
+          kubectl apply -f deployment/school-stage-secretprovider.yaml -n stage-managex-school
+          kubectl apply -f deployment/school-stage-service.yaml -n stage-managex-school
+          kubectl apply -f deployment/school-stage-cronjob.yaml -n stage-managex-school
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.email "github-actions@example.com"
+          git config --global user.name "greatify-code-merger"
+          git add deployment/school-stage-deploy.yaml deployment/school-stage-cronjob.yaml
+          git commit -m "Update deployment image for stage"
+          git push origin stage
