@@ -34,7 +34,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: managex_school
-          IMAGE_TAG_LARAVEL: dev-laravel-${{ github.sha }}
+          IMAGE_TAG_LARAVEL: dev-school-${{ github.sha }}
         run: |
           echo "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_LARAVEL" > laravel_image_tag.txt
           docker build -f Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_LARAVEL .
@@ -70,7 +70,8 @@ jobs:
 
       - name: Update PHP Laravel deployment image tag
         run: |
-          yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/dev/dev-school-deploy.yaml
+          yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/school-dev-deploy.yaml
+          yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/school-dev-cronjob.yaml
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -82,22 +83,14 @@ jobs:
       - name: Update kube config
         run: aws eks update-kubeconfig --name dev-stg-cluster --region ap-south-1
 
-      - name: Apply PHP Laravel deployment
+      - name: Apply K8s manifests
         run: |
-          kubectl apply -f deployment/dev/dev-school-deploy.yaml -n dev-managex-school
+          kubectl apply -f deployment/school-dev-cronjob.yaml -n dev-managex-school
+          kubectl apply -f deployment/school-dev-deploy.yaml -n dev-managex-school
+          kubectl apply -f deployment/school-dev-service.yaml -n dev-managex-school
+          kubectl apply -f deployment/school-dev-ingress.yaml -n dev-managex-school
+          kubectl apply -f deployment/school-dev-secretprovider.yaml -n dev-managex-school
 
-      - name: Apply PHP Laravel service
-        run: |
-          kubectl apply -f deployment/dev/managex-dev-school-service.yaml -n dev-managex-school
-          kubectl apply -f deployment/dev/managex-dev-school-ingress.yaml -n dev-managex-school
-
-      - name: Apply Managex Secret-ProviderClass
-        run: |
-          kubectl apply -f deployment/dev/managex-dev-school-secretprovider.yaml -n dev-managex-school
-
-      # - name: Restart deployments
-      #   run: |
-      #     kubectl rollout restart deployment managex-school-dev -n dev-managex-school
 
       - name: Push changes using GitHub App token
         env:
@@ -105,6 +98,6 @@ jobs:
         run: |
           git config --global user.email "github-actions@example.com"
           git config --global user.name "greatify-code-merger"
-          git add -f deployment/dev/dev-school-deploy.yaml
+          git add -f deployment/school-dev-deploy.yaml
           git commit -m "Update deployment image"
           git push origin dev
