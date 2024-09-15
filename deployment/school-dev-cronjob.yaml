@@ -4,7 +4,7 @@ metadata:
   name: school-dev-cronjob
   namespace: dev-managex-school
 spec:
-  schedule: "*/1 * * * *"  # Runs every minute
+  schedule: "*/1 * * * *" # Runs every minute
   jobTemplate:
     spec:
       template:
@@ -22,12 +22,12 @@ spec:
                   secretProviderClass: "school-dev-secrets"
           containers:
             - name: school-dev-cronjob
-              image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stage-school-69bee12acec8b768e9b0fb6d05f43bb4bef2a2de
+              image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-aa540a5902d605e93ba46d9ab1ea4641887f7bcb
               command: ["php", "/var/www/html/artisan", "schedule:run"]
               volumeMounts:
-              - name: school-secrets-dev
-                mountPath: "/mnt/secret-store"
-                readOnly: true
+                - name: school-secrets-dev
+                  mountPath: "/mnt/secret-store"
+                  readOnly: true
               lifecycle:
                 postStart:
                   exec:
