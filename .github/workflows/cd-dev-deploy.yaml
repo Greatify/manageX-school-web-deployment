@@ -1,10 +1,10 @@
 name: ManageX-School-Dev-Deploy
 
-# on:
-#   push:
-#     branches:
-#       - dev
-#   workflow_dispatch:
+on:
+  push:
+    branches:
+      - dev
+  workflow_dispatch:
  
 jobs:  
   build-docker-images:
@@ -68,9 +68,13 @@ jobs:
         run: |
           echo "LARAVEL_IMAGE=$(<laravel_image_tag.txt)" >> $GITHUB_ENV
 
-      - name: Update PHP Laravel deployment image tag
+      - name: Get commit message
+        run: echo "COMMIT_MESSAGE=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
+
+      - name: Update PHP Laravel deployment image tag and change cause
         run: |
           yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/school-dev-deploy.yaml
+          yq -i '.spec.template.metadata.annotations."kubernetes.io/change-cause" = "Update to ${{ env.LARAVEL_IMAGE }} - ${{ env.COMMIT_MESSAGE }}"' deployment/school-dev-deploy.yaml
           yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/school-dev-cronjob.yaml
 
       - name: Configure AWS credentials
@@ -91,13 +95,12 @@ jobs:
           kubectl apply -f deployment/school-dev-ingress.yaml -n dev-managex-school
           kubectl apply -f deployment/school-dev-secretprovider.yaml -n dev-managex-school
 
-
       - name: Push changes using GitHub App token
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.email "github-actions@example.com"
           git config --global user.name "greatify-code-merger"
-          git add -f deployment/school-dev-deploy.yaml
-          git commit -m "Update deployment image"
+          git add -f deployment/school-dev-deploy.yaml deployment/school-dev-cronjob.yaml
+          git commit -m "Update deployment image and change cause"
           git push origin dev
