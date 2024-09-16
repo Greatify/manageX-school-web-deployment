@@ -22,7 +22,7 @@ spec:
                   secretProviderClass: "school-dev-secrets"
           containers:
             - name: school-dev-cronjob
-              image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-f483fbfd0e48508d5b693c58a6d4ee2e132209f2
+              image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-988ae963e7228e83b36bb27e9bc748058fe880d9
               command: ["php", "/var/www/html/artisan", "schedule:run"]
               volumeMounts:
                 - name: school-secrets-dev
