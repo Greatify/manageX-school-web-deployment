@@ -3,7 +3,7 @@ name: ManageX-School-Dev-Deploy
 on:
   push:
     branches:
-      - dev
+      - dev 
   workflow_dispatch:
  
 jobs:  
