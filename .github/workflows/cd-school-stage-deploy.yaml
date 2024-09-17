@@ -67,9 +67,13 @@ jobs:
         run: |
           echo "LARAVEL_IMAGE=$(<laravel_image_tag.txt)" >> $GITHUB_ENV
 
+      - name: Get commit message
+        run: echo "COMMIT_MESSAGE=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
+
       - name: Update PHP Laravel deployment image tag
         run: |
           yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/school-stage-deploy.yaml
+          yq -i '.spec.template.metadata.annotations."kubernetes.io/change-cause" = "Update to ${{ env.LARAVEL_IMAGE }} - ${{ env.COMMIT_MESSAGE }}"' deployment/school-stage-deploy.yaml
           yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/school-stage-cronjob.yaml
 
       - name: Configure AWS credentials
@@ -98,6 +102,6 @@ jobs:
         run: |
           git config --global user.email "github-actions@example.com"
           git config --global user.name "greatify-code-merger"
-          git add -f deployment/school-stage-deploy.yaml
+          git add -f deployment/school-stage-deploy.yaml deployment/school-stage-cronjob.yaml
           git commit -m "Update deployment image"
           git push origin stage
