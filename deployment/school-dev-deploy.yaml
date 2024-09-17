@@ -20,7 +20,7 @@ spec:
       labels:
         app: managex-school-dev
       annotations:
-        kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-e21d1e1eee0005cbe2e9a2473c4268cea65b713e - AI Report ui bug fixed
+        kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-f4874fd1c38a27bd21054231c81db449c57be03b - AI Question bank - type removed
     spec:
       serviceAccountName: school-dev-service
       volumes:
@@ -53,7 +53,7 @@ spec:
             claimName: managex-school-dev-pvc
       containers:
         - name: managex-school-dev
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-e21d1e1eee0005cbe2e9a2473c4268cea65b713e
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-f4874fd1c38a27bd21054231c81db449c57be03b
           imagePullPolicy: Always
           resources:
             requests:
