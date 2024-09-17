@@ -19,6 +19,8 @@ spec:
     metadata:
       labels:
         app: managex-school-stage
+      annotations:
+        kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stage-viewsonic-c2d9f898894fac77740a85b8089343e60f6fbdd1 - Ai Report Bug Fix
     spec:
       serviceAccountName: school-stage-service # Using your existing service account
       volumes:
@@ -51,7 +53,7 @@ spec:
             claimName: managex-school-stage-pvc
       containers:
         - name: managex-school-stg
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stage-viewsonic-170d4cf3cad7b1b3500fc543b3024206ad9755c1
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stage-viewsonic-c2d9f898894fac77740a85b8089343e60f6fbdd1
           imagePullPolicy: Always
           ports:
             - containerPort: 80
