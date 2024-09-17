@@ -20,7 +20,7 @@ spec:
       labels:
         app: managex-school-dev
       annotations:
-        kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-f3fda36668d5ad3440ab022316b81523af9c042a - Ai Question Bank Creation
+        kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-5bea4a8b564032af9b618f93ead8532360cd98fc - Migration completed for tables
     spec:
       serviceAccountName: school-dev-service
       volumes:
@@ -53,7 +53,7 @@ spec:
             claimName: managex-school-dev-pvc
       containers:
         - name: managex-school-dev
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-f3fda36668d5ad3440ab022316b81523af9c042a
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-5bea4a8b564032af9b618f93ead8532360cd98fc
           imagePullPolicy: Always
           resources:
             requests:
