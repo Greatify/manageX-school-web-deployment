@@ -20,7 +20,7 @@ spec:
       labels:
         app: managex-school-stage
       annotations:
-        kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stage-viewsonic-b54703920c6316cbb4f3902153e36d5d9b830c2f - Ai Question Paper Generation moved to Stage
+        kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stage-viewsonic-82f8e7572ef7e7b9a78559100eda57694ec9f672 - Ai Question bank Ui Changes Moved to Stage
     spec:
       serviceAccountName: school-stage-service # Using your existing service account
       volumes:
@@ -53,7 +53,7 @@ spec:
             claimName: managex-school-stage-pvc
       containers:
         - name: managex-school-stg
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stage-viewsonic-b54703920c6316cbb4f3902153e36d5d9b830c2f
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stage-viewsonic-82f8e7572ef7e7b9a78559100eda57694ec9f672
           imagePullPolicy: Always
           ports:
             - containerPort: 80
