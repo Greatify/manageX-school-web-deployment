@@ -22,7 +22,7 @@ spec:
                   secretProviderClass: "school-stage-secrets"
           containers:
             - name: school-stage-cronjob
-              image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:stage-viewsonic-ca6d8e6e568610aababf550c316f43e0f3d330ad
+              image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:school-stage-542f33b0e4851c9f7428e6b97eb98570317c1e43
               command: ["php", "/var/www/html/artisan", "schedule:run"]
               volumeMounts:
                 - name: school-secrets-environment-file
