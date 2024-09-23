@@ -1,9 +1,14 @@
 name: ManageX-School-Dev-Deploy
 
 on:
-  repository_dispatch:
-    types: [trigger-dev-deploy]
   workflow_dispatch:
+    inputs:
+      image:
+        description: 'Docker image to deploy'
+        required: true
+      sha:
+        description: 'Git SHA of the commit'
+        required: true
 
 jobs:
   deploy:
@@ -12,10 +17,8 @@ jobs:
     steps:
       - name: Debug Info
         run: |
-          echo "Event name: ${{ github.event_name }}"
-          echo "Event type: ${{ github.event.action }}"
-          echo "Payload image: ${{ github.event.client_payload.image }}"
-          echo "Payload SHA: ${{ github.event.client_payload.sha }}"
+          echo "Image: ${{ github.event.inputs.image }}"
+          echo "SHA: ${{ github.event.inputs.sha }}"
 
       - name: Checkout code
         uses: actions/checkout@v3
@@ -32,9 +35,9 @@ jobs:
 
       - name: Update deployment files
         run: |
-          yq -i '.spec.template.spec.containers[0].image = "${{ github.event.client_payload.image }}"' deployment/school-dev-deploy.yaml
-          yq -i '.spec.template.metadata.annotations."kubernetes.io/change-cause" = "Update to ${{ github.event.client_payload.image }} - SHA: ${{ github.event.client_payload.sha }}"' deployment/school-dev-deploy.yaml
-          yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = "${{ github.event.client_payload.image }}"' deployment/school-dev-cronjob.yaml
+          yq -i '.spec.template.spec.containers[0].image = "${{ github.event.inputs.image }}"' deployment/school-dev-deploy.yaml
+          yq -i '.spec.template.metadata.annotations."kubernetes.io/change-cause" = "Update to ${{ github.event.inputs.image }} - SHA: ${{ github.event.inputs.sha }}"' deployment/school-dev-deploy.yaml
+          yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = "${{ github.event.inputs.image }}"' deployment/school-dev-cronjob.yaml
 
       - name: Apply K8s manifests
         run: |
@@ -49,7 +52,7 @@ jobs:
           git config --global user.email "github-actions@example.com"
           git config --global user.name "greatify-code-merger"
           git add -f deployment/school-dev-deploy.yaml deployment/school-dev-cronjob.yaml
-          git commit -m "Update deployment image to ${{ github.event.client_payload.image }}"
+          git commit -m "Update deployment image to ${{ github.event.inputs.image }}"
           git push
 
       - name: Create Pull Request
@@ -60,5 +63,5 @@ jobs:
           base: stage
           head: dev
           title: "Promote dev to stage"
-          body: "This PR promotes the changes from dev to stage. New image: ${{ github.event.client_payload.image }}"
+          body: "This PR promotes the changes from dev to stage. New image: ${{ github.event.inputs.image }}"
           branch: promote-dev-to-stage
