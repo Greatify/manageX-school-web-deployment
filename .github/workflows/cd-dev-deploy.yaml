@@ -65,3 +65,13 @@ jobs:
           title: "Promote dev to stage"
           body: "This PR promotes the changes from dev to stage. New image: ${{ github.event.inputs.image }}"
           branch: promote-dev-to-stage
+
+      - name: Slack notification
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          text: Deployment to dev environment completed. Image: ${{ github.event.inputs.image }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
