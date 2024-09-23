@@ -10,6 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev
     steps:
+      - name: Debug Info
+        run: |
+          echo "Event name: ${{ github.event_name }}"
+          echo "Event type: ${{ github.event.action }}"
+          echo "Payload image: ${{ github.event.client_payload.image }}"
+          echo "Payload SHA: ${{ github.event.client_payload.sha }}"
+
       - name: Checkout code
         uses: actions/checkout@v3
 
