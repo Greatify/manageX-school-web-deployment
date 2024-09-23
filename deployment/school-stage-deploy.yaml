@@ -20,7 +20,7 @@ spec:
       labels:
         app: managex-school-stage
       annotations:
-        kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:school-stage-542f33b0e4851c9f7428e6b97eb98570317c1e43 - Changed Image Tag
+        kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:school-stage-3ce30af7c7518efba3842f346a2130273fa205d6 - Announcement Fixes
     spec:
       serviceAccountName: school-stage-service # Using your existing service account
       volumes:
@@ -53,7 +53,7 @@ spec:
             claimName: managex-school-stage-pvc
       containers:
         - name: managex-school-stg
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:school-stage-542f33b0e4851c9f7428e6b97eb98570317c1e43
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:school-stage-3ce30af7c7518efba3842f346a2130273fa205d6
           imagePullPolicy: Always
           ports:
             - containerPort: 80
