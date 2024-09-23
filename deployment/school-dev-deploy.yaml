@@ -20,7 +20,7 @@ spec:
       labels:
         app: managex-school-dev
       annotations:
-        kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-e31c1182ef0cfb44456d290bccfb9b8891a8d7aa - UI Changes done in Question
+        kubernetes.io/change-cause: 'Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:218013f8dfbf6430febbb07155570c00b9a25a6b - SHA: 218013f8dfbf6430febbb07155570c00b9a25a6b'
     spec:
       serviceAccountName: school-dev-service
       volumes:
@@ -53,7 +53,7 @@ spec:
             claimName: managex-school-dev-pvc
       containers:
         - name: managex-school-dev
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-e31c1182ef0cfb44456d290bccfb9b8891a8d7aa
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:218013f8dfbf6430febbb07155570c00b9a25a6b
           imagePullPolicy: Always
           resources:
             requests:
