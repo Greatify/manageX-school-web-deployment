@@ -1,81 +1,19 @@
 name: ManageX-School-Dev-Deploy
 
 on:
-  push:
-    branches:
-      - dev
+  repository_dispatch:
+    types: [trigger-dev-deploy]
   workflow_dispatch:
- 
-jobs:  
-  build-docker-images:
-    runs-on: ubuntu-latest
-    environment: dev
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          repository: 'Greatify/manageX-school-web'
-          ref: 'greatify-dev'
-          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v3
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build PHP Laravel image, tag, and push image to Amazon ECR
-        id: build-laravel-image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: managex_school
-          IMAGE_TAG_LARAVEL: dev-school-${{ github.sha }}
-        run: |
-          echo "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_LARAVEL" > laravel_image_tag.txt
-          docker build -f Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_LARAVEL .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_LARAVEL
-
-      - name: Upload image tag files
-        uses: actions/upload-artifact@v3
-        with:
-          name: image-tags
-          path: |
-            laravel_image_tag.txt
-          if-no-files-found: error
-
+jobs:
   deploy:
     runs-on: ubuntu-latest
-    needs: [build-docker-images]
     environment: dev
     steps:
       - uses: actions/checkout@v3
         with:
           repository: 'Greatify/manageX-school-web-deployment'
           ref: 'dev'
-
-      - name: Download image tag files
-        uses: actions/download-artifact@v3
-        with:
-          name: image-tags
-          path: .
-
-      - name: Set image tags as environment variables
-        run: |
-          echo "LARAVEL_IMAGE=$(<laravel_image_tag.txt)" >> $GITHUB_ENV
-
-      - name: Get commit message
-        run: echo "COMMIT_MESSAGE=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
-
-      - name: Update PHP Laravel deployment image tag and change cause
-        run: |
-          yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/school-dev-deploy.yaml
-          yq -i '.spec.template.metadata.annotations."kubernetes.io/change-cause" = "Updated to ${{ env.LARAVEL_IMAGE }} - ${{ env.COMMIT_MESSAGE }}"' deployment/school-dev-deploy.yaml
-          yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/school-dev-cronjob.yaml
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -87,6 +25,12 @@ jobs:
       - name: Update kube config
         run: aws eks update-kubeconfig --name dev-stg-cluster --region ap-south-1
 
+      - name: Update deployment files
+        run: |
+          yq -i '.spec.template.spec.containers[0].image = "${{ github.event.client_payload.image }}"' deployment/school-dev-deploy.yaml
+          yq -i '.spec.template.metadata.annotations."kubernetes.io/change-cause" = "Update to ${{ github.event.client_payload.image }}"' deployment/school-dev-deploy.yaml
+          yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = "${{ github.event.client_payload.image }}"' deployment/school-dev-cronjob.yaml
+
       - name: Apply K8s manifests
         run: |
           kubectl apply -f deployment/school-dev-cronjob.yaml -n dev-managex-school
@@ -95,7 +39,7 @@ jobs:
           kubectl apply -f deployment/school-dev-ingress.yaml -n dev-managex-school
           kubectl apply -f deployment/school-dev-secretprovider.yaml -n dev-managex-school
 
-      - name: Push changes using GitHub App token
+      - name: Push changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -104,3 +48,14 @@ jobs:
           git add -f deployment/school-dev-deploy.yaml deployment/school-dev-cronjob.yaml
           git commit -m "Update deployment image and change cause"
           git push origin dev
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+          repository: Greatify/manageX-school-web
+          base: stage
+          head: dev
+          title: "Promote dev to stage"
+          body: "This PR promotes the changes from dev to stage."
+          branch: promote-dev-to-stage
