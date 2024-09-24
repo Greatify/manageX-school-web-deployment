@@ -20,7 +20,7 @@ spec:
       labels:
         app: managex-school-dev
       annotations:
-        kubernetes.io/change-cause: 'Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:09ac277b88fe2ba073f3c4e89441342c25538d66 - SHA: 09ac277b88fe2ba073f3c4e89441342c25538d66'
+        kubernetes.io/change-cause: 'Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-abda2e7a79e0d080e3019fd9639b4e79bed8b6b4 - added service file'
     spec:
       serviceAccountName: school-dev-service
       volumes:
@@ -53,7 +53,7 @@ spec:
             claimName: managex-school-dev-pvc
       containers:
         - name: managex-school-dev
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:09ac277b88fe2ba073f3c4e89441342c25538d66
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-abda2e7a79e0d080e3019fd9639b4e79bed8b6b4
           imagePullPolicy: Always
           resources:
             requests:
