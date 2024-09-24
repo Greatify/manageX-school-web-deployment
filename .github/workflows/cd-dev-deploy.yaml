@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev
     steps:
-      - name: Checkout code
+      - name: Checkout deployment repo
         uses: actions/checkout@v3
 
       - name: Configure AWS credentials
@@ -41,7 +41,7 @@ jobs:
           kubectl apply -f deployment/school-dev-ingress.yaml -n dev-managex-school
           kubectl apply -f deployment/school-dev-secretprovider.yaml -n dev-managex-school
 
-      - name: Push changes
+      - name: Push changes to deployment repo
         run: |
           git config --global user.email "github-actions@example.com"
           git config --global user.name "greatify-code-merger"
@@ -50,41 +50,25 @@ jobs:
           git push
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          repository: Greatify/manageX-school-web
-          branch: dev
-          base: stage
-          title: "Promote Dev to Stage"
-          body: |
-            This PR promotes the changes from Dev to Stage.
-            
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_URL=$(gh pr create --repo Greatify/manageX-school-web \
+            --base stage \
+            --head dev \
+            --title "Promote Dev to Stage" \
+            --body "This PR promotes the changes from Dev to Stage.
+
             Deployed image: ${{ github.event.inputs.image }}
             Commit SHA: ${{ github.event.inputs.sha }}
-          labels: automated-pr, dev-to-stage
-
-      - name: Check if PR was merged
-        id: check_pr
-        run: |
-          PR_STATE=$(gh pr view --repo Greatify/manageX-school-web --json state -q .state)
-          if [ "$PR_STATE" == "MERGED" ]; then
-            echo "pr_merged=true" >> $GITHUB_OUTPUT
-          else
-            echo "pr_merged=false" >> $GITHUB_OUTPUT
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Trigger Stage Deploy
-        if: steps.check_pr.outputs.pr_merged == 'true'
-        uses: benc-uk/workflow-dispatch@v1
-        with:
-          workflow: ManageX-School-Stage-Deploy
-          repo: Greatify/manageX-school-web-deployment
-          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
-          ref: stage
-          inputs: '{"image": "${{ github.event.inputs.image }}", "sha": "${{ github.event.inputs.sha }}"}'
+            
+            <!-- DO NOT REMOVE: Stage deployment details -->
+            <stage-deploy>
+            image: ${{ github.event.inputs.image }}
+            sha: ${{ github.event.inputs.sha }}
+            </stage-deploy>" \
+            --label "automated-pr,dev-to-stage")
+          echo "PR_URL=$PR_URL" >> $GITHUB_ENV
 
       - name: Slack Notification
         uses: 8398a7/action-slack@v3
@@ -94,8 +78,7 @@ jobs:
             Dev Deployment Completed
             Image: ${{ github.event.inputs.image }}
             Commit SHA: ${{ github.event.inputs.sha }}
-            PR Created: Yes
-            PR Merged: ${{ steps.check_pr.outputs.pr_merged }}
+            PR Created: ${{ env.PR_URL }}
           fields: repo,message,commit,author,action,eventName,ref,workflow
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
