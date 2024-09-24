@@ -1,5 +1,4 @@
 name: ManageX-School-Dev-Deploy
-
 on:
   workflow_dispatch:
     inputs:
@@ -15,7 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev
     steps:
-    
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -56,8 +54,50 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           repository: Greatify/manageX-school-web
+          branch: dev
           base: stage
-          head: dev
-          title: "Promote dev to stage"
-          body: "This PR promotes the changes from dev to stage. New image: ${{ github.event.inputs.image }}"
-          branch: promote-dev-to-stage
+          title: "Promote Dev to Stage"
+          body: |
+            This PR promotes the changes from Dev to Stage.
+            
+            Deployed image: ${{ github.event.inputs.image }}
+            Commit SHA: ${{ github.event.inputs.sha }}
+          labels: automated-pr, dev-to-stage
+
+      - name: Check if PR was merged
+        id: check_pr
+        run: |
+          PR_STATE=$(gh pr view --repo Greatify/manageX-school-web --json state -q .state)
+          if [ "$PR_STATE" == "MERGED" ]; then
+            echo "pr_merged=true" >> $GITHUB_OUTPUT
+          else
+            echo "pr_merged=false" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Trigger Stage Deploy
+        if: steps.check_pr.outputs.pr_merged == 'true'
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: ManageX-School-Stage-Deploy
+          repo: Greatify/manageX-school-web-deployment
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+          ref: stage
+          inputs: '{"image": "${{ github.event.inputs.image }}", "sha": "${{ github.event.inputs.sha }}"}'
+
+      - name: Slack Notification
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          text: |
+            Dev Deployment Completed
+            Image: ${{ github.event.inputs.image }}
+            Commit SHA: ${{ github.event.inputs.sha }}
+            PR Created: Yes
+            PR Merged: ${{ steps.check_pr.outputs.pr_merged }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
