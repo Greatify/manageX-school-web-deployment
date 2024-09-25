@@ -20,7 +20,7 @@ spec:
       labels:
         app: managex-school-dev
       annotations:
-        kubernetes.io/change-cause: 'Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-58e8434bcd42f273550a257099f2a2ad598629ad - Removed announcement validation condition'
+        kubernetes.io/change-cause: 'Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-9eca70d6e88c6bb91c454cfef377cb871a0f9262 - added folder permisson in deployment'
     spec:
       serviceAccountName: school-dev-service
       volumes:
@@ -53,7 +53,7 @@ spec:
             claimName: managex-school-dev-pvc
       containers:
         - name: managex-school-dev
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-58e8434bcd42f273550a257099f2a2ad598629ad
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-9eca70d6e88c6bb91c454cfef377cb871a0f9262
           imagePullPolicy: Always
           resources:
             requests:
