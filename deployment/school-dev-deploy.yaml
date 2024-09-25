@@ -20,7 +20,7 @@ spec:
       labels:
         app: managex-school-dev
       annotations:
-        kubernetes.io/change-cause: 'Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-a13c0edddb86f452fc132eb2135a0366df71d408 - ai-report-changes'
+        kubernetes.io/change-cause: 'Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-58e8434bcd42f273550a257099f2a2ad598629ad - Removed announcement validation condition'
     spec:
       serviceAccountName: school-dev-service
       volumes:
@@ -53,7 +53,7 @@ spec:
             claimName: managex-school-dev-pvc
       containers:
         - name: managex-school-dev
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-a13c0edddb86f452fc132eb2135a0366df71d408
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-58e8434bcd42f273550a257099f2a2ad598629ad
           imagePullPolicy: Always
           resources:
             requests:
