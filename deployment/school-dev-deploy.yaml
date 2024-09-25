@@ -89,4 +89,9 @@ spec:
           lifecycle:
             postStart:
               exec:
-                command: ['cp', '-R', '/mnt/secret-store/.env', '/var/www/html/.env']
+                command:
+                  - /bin/sh
+                  - -c
+                  - |
+                    cp -R /mnt/secret-store/.env /var/www/html/.env
+                    chmod -R 777 /var/www/html/storage/app/public
