@@ -20,7 +20,7 @@ spec:
       labels:
         app: managex-school-dev
       annotations:
-        kubernetes.io/change-cause: 'Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-ea0915d7e4b96e1c73630c16fefa9ea3a1eea225 - admincart-student-selection-popup'
+        kubernetes.io/change-cause: 'Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-ea0915d7e4b96e1c73630c16fefa9ea3a1eea225 - Update deployment image and change cause'
     spec:
       serviceAccountName: school-dev-service
       volumes:
