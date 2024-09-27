@@ -5,6 +5,9 @@ metadata:
   namespace: dev-managex-school
 spec:
   schedule: "*/1 * * * *" # Runs every minute
+  concurrencyPolicy: "Replace"
+  successfulJobsHistoryLimit: 1 
+  failedJobsHistoryLimit: 1 
   jobTemplate:
     spec:
       template:
