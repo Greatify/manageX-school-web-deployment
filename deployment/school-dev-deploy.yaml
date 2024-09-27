@@ -54,14 +54,14 @@ spec:
       containers:
         - name: managex-school-dev
           image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:dev-school-0f274c8eaf663e2da86b343d96fc11ee9c0750d8
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           resources:
             requests:
-              cpu: "500m"
-              memory: 1Gi
+              cpu: 100m
+              memory: 128Mi
             limits:
-              cpu: 1
-              memory: 2Gi
+              cpu: 500m
+              memory: 256Mi
           ports:
             - containerPort: 80
           volumeMounts:
