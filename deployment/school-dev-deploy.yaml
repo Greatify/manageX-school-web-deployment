@@ -20,7 +20,7 @@ spec:
       labels:
         app: managex-school-dev
       annotations:
-        kubernetes.io/change-cause: 'Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-ef6ebd94b06cfdae41e9e43e1f6290cc2655c58b - Re deployment check'
+        kubernetes.io/change-cause: 'Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-ea0915d7e4b96e1c73630c16fefa9ea3a1eea225 - admincart-student-selection-popup'
     spec:
       serviceAccountName: school-dev-service
       volumes:
@@ -53,7 +53,7 @@ spec:
             claimName: managex-school-dev-pvc
       containers:
         - name: managex-school-dev
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-ef6ebd94b06cfdae41e9e43e1f6290cc2655c58b
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-ea0915d7e4b96e1c73630c16fefa9ea3a1eea225
           imagePullPolicy: Always
           resources:
             requests:

@@ -6,8 +6,8 @@ metadata:
 spec:
   schedule: "*/1 * * * *" # Runs every minute
   concurrencyPolicy: "Replace"
-  successfulJobsHistoryLimit: 1 
-  failedJobsHistoryLimit: 1 
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:
@@ -25,7 +25,7 @@ spec:
                   secretProviderClass: "school-dev-secrets"
           containers:
             - name: school-dev-cronjob
-              image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-ef6ebd94b06cfdae41e9e43e1f6290cc2655c58b
+              image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-ea0915d7e4b96e1c73630c16fefa9ea3a1eea225
               command: ["php", "/var/www/html/artisan", "schedule:run"]
               volumeMounts:
                 - name: school-secrets-dev
