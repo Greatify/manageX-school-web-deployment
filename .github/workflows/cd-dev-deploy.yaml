@@ -125,9 +125,9 @@ jobs:
           SLACK_MESSAGE: |
             Deployment by ${{ github.actor }} is ${{ job.status }}.
             Commit Message: "${{ github.event.head_commit.message }}"
-            ${{ github.actor }}, your code has been deployed. Please check the deployment and verify the changes on the server.
+            ${{ job.status == 'success' && 'Your code has been deployed. Please check the deployment and verify the changes on the server.' || 'Your code has not been deployed due to failure. Please check the deployment logs for more details.' }}
+        
       
-
       - name: Push changes using GitHub App token
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
