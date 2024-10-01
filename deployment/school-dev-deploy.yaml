@@ -20,7 +20,7 @@ spec:
       labels:
         app: managex-school
       annotations:
-        kubernetes.io/change-cause: 'Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-37c202ef51eeca8ca2e4053bb1aaf898fc31ea2d - reverted to greatify-dev  (by surya1005)'
+        kubernetes.io/change-cause: 'Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-279d9442870f7981756355733af5f490e8beb79c - fixed indentation (by surya1005)'
     spec:
       serviceAccountName: school-service
       volumes:
@@ -53,7 +53,7 @@ spec:
             claimName: managex-school-pvc
       containers:
         - name: managex-school
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-37c202ef51eeca8ca2e4053bb1aaf898fc31ea2d
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-279d9442870f7981756355733af5f490e8beb79c
           imagePullPolicy: IfNotPresent
           resources:
             requests:
