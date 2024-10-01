@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: 'Greatify/manageX-school-web'
-          ref: 'dev'
+          ref: 'greatify-dev'
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
 
       - name: Configure AWS credentials
