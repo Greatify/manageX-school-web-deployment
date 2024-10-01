@@ -90,7 +90,7 @@ jobs:
       - name: Update PHP Laravel deployment image tag and change cause
         run: |
           yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/school-dev-deploy.yaml
-          yq -i '.spec.template.metadata.annotations."kubernetes.io/change-cause" = "Update to ${{ env.LARAVEL_IMAGE }} - ${{ env.COMMIT_MESSAGE }}  (by ${{ github.actor }})"' deployment/school-dev-deploy.yaml
+          yq -i '.spec.template.metadata.annotations."kubernetes.io/change-cause" = "Update to ${{ env.LARAVEL_IMAGE }} - ${{ env.COMMIT_MESSAGE }} (by ${{ github.actor }})"' deployment/school-dev-deploy.yaml
           yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/school-dev-cronjob.yaml
 
       - name: Configure AWS credentials
