@@ -20,7 +20,7 @@ spec:
       labels:
         app: managex-school
       annotations:
-        kubernetes.io/change-cause: 'Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:dev-school-3c48028954cf82db80f2ff74791a3b157f0e045c - students overall attendance report'
+        kubernetes.io/change-cause: 'Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-3e68c69b97e68aede78abcb90c73c1365330168e - modified dockerfile in dev branch  (by surya1005)'
     spec:
       serviceAccountName: school-service
       volumes:
@@ -53,7 +53,7 @@ spec:
             claimName: managex-school-pvc
       containers:
         - name: managex-school
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:dev-school-3c48028954cf82db80f2ff74791a3b157f0e045c
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-3e68c69b97e68aede78abcb90c73c1365330168e
           imagePullPolicy: IfNotPresent
           resources:
             requests:
