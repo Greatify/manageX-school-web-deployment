@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: school-dev-cronjob
+  name: school-cronjob
   namespace: dev-managex-school
 spec:
   schedule: "*/1 * * * *" # Runs every minute
@@ -13,22 +13,22 @@ spec:
       template:
         metadata:
           labels:
-            app: school-dev-cronjob
+            app: school-cronjob
         spec:
-          serviceAccountName: school-dev-service
+          serviceAccountName: school-service
           volumes:
-            - name: school-secrets-dev
+            - name: school-secrets
               csi:
                 driver: secrets-store.csi.k8s.io
                 readOnly: true
                 volumeAttributes:
-                  secretProviderClass: "school-dev-secrets"
+                  secretProviderClass: "school-secrets"
           containers:
-            - name: school-dev-cronjob
+            - name: school-cronjob
               image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:dev-school-3c48028954cf82db80f2ff74791a3b157f0e045c
               command: ["php", "/var/www/html/artisan", "schedule:run"]
               volumeMounts:
-                - name: school-secrets-dev
+                - name: school-secrets
                   mountPath: "/mnt/secret-store"
                   readOnly: true
               lifecycle:

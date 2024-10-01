@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: managex-school-dev
+  name: managex-school
   namespace: dev-managex-school
   labels:
-    app: managex-school-dev
+    app: managex-school
 spec:
   replicas: 1
   revisionHistoryLimit: 10
@@ -14,25 +14,25 @@ spec:
       maxUnavailable: 50%
   selector:
     matchLabels:
-      app: managex-school-dev
+      app: managex-school
   template:
     metadata:
       labels:
-        app: managex-school-dev
+        app: managex-school
       annotations:
         kubernetes.io/change-cause: 'Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:dev-school-3c48028954cf82db80f2ff74791a3b157f0e045c - students overall attendance report'
     spec:
-      serviceAccountName: school-dev-service
+      serviceAccountName: school-service
       volumes:
-        - name: school-secrets-dev
+        - name: school-secrets
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: "school-dev-secrets"
-        - name: school-dev-nginx-configuration
+              secretProviderClass: "school-secrets"
+        - name: school-nginx-configuration
           configMap:
-            name: managex-school-dev-nginx-config
+            name: managex-school-nginx-config
             items:
               - key: default
                 path: default
@@ -48,20 +48,20 @@ spec:
           emptyDir: {}
         - name: pending-files
           emptyDir: {}
-        - name: dev-efs-storage
+        - name: efs-storage
           persistentVolumeClaim:
-            claimName: managex-school-dev-pvc
+            claimName: managex-school-pvc
       containers:
-        - name: managex-school-dev
+        - name: managex-school
           image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/stage-managex-school:dev-school-3c48028954cf82db80f2ff74791a3b157f0e045c
           imagePullPolicy: IfNotPresent
           resources:
             requests:
-              cpu: 100m
-              memory: 128Mi
-            limits:
               cpu: 500m
-              memory: 256Mi
+              memory: 512Mi
+            limits:
+              cpu: 1
+              memory: 2Gi
           ports:
             - containerPort: 80
           volumeMounts:
@@ -77,13 +77,13 @@ spec:
               mountPath: /var/www/html/storage/app/tcpdf
             - name: pending-files
               mountPath: /var/www/html/resources/pending-files
-            - name: school-dev-nginx-configuration
+            - name: school-nginx-configuration
               mountPath: /etc/nginx/sites-available/
-            - name: dev-efs-storage
+            - name: efs-storage
               mountPath: /var/www/html/storage/app/efs
-            - name: dev-efs-storage
+            - name: efs-storage
               mountPath: /var/www/html/storage/app/public
-            - name: school-secrets-dev
+            - name: school-secrets
               mountPath: "/mnt/secret-store"
               readOnly: true
           lifecycle:

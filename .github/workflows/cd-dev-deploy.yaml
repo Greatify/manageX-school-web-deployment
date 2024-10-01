@@ -1,4 +1,4 @@
-name: ManageX-School-Dev-Deploy
+name: ManageX-School-Deploy
 
 on:
   push:
@@ -25,6 +25,24 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'  
+  
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Retrieve .env from AWS Secrets Manager
+        run: |
+            aws secretsmanager get-secret-value --secret-id Managex-school-dev --query SecretString --output text > .env
+
+      - name: Generate application key
+        run: php artisan key:generate
+
+      - name: Run unit tests
+        run: php artisan test
+
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
@@ -33,7 +51,7 @@ jobs:
         id: build-laravel-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: stage-managex-school
+          ECR_REPOSITORY: managex_school
           IMAGE_TAG_LARAVEL: dev-school-${{ github.sha }}
         run: |
           echo "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_LARAVEL" > laravel_image_tag.txt
@@ -47,6 +65,16 @@ jobs:
           path: |
             laravel_image_tag.txt
           if-no-files-found: error
+
+      - name: Notify on Docker Build Failure
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+            SLACK_CHANNEL: '#managex-school'
+            SLACK_COLOR: 'danger'
+            SLACK_TITLE: 'Docker Build Failed'
+            SLACK_MESSAGE: "Docker build failed for commit ${{ github.sha }} pushed by @${{ github.actor }}. Error: ${{ job.steps.build-and-push.outputs.error }}. Error message: ${{ job.steps.run-tests.outputs.error-message }}. Please fix the issue and push an update. Note: Code is not deployed. @${{ github.actor }}, your changes are not deployed because of this issue."  
 
   deploy:
     runs-on: ubuntu-latest
@@ -74,7 +102,7 @@ jobs:
       - name: Update PHP Laravel deployment image tag and change cause
         run: |
           yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/school-dev-deploy.yaml
-          yq -i '.spec.template.metadata.annotations."kubernetes.io/change-cause" = "Update to ${{ env.LARAVEL_IMAGE }} - ${{ env.COMMIT_MESSAGE }}"' deployment/school-dev-deploy.yaml
+          yq -i '.spec.template.metadata.annotations."kubernetes.io/change-cause" = "Update to ${{ env.LARAVEL_IMAGE }} - ${{ env.COMMIT_MESSAGE }}  (by ${{ github.actor }})"' deployment/school-dev-deploy.yaml
           yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' deployment/school-dev-cronjob.yaml
 
       - name: Configure AWS credentials
@@ -89,11 +117,27 @@ jobs:
 
       - name: Apply K8s manifests
         run: |
+          kubectl apply -f deployment/school-dev-configmap.yaml -n dev-managex-school
           kubectl apply -f deployment/school-dev-cronjob.yaml -n dev-managex-school
           kubectl apply -f deployment/school-dev-deploy.yaml -n dev-managex-school
+          kubectl apply -f deployment/school-dev-ingress.yaml -n dev-managex-school
+          kubectl apply -f deployment/school-dev-pod-autoscaling.yaml -n dev-managex-school
+          kubectl apply -f deployment/school-dev-secretprovider.yaml -n dev-managex-school
           kubectl apply -f deployment/school-dev-service.yaml -n dev-managex-school
           kubectl apply -f deployment/school-dev-ingress.yaml -n dev-managex-school
-          kubectl apply -f deployment/school-dev-secretprovider.yaml -n dev-managex-school
+
+      - name: Slack Notification on Deployment Status
+        if: always()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_CHANNEL: '#managex-school'
+          SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
+          SLACK_TITLE: "Deployment Job - ${{ job.status }}"
+          SLACK_MESSAGE: |
+            Deployment by ${{ github.actor }} is ${{ job.status }}.
+            ${{ github.actor }}, your code has been deployed. Please check the deployment and verify the changes on the server.
+
 
       - name: Push changes using GitHub App token
         env:
