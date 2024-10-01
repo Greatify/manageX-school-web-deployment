@@ -96,14 +96,14 @@ spec:
                     cp -R /mnt/secret-store/.env /var/www/html/.env
                     chmod -R 777 /var/www/html/storage/app/public
             livenessProbe:
-            httpGet:
-              path: /
-              port: 80
-            initialDelaySeconds: 30
-            periodSeconds: 30
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 80
-            initialDelaySeconds: 15
-            periodSeconds: 20
+              httpGet:
+                path: /
+                port: 80
+              initialDelaySeconds: 30
+              periodSeconds: 30
+            readinessProbe:
+              httpGet:
+                path: /
+                port: 80
+              initialDelaySeconds: 15
+              periodSeconds: 20
