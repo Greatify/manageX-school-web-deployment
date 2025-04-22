@@ -18,4 +18,5 @@ spec:
                 volumeAttributes:
                   secretProviderClass: managex-school-secrets
           containers:
-            - image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:92183768d52b988f0f99302dde5b728e65ac3dcb-Add-CI-workflow-for-ManageX-School-Dev-environment-pushed-by-surya1005
+            - name: school-cronjob
+              image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:92183768d52b988f0f99302dde5b728e65ac3dcb-Add-CI-workflow-for-ManageX-School-Dev-environment-pushed-by-surya1005
