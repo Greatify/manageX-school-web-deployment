@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: school-ingress
+  annotations:
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:399600302704:certificate/cacda6c3-9dea-4893-9b70-ed93388e9576
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: managex-school-service
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - greatifydev.school

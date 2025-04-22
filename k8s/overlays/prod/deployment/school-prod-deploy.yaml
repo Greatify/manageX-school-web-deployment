@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: school
+  labels:
+    app: managex-school
+spec:
+  selector:
+    matchLabels:
+      app: managex-school
+  template:
+    metadata:
+      labels:
+        app: managex-school
+    spec:
+      volumes:
+        - name: school-secrets
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: managex-school-secrets-production
+        - name: school-server-configuration
+          configMap:
+            name: managex-school-server-config-production
+            items:
+              - key: default
+                path: default
+        - name: school-nginx-configuration
+          configMap:
+            name: managex-school-nginx-config-production
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+      containers:
+        - name: managex-school
+          resources:
+            requests:
+              cpu: 1
+              memory: 4Gi
+            limits:
+              cpu: 2
+              memory: 8Gi

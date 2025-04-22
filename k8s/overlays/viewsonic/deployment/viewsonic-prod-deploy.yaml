@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: school
+  labels:
+    app: viewsonic-production
+spec:
+  selector:
+    matchLabels:
+      app: viewsonic-production
+  template:
+    metadata:
+      labels:
+        app: viewsonic-production
+    spec:
+      serviceAccountName: viewsonic-secrets-sa
+      volumes:
+        - name: school-secrets
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: viewsonic-school-secrets-production
+        - name: school-server-configuration
+          configMap:
+            name: viewsonic-school-server-config-production
+            items:
+              - key: default
+                path: default
+        - name: school-nginx-configuration
+          configMap:
+            name: viewsonic-school-nginx-config-production
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+        - name: efs-storage
+          persistentVolumeClaim:
+            claimName: viewsonic-production-pvc
+      containers:
+        - name: managex-school
+          resources:
+            requests:
+              cpu: 1
+              memory: 4Gi
+            limits:
+              cpu: 2
+              memory: 8Gi
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: efs-storage 
+              mountPath: /var/www/html/storage/app/efs
+            - name: school-secrets
+              mountPath: "/mnt/secret-store"
+              readOnly: true
