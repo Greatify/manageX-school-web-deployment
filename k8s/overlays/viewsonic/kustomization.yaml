@@ -1,0 +1,87 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: viewsonic-production
+
+namePrefix: viewsonic-
+nameSuffix: -production
+
+resources:
+  - ../../base
+
+patches:
+  - path: deployment/viewsonic-prod-cronjob.yaml
+    target:
+      kind: CronJob
+      name: school-cronjob
+  - patch: |-
+      - op: replace
+        path: /spec/jobTemplate/spec/template/spec/containers/0/name
+        value: viewsonic-school-cronjob
+      - op: replace
+        path: /metadata/labels/app
+        value: viewsonic-cronjob-prod
+      - op: replace
+        path: /spec/jobTemplate/spec/template/metadata/labels/app
+        value: viewsonic-cronjob-prod
+    target:
+      kind: CronJob
+      name: school-cronjob 
+
+  - path: deployment/viewsonic-prod-deploy.yaml
+    target:
+      kind: Deployment
+      name: school
+  - patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/name
+        value: viewsonic-production
+      - op: replace
+        path: /metadata/labels/app
+        value: viewsonic-school-prod
+      - op: replace
+        path: /spec/selector/matchLabels/app
+        value: viewsonic-school-prod
+      - op: replace
+        path: /spec/template/metadata/labels/app
+        value: viewsonic-school-prod
+    target:
+      kind: Deployment 
+      name: school
+
+  - path: deployment/viewsonic-prod-ingress.yaml
+    target:
+      kind: Ingress
+      name: school-ingress
+
+  - path: deployment/viewsonic-prod-nginx-configmap.yaml
+    target:
+      kind: ConfigMap
+      name: school-nginx-config
+
+  - path: deployment/viewsonic-prod-pod-autoscaler.yaml
+    target:
+      kind: HorizontalPodAutoscaler
+      name: school-pod-autoscaler
+
+  - path: deployment/viewsonic-prod-secretprovider.yaml
+    target:
+      kind: SecretProviderClass
+      name: school-secrets
+
+  - path: deployment/viewsonic-prod-server-configmap.yaml
+    target:
+      kind: ConfigMap
+      name: school-server-config
+
+  - path: deployment/viewsonic-prod-service.yaml
+    target:
+      kind: Service
+      name: school-service
+  - patch: |-
+      - op: replace
+        path: /spec/selector/app
+        value: viewsonic-school-prod
+    target:
+      kind: Service
+      name: school-service

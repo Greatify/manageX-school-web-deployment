@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: school-cronjob
+spec:
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: viewsonic-school-cronjob
+        spec:
+          serviceAccountName: viewsonic-secrets-sa
+          volumes:
+            - name: school-secrets
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: viewsonic-school-secrets-production
+          containers:
+            - name: school-cronjob
+              volumeMounts:
+                - name: school-secrets
+                  mountPath: "/mnt/secret-store"
+                  readOnly: true

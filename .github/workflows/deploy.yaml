@@ -1,18 +1,20 @@
-name: ManageX-School-Dev-Deployment
+name: ManageX School Dev CD
 
 on:
   workflow_dispatch:
     inputs:
-      build_run_id:
-        description: 'GitHub Run ID of the build workflow in managex-school-web'
+      image:
+        description: 'Docker image to deploy'
         required: true
-  repository_dispatch:
-    types: [trigger-deployment]
-
-permissions:
-  contents: write
-  id-token: write
-  pull-requests: write
+      sha:
+        description: 'Git SHA of the commit'
+        required: true
+      commit_message:
+        description: 'Sanitized commit message'
+        required: true
+      actor:
+        description: 'Sanitized actor name'
+        required: true
 
 jobs:
   Deploy-to-Dev:
@@ -22,25 +24,33 @@ jobs:
     env:
       CLOUDFRONT_DISTRIBUTION: E31U53GJ2LNL56
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          ref: 'dev'
-          fetch-depth: 0
+          ref: 'main'
           token: ${{ secrets.PAT_TOKEN }}
 
-      - name: Download image tag artifact
-        uses: dawidd6/action-download-artifact@v3
-        with:
-          repo: ${{ github.repository_owner }}/managex-school-web
-          workflow: docker-build.yaml
-          run_id: ${{ github.event.inputs.build_run_id || github.event.client_payload.build_run_id }}
-          name: image-tags
-          path: .
-
-      - name: Set image tags as environment variables
+      - name: Set image tag from dispatch input
         run: |
-          echo "LARAVEL_IMAGE=$(<laravel_image_tag.txt)" >> $GITHUB_ENV
+          echo "LARAVEL_IMAGE=${{ github.event.inputs.image }}" >> $GITHUB_ENV
+          echo "COMMIT_SHA=${{ github.event.inputs.sha }}" >> $GITHUB_ENV
+          echo "COMMIT_MESSAGE=${{ github.event.inputs.commit_message }}" >> $GITHUB_ENV
+          echo "ACTOR=${{ github.event.inputs.actor }}" >> $GITHUB_ENV
+
+      - name: Update PHP Laravel deployment image tag and change cause
+        run: |
+          yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' k8s/overlays/dev/deployment/school-dev-deploy.yaml
+          yq -i '.spec.template.metadata.annotations."kubernetes.io/change-cause" = "Update to ${{ env.LARAVEL_IMAGE }} - ${{ env.COMMIT_MESSAGE }} (by ${{ env.ACTOR }})"' k8s/overlays/dev/deployment/school-dev-deploy.yaml
+          yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' k8s/overlays/dev/deployment/school-dev-cronjob.yaml
+
+      - name: Commit and Push Changes
+        run: |
+          git pull origin main
+          git config --local user.email "suriyanarayanan.s@greatify.ai"
+          git config --local user.name "surya1005"
+          git add -f k8s/overlays/dev/deployment/school-dev-deploy.yaml k8s/overlays/dev/deployment/school-dev-cronjob.yaml
+          git commit -m "Update deployment image and change cause for ${{ env.COMMIT_SHA }} [Automated]"
+          git push origin main
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -51,12 +61,6 @@ jobs:
 
       - name: Update kube config
         run: aws eks update-kubeconfig --name dev-stg-cluster --region ap-south-1
-
-      - name: Update PHP Laravel deployment image tag and change cause
-        run: |
-          yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' k8s/base/deployment/base-deploy.yaml
-          yq -i '.spec.template.metadata.annotations."kubernetes.io/change-cause" = "Update to ${{ env.LARAVEL_IMAGE }} - ${{ github.event.head_commit.message || github.event.client_payload.commit_message }} (by ${{ github.actor || github.event.client_payload.actor }})"' k8s/base/deployment/base-deploy.yaml
-          yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' k8s/base/deployment/base-cronjob.yaml
 
       - name: Apply K8s manifests to Dev Environment With Validation
         run: |
@@ -69,42 +73,23 @@ jobs:
           echo "Created invalidation: $INVALIDATION_ID"
           aws cloudfront wait invalidation-completed --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION }} --id $INVALIDATION_ID
 
-      - name: Push changes using GitHub App token
-        if: success()
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-        run: |
-          git pull origin dev
-          git config --local user.email "suriyanarayanan.s@greatify.ai"
-          git config --local user.name "surya1005"
-          git add -f k8s/base/deployment/base-deploy.yaml k8s/base/deployment/base-cronjob.yaml
-          git commit -m "Update deployment image and change cause [Automated]"
-
-      - name: Push to protected branch
-        if: success()
-        uses: CasperWA/push-protected@v2
-        with:
-          token: ${{ secrets.PAT_TOKEN }}
-          branch: dev
-          unprotect_reviews: true
-
       - name: Slack Notification on Deployment Status
         if: always()
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
-          fields: repo,message,commit,author,action,eventName,ref,workflow
+          fields: repo,commit,author,workflow
           author_name: School Dev Deployment Status
-          mention: ${{ github.actor || github.event.client_payload.actor }}
+          mention: ${{ github.event.inputs.actor }}
           if_mention: success,failure
           job_name: Deploy-to-Dev
           channel: managex-school
           username: manageX-school
           text: |
             :rocket: "*Deployment Job* - *${{ job.status }} (School Dev Environment)*"
-            *Author:* `${{ github.actor || github.event.client_payload.actor }}`
-            *Deployment for commit* *${{ github.event.inputs.build_run_id || github.event.client_payload.build_run_id }}* *pushed by* @${{ github.actor || github.event.client_payload.actor }} has ${{ job.status }} in *School Dev Environment*.
-            *Commit Message:* *${{ github.event.head_commit.message || github.event.client_payload.commit_message }}*
+            *Author:* `${{ env.ACTOR }}`
+            *Deployment for commit* *${{ env.COMMIT_SHA }}* *pushed by* @${{ env.ACTOR }} has ${{ job.status }} in *School Dev Environment*.
+            *Commit Message:* *${{ env.COMMIT_MESSAGE }}*
             ${{ job.status == 'success' && 'Your changes have been successfully deployed to the *School Dev environment*. Please verify the changes on the server.' || 'Deployment failed. Please check the logs for more details.' }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

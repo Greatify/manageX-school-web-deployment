@@ -1,0 +1,123 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: school
+  labels:
+    app: managex-school
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: managex-school
+  template:
+    metadata:
+      labels:
+        app: managex-school
+      annotations:
+        kubernetes.io/change-cause: "Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d7ceb56ab49397b0c34fde3d89e8e0f3c30cb8d1-Include-Git-reference-for-improved-cache-pushed-by-surya1005 - Include Git reference for improved cache (by surya1005)"
+    spec:
+      serviceAccountName: school-service
+      volumes:
+        - name: school-secrets
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: school-secrets
+        - name: school-server-configuration
+          configMap:
+            name: school-server-config
+            items:
+              - key: default
+                path: default
+        - name: school-nginx-configuration
+          configMap:
+            name: school-nginx-config
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+        - name: cache
+          emptyDir: {}
+        - name: testing
+          emptyDir: {}
+        - name: sessions
+          emptyDir: {}
+        - name: views
+          emptyDir: {}
+        - name: tcpdf
+          emptyDir: {}
+        - name: pending-files
+          emptyDir: {}
+        - name: efs-storage
+          persistentVolumeClaim:
+            claimName: managex-school-pvc
+      containers:
+        - name: managex-school
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d7ceb56ab49397b0c34fde3d89e8e0f3c30cb8d1-Include-Git-reference-for-improved-cache-pushed-by-surya1005
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+            limits:
+              cpu: "1"
+              memory: 2Gi
+          volumeMounts:
+            - name: cache
+              mountPath: /var/www/html/storage/framework/cache
+            - name: sessions
+              mountPath: /var/www/html/storage/framework/sessions
+            - name: views
+              mountPath: /var/www/html/storage/framework/views
+            - name: testing
+              mountPath: /var/www/html/storage/framework/testing
+            - name: tcpdf
+              mountPath: /var/www/html/storage/app/tcpdf
+            - name: pending-files
+              mountPath: /var/www/html/resources/pending-files
+            - name: school-server-configuration
+              mountPath: /etc/nginx/sites-available
+            - name: school-nginx-configuration
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+            - name: efs-storage
+              mountPath: /var/www/html/storage/app/efs
+              subPath: efs
+            - name: efs-storage
+              mountPath: /var/www/html/storage/app/public
+              subPath: public
+            - name: school-secrets
+              mountPath: "/mnt/secret-store"
+              readOnly: true
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - |
+                    cp -R /mnt/secret-store/.env /var/www/html/.env
+                    chmod -R 777 /var/www/html/storage/app/public
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            timeoutSeconds: 2
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
