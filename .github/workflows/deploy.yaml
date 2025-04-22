@@ -1,0 +1,111 @@
+name: ManageX-School-Dev-Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_run_id:
+        description: 'GitHub Run ID of the build workflow in managex-school-web'
+        required: true
+  repository_dispatch:
+    types: [trigger-deployment]
+
+permissions:
+  contents: write
+  id-token: write
+  pull-requests: write
+
+jobs:
+  Deploy-to-Dev:
+    runs-on: ubuntu-latest
+    environment: dev
+    timeout-minutes: 20
+    env:
+      CLOUDFRONT_DISTRIBUTION: E31U53GJ2LNL56
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: 'dev'
+          fetch-depth: 0
+          token: ${{ secrets.PAT_TOKEN }}
+
+      - name: Download image tag artifact
+        uses: dawidd6/action-download-artifact@v3
+        with:
+          repo: ${{ github.repository_owner }}/managex-school-web
+          workflow: docker-build.yaml
+          run_id: ${{ github.event.inputs.build_run_id || github.event.client_payload.build_run_id }}
+          name: image-tags
+          path: .
+
+      - name: Set image tags as environment variables
+        run: |
+          echo "LARAVEL_IMAGE=$(<laravel_image_tag.txt)" >> $GITHUB_ENV
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Update kube config
+        run: aws eks update-kubeconfig --name dev-stg-cluster --region ap-south-1
+
+      - name: Update PHP Laravel deployment image tag and change cause
+        run: |
+          yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' k8s/base/deployment/base-deploy.yaml
+          yq -i '.spec.template.metadata.annotations."kubernetes.io/change-cause" = "Update to ${{ env.LARAVEL_IMAGE }} - ${{ github.event.head_commit.message || github.event.client_payload.commit_message }} (by ${{ github.actor || github.event.client_payload.actor }})"' k8s/base/deployment/base-deploy.yaml
+          yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' k8s/base/deployment/base-cronjob.yaml
+
+      - name: Apply K8s manifests to Dev Environment With Validation
+        run: |
+          kubectl apply -k k8s/overlays/dev --validate=true
+          kubectl rollout status deployment/managex-school -n dev-managex-school --timeout=300s
+
+      - name: Create CloudFront Invalidation
+        run: |
+          INVALIDATION_ID=$(aws cloudfront create-invalidation --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION }} --paths "/*" --query 'Invalidation.Id' --output text)
+          echo "Created invalidation: $INVALIDATION_ID"
+          aws cloudfront wait invalidation-completed --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION }} --id $INVALIDATION_ID
+
+      - name: Push changes using GitHub App token
+        if: success()
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          git pull origin dev
+          git config --local user.email "suriyanarayanan.s@greatify.ai"
+          git config --local user.name "surya1005"
+          git add -f k8s/base/deployment/base-deploy.yaml k8s/base/deployment/base-cronjob.yaml
+          git commit -m "Update deployment image and change cause [Automated]"
+
+      - name: Push to protected branch
+        if: success()
+        uses: CasperWA/push-protected@v2
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          branch: dev
+          unprotect_reviews: true
+
+      - name: Slack Notification on Deployment Status
+        if: always()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow
+          author_name: School Dev Deployment Status
+          mention: ${{ github.actor || github.event.client_payload.actor }}
+          if_mention: success,failure
+          job_name: Deploy-to-Dev
+          channel: managex-school
+          username: manageX-school
+          text: |
+            :rocket: "*Deployment Job* - *${{ job.status }} (School Dev Environment)*"
+            *Author:* `${{ github.actor || github.event.client_payload.actor }}`
+            *Deployment for commit* *${{ github.event.inputs.build_run_id || github.event.client_payload.build_run_id }}* *pushed by* @${{ github.actor || github.event.client_payload.actor }} has ${{ job.status }} in *School Dev Environment*.
+            *Commit Message:* *${{ github.event.head_commit.message || github.event.client_payload.commit_message }}*
+            ${{ job.status == 'success' && 'Your changes have been successfully deployed to the *School Dev environment*. Please verify the changes on the server.' || 'Deployment failed. Please check the logs for more details.' }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
