@@ -30,7 +30,7 @@ patches:
                         secretProviderClass: managex-school-secrets
                 containers:
                   - name: managex-school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:test
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ae976b038c7acb95e8d4d65b458f7dad140a4369-GE-8298--2057-pushed-by-Pugazh09
 
   - target:
       kind: Deployment
@@ -48,7 +48,7 @@ patches:
             labels:
               app: managex-school-dev
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:064f30ce344f7775cc8a743d69eba52d88c388f5-Update-deployment-image-and-ch-pushed-by-surya1005 - (by surya1005)
+              kubernetes.io/change-cause: "Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ae976b038c7acb95e8d4d65b458f7dad140a4369-GE-8298--2057-pushed-by-Pugazh09 - GE-8298  (#2057) (by Pugazh09)"
           spec:
             volumes:
               - name: school-secrets
@@ -64,8 +64,8 @@ patches:
                 configMap:
                   name: managex-school-nginx-config
             containers:
-              - name: managex-school-dev
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:test
+              - name: managex-school
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ae976b038c7acb95e8d4d65b458f7dad140a4369-GE-8298--2057-pushed-by-Pugazh09
                 resources:
                   requests:
                     cpu: 400m
@@ -107,8 +107,10 @@ patches:
       apiVersion: autoscaling/v2
       kind: HorizontalPodAutoscaler
       metadata:
-        name: scaleTargetRef:
-          name: school-dev
+        name: school-pod-autoscaler
+      spec:
+        scaleTargetRef:
+          name: managex-school
         behavior:
           scaleDown:
             stabilizationWindowSeconds: 30
@@ -124,7 +126,7 @@ patches:
       spec:
         parameters:
           objects: |
-            - objectName: arn:aws:secretsmanager:ap-south-1:399600302704:secret:your-secret-name
+            - objectName: arn:aws:secretsmanager:ap-south-1:399600302704:secret:Managex-school-dev-kVqmgl
               objectAlias: ".env"
               objectType: "secretsmanager"
 
@@ -138,4 +140,4 @@ patches:
         name: school-service
       spec:
         selector:
-          app: school-dev
+          app: managex-school

@@ -2,9 +2,10 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: school-cronjob
-  namespace: dev-managex-school
+  labels:
+    app: school-cronjob
 spec:
-  schedule: "*/1 * * * *" # Runs every minute
+  schedule: "*/1 * * * *"
   concurrencyPolicy: "Replace"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
@@ -22,14 +23,14 @@ spec:
                 driver: secrets-store.csi.k8s.io
                 readOnly: true
                 volumeAttributes:
-                  secretProviderClass: "school-secrets"
+                  secretProviderClass: managex-school-secrets
           containers:
             - name: school-cronjob
-              image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-school-279d9442870f7981756355733af5f490e8beb79c
+              image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d7ceb56ab49397b0c34fde3d89e8e0f3c30cb8d1-Include-Git-reference-for-improved-cache-pushed-by-surya1005
               command: ["php", "/var/www/html/artisan", "schedule:run"]
               volumeMounts:
                 - name: school-secrets
-                  mountPath: "/mnt/secret-store"
+                  mountPath: "/mnt/secret-store/"
                   readOnly: true
               lifecycle:
                 postStart:

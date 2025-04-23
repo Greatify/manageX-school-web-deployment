@@ -1,87 +1,109 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
 namespace: stage-managex-school
-
 namePrefix: managex-
 resources:
   - ../../base
-
-
 patches:
-  - path: deployment/school-stage-cronjob.yaml
-    target:
+  - target:
       kind: CronJob
       name: school-cronjob
-  - patch: |-
-      - op: replace
-        path: /spec/jobTemplate/spec/template/spec/containers/0/name
-        value: managex-school-cronjob
-      - op: replace
-        path: /metadata/labels/app
-        value: school-cronjob-stage
-      - op: replace
-        path: /spec/jobTemplate/spec/template/metadata/labels/app
-        value: school-cronjob-stage
-    target:
+    patch: |-
+      apiVersion: batch/v1
       kind: CronJob
-      name: school-cronjob 
+      metadata:
+        name: school-cronjob
+        labels:
+          app: school-cronjob-stage
+      spec:
+        jobTemplate:
+          spec:
+            template:
+              metadata:
+                labels:
+                  app: school-cronjob-stage
+              spec:
+                containers:
+                  - name: school-cronjob
 
-  - path: deployment/school-stage-deploy.yaml
-    target:
+  - target:
       kind: Deployment
       name: school
-  - patch: |-
-      - op: replace
-        path: /spec/template/spec/containers/0/name
-        value: managex-school-stage
-      - op: replace
-        path: /metadata/labels/app
-        value: managex-school-stage
-      - op: replace
-        path: /spec/selector/matchLabels/app
-        value: managex-school-stage
-      - op: replace
-        path: /spec/template/metadata/labels/app
-        value: managex-school-stage
-    target:
-      kind: Deployment 
-      name: school
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: school
+        labels:
+          app: managex-school-stage
+      spec:
+        template:
+          metadata:
+            labels:
+              app: managex-school-stage
+          spec:
+            containers:
+              - name: managex-school-stage
+                resources:
+                  requests:
+                    cpu: 800m
+                    memory: 800Mi
+                  limits:
+                    cpu: "1"
+                    memory: 1Gi
 
-  - path: deployment/school-stage-ingress.yaml
-    target:
+  - target:
       kind: Ingress
       name: school-ingress
+    patch: |-
+      apiVersion: networking.k8s.io/v1
+      kind: Ingress
+      metadata:
+        name: school-ingress
+        annotations:
+          alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:399600302704:certificate/53053dcd-d173-42cf-9e53-e15c9c64e7e2
+      spec:
+        tls:
+          - hosts:
+              - greatifystg.school
+            secretName: tls-secret
 
-  - path: deployment/school-stage-nginx-configmap.yaml
-    target:
-      kind: ConfigMap
-      name: school-nginx-config
-
-  - path: deployment/school-stage-pod-autoscaler.yaml
-    target:
+  - target:
       kind: HorizontalPodAutoscaler
       name: school-pod-autoscaler
+    patch: |-
+      apiVersion: autoscaling/v2
+      kind: HorizontalPodAutoscaler
+      metadata:
+        name: scaleTargetRef:
+          name: managex-school
+        behavior:
+          scaleDown:
+            stabilizationWindowSeconds: 30
 
-  - path: deployment/school-stage-secretprovider.yaml
-    target:
+  - target:
       kind: SecretProviderClass
       name: school-secrets
+    patch: |-
+      apiVersion: secrets-store.csi.x-k8s.io/v1
+      kind: SecretProviderClass
+      metadata:
+        name: school-secrets
+      spec:
+        parameters:
+          objects: |
+            - objectName: arn:aws:secretsmanager:ap-south-1:399600302704:secret:ManageX-School-Stage-1JE97f
+              objectAlias: ".env"
+              objectType: "secretsmanager"
 
-
-  - path: deployment/school-stage-server-configmap.yaml
-    target:
-      kind: ConfigMap
-      name: school-server-config
-   
-  - path: deployment/school-stage-service.yaml
-    target:
+  - target:
       kind: Service
       name: school-service
-  - patch: |-
-      - op: replace
-        path: /spec/selector/app
-        value: managex-school-stage
-    target:
+    patch: |-
+      apiVersion: v1
       kind: Service
-      name: school-service
+      metadata:
+        name: school-service
+      spec:
+        selector:
+          app: managex-school-stage

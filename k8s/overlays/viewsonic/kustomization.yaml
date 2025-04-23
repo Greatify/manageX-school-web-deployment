@@ -1,87 +1,251 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
 namespace: viewsonic-production
-
 namePrefix: viewsonic-
 nameSuffix: -production
-
 resources:
   - ../../base
-
 patches:
-  - path: deployment/viewsonic-prod-cronjob.yaml
-    target:
+  - target:
       kind: CronJob
       name: school-cronjob
-  - patch: |-
-      - op: replace
-        path: /spec/jobTemplate/spec/template/spec/containers/0/name
-        value: viewsonic-school-cronjob
-      - op: replace
-        path: /metadata/labels/app
-        value: viewsonic-cronjob-prod
-      - op: replace
-        path: /spec/jobTemplate/spec/template/metadata/labels/app
-        value: viewsonic-cronjob-prod
-    target:
+    patch: |-
+      apiVersion: batch/v1
       kind: CronJob
-      name: school-cronjob 
+      metadata:
+        name: school-cronjob
+        labels:
+          app: viewsonic-cronjob-prod
+      spec:
+        jobTemplate:
+          spec:
+            template:
+              metadata:
+                labels:
+                  app: viewsonic-cronjob-prod
+            spec:
+              serviceAccountName: viewsonic-secrets-sa
+              volumes:
+                - name: school-secrets
+                  csi:
+                    driver: secrets-store.csi.k8s.io
+                    readOnly: true
+                    volumeAttributes:
+                      secretProviderClass: viewsonic-school-secrets-production
+                containers:
+                  - name: viewsonic-school-cronjob
 
-  - path: deployment/viewsonic-prod-deploy.yaml
-    target:
+  - target:
       kind: Deployment
       name: school
-  - patch: |-
-      - op: replace
-        path: /spec/template/spec/containers/0/name
-        value: viewsonic-production
-      - op: replace
-        path: /metadata/labels/app
-        value: viewsonic-school-prod
-      - op: replace
-        path: /spec/selector/matchLabels/app
-        value: viewsonic-school-prod
-      - op: replace
-        path: /spec/template/metadata/labels/app
-        value: viewsonic-school-prod
-    target:
-      kind: Deployment 
-      name: school
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: school
+        labels:
+          app: viewsonic-school-prod
+      spec:
+        selector:
+          matchLabels:
+            app: viewsonic-school-prod
+      spec:
+        template:
+          metadata:
+            labels:
+              app: viewsonic-school-prod
+          spec:
+            serviceAccountName: viewsonic-secrets-sa
+            volumes:
+              - name: school-secrets
+                csi:
+                  driver: secrets-store.csi.k8s.io
+                  readOnly: true
+                  volumeAttributes:
+                    secretProviderClass: viewsonic-school-secrets-production
+              - name: school-server-configuration
+                configMap:
+                  name: viewsonic-school-server-config-production
+                  items:
+                    - key: default
+                      path: default
+              - name: school-nginx-configuration
+                configMap:
+                  name: viewsonic-school-nginx-config-production
+                  items:
+                    - key: nginx.conf
+                      path: nginx.conf
+              - name: efs-storage
+                persistentVolumeClaim:
+                  claimName: viewsonic-production-pvc
+            containers:
+              - name: viewsonic-production
+                resources:
+                  requests:
+                    cpu: 1
+                    memory: 4Gi
+                  limits:
+                    cpu: 2
+                    memory: 8Gi
 
-  - path: deployment/viewsonic-prod-ingress.yaml
-    target:
+  - target:
       kind: Ingress
       name: school-ingress
+    patch: |-
+      apiVersion: networking.k8s.io/v1
+      kind: Ingress
+      metadata:
+        name: school-ingress
+        annotations:
+          alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:399600302704:certificate/3fdde8ff-9c5c-40d1-a63e-371718df2174
+      spec:
+        rules:
+          - http:
+              paths:
+                - path: /
+                  pathType: Prefix
+                  backend:
+                    service:
+                      name: viewsonic-school-service
+                      port:
+                        number: 80
+        tls:
+          - hosts:
+              - greatify.dev
+            secretName: tls-secret
 
-  - path: deployment/viewsonic-prod-nginx-configmap.yaml
-    target:
-      kind: ConfigMap
-      name: school-nginx-config
-
-  - path: deployment/viewsonic-prod-pod-autoscaler.yaml
-    target:
+  - target:
       kind: HorizontalPodAutoscaler
       name: school-pod-autoscaler
+    patch: |-
+      apiVersion: autoscaling/v2
+      kind: HorizontalPodAutoscaler
+      metadata:
+        name: scaleTargetRef:
+          name: viewsonic-school-production
+        behavior:
+          scaleDown:
+            stabilizationWindowSeconds: 60
 
-  - path: deployment/viewsonic-prod-secretprovider.yaml
-    target:
+  - target:
       kind: SecretProviderClass
       name: school-secrets
+    patch: |-
+      apiVersion: secrets-store.csi.x-k8s.io/v1
+      kind: SecretProviderClass
+      metadata:
+        name: school-secrets
+      spec:
+        parameters:
+          objects: |
+            - objectName: arn:aws:secretsmanager:ap-south-1:399600302704:secret:Viewsonic-Live-ZZIlzy
+              objectAlias: ".env"
+              objectType: "secretsmanager"
 
-  - path: deployment/viewsonic-prod-server-configmap.yaml
-    target:
+  - target:
+      kind: Service
+      name: school-service
+    patch: |-
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: school-service
+      spec:
+        selector:
+          app: viewsonic-school-prod
+
+  - target:
       kind: ConfigMap
-      name: school-server-config
+      name: school-nginx-config
+    patch: |-
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: school-nginx-config
+      data:
+        nginx.conf: |
+          user www-data;
+          worker_processes auto;
+          pid /run/nginx.pid;
+          include /etc/nginx/modules-enabled/*.conf;
 
-  - path: deployment/viewsonic-prod-service.yaml
-    target:
-      kind: Service
-      name: school-service
-  - patch: |-
-      - op: replace
-        path: /spec/selector/app
-        value: viewsonic-school-prod
-    target:
-      kind: Service
-      name: school-service
+          events {
+              worker_connections 1024;
+              multi_accept on;
+              use epoll;
+          }
+
+          http {
+              ##
+              # Basic Settings
+              ##
+              sendfile on;
+              tcp_nopush on;
+              tcp_nodelay on;
+              keepalive_timeout 65;
+              types_hash_max_size 2048;
+              server_tokens off;
+              
+              # Global timeout settings
+              proxy_read_timeout 600;
+              proxy_connect_timeout 600;
+              proxy_send_timeout 600;
+              fastcgi_read_timeout 600;
+              fastcgi_connect_timeout 600;
+              fastcgi_send_timeout 600;
+
+              # Global buffer sizes
+              client_body_buffer_size 128k;
+              client_header_buffer_size 3k;
+              large_client_header_buffers 4 8k;
+              client_max_body_size 1024M;
+
+              # Global timeouts
+              client_body_timeout 12;
+              client_header_timeout 12;
+              send_timeout 10;
+
+              # Log format
+              log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                              '$status $body_bytes_sent "$http_referer" '
+                              '"$http_user_agent" "$http_x_forwarded_for"';
+
+              # MIME
+              include /etc/nginx/mime.types;
+              default_type application/octet-stream;
+
+              ##
+              # SSL Settings
+              ##
+              ssl_protocols TLSv1.2 TLSv1.3;
+              ssl_prefer_server_ciphers on;
+              ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
+
+              ##
+              # Logging Settings
+              ##
+              access_log /var/log/nginx/access.log main;
+              error_log /var/log/nginx/error.log;
+
+              ##
+              # Gzip Settings
+              ##
+              gzip on;
+              gzip_vary on;
+              gzip_proxied any;
+              gzip_comp_level 6;
+              gzip_buffers 16 8k;
+              gzip_http_version 1.1;
+              gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
+              ##
+              # Global error page configuration
+              ##
+              fastcgi_intercept_errors on;
+              proxy_intercept_errors on;
+              ##
+              # Virtual Host Configs
+              ##
+              include /etc/nginx/conf.d/*.conf;
+              include /etc/nginx/sites-enabled/*;
+          }

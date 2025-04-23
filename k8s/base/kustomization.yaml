@@ -2,11 +2,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- deployment/base-cronjob.yaml
+- configmap/base-nginx-configmap.yaml
+- configmap/base-server-configmap.yaml
+- cronjob/base-cronjob.yaml
 - deployment/base-deploy.yaml
-- deployment/base-ingress.yaml
-- deployment/base-nginx-configmap.yaml
-- deployment/base-pod-autoscaler.yaml
-- deployment/base-secretprovider.yaml
-- deployment/base-server-configmap.yaml
-- deployment/base-service.yaml
+- hpa/base-pod-autoscaler.yaml
+- ingress/base-ingress.yaml
+- secretproviderclass/base-secretprovider.yaml
+- service/base-service.yaml

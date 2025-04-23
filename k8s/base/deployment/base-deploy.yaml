@@ -28,16 +28,16 @@ spec:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: school-secrets
+              secretProviderClass: managex-school-secrets
         - name: school-server-configuration
           configMap:
-            name: school-server-config
+            name: managex-school-server-config
             items:
               - key: default
                 path: default
         - name: school-nginx-configuration
           configMap:
-            name: school-nginx-config
+            name: managex-school-nginx-config
             items:
               - key: nginx.conf
                 path: nginx.conf
