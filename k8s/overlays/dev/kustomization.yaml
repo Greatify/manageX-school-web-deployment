@@ -1,86 +1,141 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
 namespace: dev-managex-school
 namePrefix: managex-
-
 resources:
   - ../../base
-
-
 patches:
-  - path: deployment/school-dev-cronjob.yaml
-    target:
+  - target:
       kind: CronJob
       name: school-cronjob
-  - patch: |-
-      - op: replace
-        path: /spec/jobTemplate/spec/template/spec/containers/0/name
-        value: managex-school-cronjob
-      - op: replace
-        path: /metadata/labels/app
-        value: school-cronjob-dev
-      - op: replace
-        path: /spec/jobTemplate/spec/template/metadata/labels/app
-        value: school-cronjob-dev
-    target:
+    patch: |-
+      apiVersion: batch/v1
       kind: CronJob
-      name: school-cronjob   
+      metadata:
+        name: school-cronjob
+        labels:
+          app: school-cronjob-dev
+      spec:
+        jobTemplate:
+          spec:
+            template:
+              metadata:
+                labels:
+                  app: school-cronjob-dev
+              spec:
+                volumes:
+                  - name: school-secrets
+                    csi:
+                      volumeAttributes:
+                        secretProviderClass: managex-school-secrets
+                containers:
+                  - name: managex-school-cronjob
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:test
 
-  - path: deployment/school-dev-deploy.yaml
-    target:
+  - target:
       kind: Deployment
       name: school
-  - patch: |-
-      - op: replace
-        path: /spec/template/spec/containers/0/name
-        value: managex-school-dev
-      - op: replace
-        path: /metadata/labels/app
-        value: managex-school-dev
-      - op: replace
-        path: /spec/selector/matchLabels/app
-        value: managex-school-dev
-      - op: replace
-        path: /spec/template/metadata/labels/app
-        value: managex-school-dev
-    target:
-      kind: Deployment 
-      name: school
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: school
+        labels:
+          app: managex-school-dev
+      spec:
+        template:
+          metadata:
+            labels:
+              app: managex-school-dev
+            annotations:
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:064f30ce344f7775cc8a743d69eba52d88c388f5-Update-deployment-image-and-ch-pushed-by-surya1005 - (by surya1005)
+          spec:
+            volumes:
+              - name: school-secrets
+                csi:
+                  driver: secrets-store.csi.k8s.io
+                  readOnly: true
+                  volumeAttributes:
+                    secretProviderClass: managex-school-secrets
+              - name: school-server-configuration
+                configMap:
+                  name: managex-school-server-config
+              - name: school-nginx-configuration
+                configMap:
+                  name: managex-school-nginx-config
+            containers:
+              - name: managex-school-dev
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:test
+                resources:
+                  requests:
+                    cpu: 400m
+                    memory: 600Mi
+                  limits:
+                    cpu: 500m
+                    memory: 700Mi
 
-  - path: deployment/school-dev-ingress.yaml
-    target:
+  - target:
       kind: Ingress
       name: school-ingress
+    patch: |-
+      apiVersion: networking.k8s.io/v1
+      kind: Ingress
+      metadata:
+        name: school-ingress
+        annotations:
+          alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:399600302704:certificate/cacda6c3-9dea-4893-9b70-ed93388e9576
+      spec:
+        rules:
+          - http:
+              paths:
+                - path: /
+                  pathType: Prefix
+                  backend:
+                    service:
+                      name: managex-school-service
+                      port:
+                        number: 80
+        tls:
+          - hosts:
+              - greatifydev.school
+            secretName: tls-secret
 
-  - path: deployment/school-dev-nginx-configmap.yaml
-    target:
-      kind: ConfigMap
-      name: school-nginx-config
-
-  - path: deployment/school-dev-pod-autoscaler.yaml
-    target:
+  - target:
       kind: HorizontalPodAutoscaler
       name: school-pod-autoscaler
+    patch: |-
+      apiVersion: autoscaling/v2
+      kind: HorizontalPodAutoscaler
+      metadata:
+        name: scaleTargetRef:
+          name: school-dev
+        behavior:
+          scaleDown:
+            stabilizationWindowSeconds: 30
 
-  - path: deployment/school-dev-secretprovider.yaml
-    target:
+  - target:
       kind: SecretProviderClass
       name: school-secrets
+    patch: |-
+      apiVersion: secrets-store.csi.x-k8s.io/v1
+      kind: SecretProviderClass
+      metadata:
+        name: school-secrets
+      spec:
+        parameters:
+          objects: |
+            - objectName: arn:aws:secretsmanager:ap-south-1:399600302704:secret:your-secret-name
+              objectAlias: ".env"
+              objectType: "secretsmanager"
 
-  - path: deployment/school-dev-server-configmap.yaml
-    target:
-      kind: ConfigMap
-      name: school-server-config
-   
-  - path: deployment/school-dev-service.yaml
-    target:
+  - target:
       kind: Service
       name: school-service
-  - patch: |-
-      - op: replace
-        path: /spec/selector/app
-        value: managex-school-dev
-    target:
+    patch: |-
+      apiVersion: v1
       kind: Service
-      name: school-service
+      metadata:
+        name: school-service
+      spec:
+        selector:
+          app: school-dev

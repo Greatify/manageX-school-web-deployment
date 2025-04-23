@@ -39,9 +39,8 @@ jobs:
 
       - name: Update PHP Laravel deployment image tag and change cause
         run: |
-          yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' k8s/overlays/dev/deployment/school-dev-deploy.yaml
-          yq -i '.spec.template.metadata.annotations."kubernetes.io/change-cause" = "Update to ${{ env.LARAVEL_IMAGE }} - ${{ env.COMMIT_MESSAGE }} (by ${{ env.ACTOR }})"' k8s/overlays/dev/deployment/school-dev-deploy.yaml
-          yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' k8s/overlays/dev/deployment/school-dev-cronjob.yaml
+         sed -i "s|image: .*|image: ${{ env.LARAVEL_IMAGE }}|" k8s/overlays/dev/kustomization.yaml
+         sed -i "s|kubernetes.io/change-cause: .*|kubernetes.io/change-cause: Update to ${{ env.LARAVEL_IMAGE }} - ${{ env.COMMIT_MESSAGE }} (by ${{ env.ACTOR }})|" k8s/overlays/dev/kustomization.yaml
 
       - name: Commit and Push Changes
         run: |
