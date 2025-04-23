@@ -74,7 +74,7 @@ jobs:
       - name: Download image tag files
         uses: actions/download-artifact@v3
         with:
-          name: image-tags
+          name: image-tags 
           path: .
 
       - name: Set image tags as environment variables
