@@ -75,7 +75,9 @@ patches:
       apiVersion: autoscaling/v2
       kind: HorizontalPodAutoscaler
       metadata:
-        name: scaleTargetRef:
+        name: school-pod-autoscaler
+      spec:
+        scaleTargetRef:
           name: managex-school
         behavior:
           scaleDown:

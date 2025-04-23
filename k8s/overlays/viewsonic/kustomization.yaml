@@ -121,12 +121,13 @@ patches:
       apiVersion: autoscaling/v2
       kind: HorizontalPodAutoscaler
       metadata:
-        name: scaleTargetRef:
+        name: school-pod-autoscaler
+      spec:
+        scaleTargetRef:
           name: viewsonic-school-production
         behavior:
           scaleDown:
-            stabilizationWindowSeconds: 60
-
+            stabilizationWindowSeconds: 30
   - target:
       kind: SecretProviderClass
       name: school-secrets
