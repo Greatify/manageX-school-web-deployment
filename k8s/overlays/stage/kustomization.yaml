@@ -6,27 +6,6 @@ resources:
   - ../../base
 patches:
   - target:
-      kind: CronJob
-      name: school-cronjob
-    patch: |-
-      apiVersion: batch/v1
-      kind: CronJob
-      metadata:
-        name: school-cronjob
-        labels:
-          app: school-cronjob-stage
-      spec:
-        jobTemplate:
-          spec:
-            template:
-              metadata:
-                labels:
-                  app: school-cronjob-stage
-              spec:
-                containers:
-                  - name: school-cronjob
-
-  - target:
       kind: Deployment
       name: school
     patch: |-
@@ -35,15 +14,15 @@ patches:
       metadata:
         name: school
         labels:
-          app: managex-school-stage
+          app: managex-school
       spec:
         template:
           metadata:
             labels:
-              app: managex-school-stage
+              app: managex-school
           spec:
             containers:
-              - name: managex-school-stage
+              - name: managex-school
                 resources:
                   requests:
                     cpu: 800m
@@ -69,21 +48,6 @@ patches:
             secretName: tls-secret
 
   - target:
-      kind: HorizontalPodAutoscaler
-      name: school-pod-autoscaler
-    patch: |-
-      apiVersion: autoscaling/v2
-      kind: HorizontalPodAutoscaler
-      metadata:
-        name: school-pod-autoscaler
-      spec:
-        scaleTargetRef:
-          name: managex-school
-        behavior:
-          scaleDown:
-            stabilizationWindowSeconds: 30
-
-  - target:
       kind: SecretProviderClass
       name: school-secrets
     patch: |-
@@ -97,15 +61,3 @@ patches:
             - objectName: arn:aws:secretsmanager:ap-south-1:399600302704:secret:ManageX-School-Stage-1JE97f
               objectAlias: ".env"
               objectType: "secretsmanager"
-
-  - target:
-      kind: Service
-      name: school-service
-    patch: |-
-      apiVersion: v1
-      kind: Service
-      metadata:
-        name: school-service
-      spec:
-        selector:
-          app: managex-school-stage

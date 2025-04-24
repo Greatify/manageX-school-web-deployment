@@ -15,14 +15,14 @@ patches:
       metadata:
         name: school-cronjob
         labels:
-          app: school-cronjob-prod
+          app: school-cronjob
       spec:
         jobTemplate:
           spec:
             template:
               metadata:
                 labels:
-                  app: school-cronjob-prod
+                  app: school-cronjob
               spec:
                 volumes:
                   - name: school-secrets
@@ -31,8 +31,6 @@ patches:
                       readOnly: true
                       volumeAttributes:
                         secretProviderClass: managex-school-secrets-production
-                containers:
-                  - name: managex-school-cronjob
 
   - target:
       kind: Deployment
@@ -43,16 +41,16 @@ patches:
       metadata:
         name: school
         labels:
-          app: managex-school-prod
+          app: managex-school
       spec:
         selector:
           matchLabels:
-            app: managex-school-prod
+            app: managex-school
       spec:
         template:
           metadata:
             labels:
-              app: managex-school-prod
+              app: managex-school
           spec:
            volumes:
               - name: school-secrets
@@ -68,7 +66,7 @@ patches:
                 configMap:
                   name: managex-school-nginx-config-production
             containers:
-              - name: managex-school-production
+              - name: managex-school
                 resources:
                   requests:
                     cpu: 1
@@ -116,7 +114,7 @@ patches:
           name: managex-school-production
         behavior:
           scaleDown:
-            stabilizationWindowSeconds: 30
+            stabilizationWindowSeconds: 60
 
   - target:
       kind: SecretProviderClass
@@ -133,17 +131,6 @@ patches:
               objectAlias: ".env"
               objectType: "secretsmanager"
 
-  - target:
-      kind: Service
-      name: school-service
-    patch: |-
-      apiVersion: v1
-      kind: Service
-      metadata:
-        name: school-service
-      spec:
-        selector:
-          app: managex-school-prod
 
   - target:
       kind: ConfigMap

@@ -3,9 +3,9 @@ kind: Service
 metadata:
   name: school-service
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
-    app: school
+    app: managex-school
   ports:
     - protocol: TCP
       port: 80

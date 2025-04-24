@@ -94,17 +94,9 @@ spec:
               mountPath: /var/www/html/storage/app/public
               subPath: public
             - name: school-secrets
-              mountPath: "/mnt/secret-store"
+              mountPath: "/var/www/html/.env"
+              subPath: ".env"
               readOnly: true
-          lifecycle:
-            postStart:
-              exec:
-                command:
-                  - /bin/sh
-                  - -c
-                  - |
-                    cp -R /mnt/secret-store/.env /var/www/html/.env
-                    chmod -R 777 /var/www/html/storage/app/public
           livenessProbe:
             httpGet:
               path: /

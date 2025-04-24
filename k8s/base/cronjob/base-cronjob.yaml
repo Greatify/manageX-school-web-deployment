@@ -30,10 +30,7 @@ spec:
               command: ["php", "/var/www/html/artisan", "schedule:run"]
               volumeMounts:
                 - name: school-secrets
-                  mountPath: "/mnt/secret-store/"
+                  mountPath: "/var/www/html/.env"
+                  subPath: ".env"
                   readOnly: true
-              lifecycle:
-                postStart:
-                  exec:
-                    command: ['sh', '-c', 'cp /mnt/secret-store/.env /var/www/html/.env']
           restartPolicy: OnFailure

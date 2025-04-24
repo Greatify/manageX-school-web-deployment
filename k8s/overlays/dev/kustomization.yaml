@@ -14,22 +14,17 @@ patches:
       metadata:
         name: school-cronjob
         labels:
-          app: school-cronjob-dev
+          app: school-cronjob
       spec:
         jobTemplate:
           spec:
             template:
               metadata:
                 labels:
-                  app: school-cronjob-dev
+                  app: school-cronjob
               spec:
-                volumes:
-                  - name: school-secrets
-                    csi:
-                      volumeAttributes:
-                        secretProviderClass: managex-school-secrets
                 containers:
-                  - name: managex-school-cronjob
+                  - name: school-cronjob
                     image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ae976b038c7acb95e8d4d65b458f7dad140a4369-GE-8298--2057-pushed-by-Pugazh09
 
   - target:
@@ -41,31 +36,18 @@ patches:
       metadata:
         name: school
         labels:
-          app: managex-school-dev
+          app: managex-school
       spec:
         template:
           metadata:
             labels:
-              app: managex-school-dev
+              app: managex-school
             annotations:
-              kubernetes.io/change-cause: "Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ae976b038c7acb95e8d4d65b458f7dad140a4369-GE-8298--2057-pushed-by-Pugazh09 - GE-8298  (#2057) (by Pugazh09)"
+              kubernetes.io/change-cause: "Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:0648c5565fdfd333ef75b602a146e2b23cbf6de8-GE-9823--ID-card-issue-2069-pushed-by-Pugazh09 - GE-9823--ID card issue (#2069) (by Pugazh09)"
           spec:
-            volumes:
-              - name: school-secrets
-                csi:
-                  driver: secrets-store.csi.k8s.io
-                  readOnly: true
-                  volumeAttributes:
-                    secretProviderClass: managex-school-secrets
-              - name: school-server-configuration
-                configMap:
-                  name: managex-school-server-config
-              - name: school-nginx-configuration
-                configMap:
-                  name: managex-school-nginx-config
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ae976b038c7acb95e8d4d65b458f7dad140a4369-GE-8298--2057-pushed-by-Pugazh09
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:0648c5565fdfd333ef75b602a146e2b23cbf6de8-GE-9823--ID-card-issue-2069-pushed-by-Pugazh09
                 resources:
                   requests:
                     cpu: 400m
@@ -101,21 +83,6 @@ patches:
             secretName: tls-secret
 
   - target:
-      kind: HorizontalPodAutoscaler
-      name: school-pod-autoscaler
-    patch: |-
-      apiVersion: autoscaling/v2
-      kind: HorizontalPodAutoscaler
-      metadata:
-        name: school-pod-autoscaler
-      spec:
-        scaleTargetRef:
-          name: managex-school
-        behavior:
-          scaleDown:
-            stabilizationWindowSeconds: 30
-
-  - target:
       kind: SecretProviderClass
       name: school-secrets
     patch: |-
@@ -129,15 +96,3 @@ patches:
             - objectName: arn:aws:secretsmanager:ap-south-1:399600302704:secret:Managex-school-dev-kVqmgl
               objectAlias: ".env"
               objectType: "secretsmanager"
-
-  - target:
-      kind: Service
-      name: school-service
-    patch: |-
-      apiVersion: v1
-      kind: Service
-      metadata:
-        name: school-service
-      spec:
-        selector:
-          app: managex-school
