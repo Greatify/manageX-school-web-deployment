@@ -1,4 +1,4 @@
-name: ManageX School Dev CD
+name: Deploy to Development
 
 on:
   workflow_dispatch:
@@ -40,7 +40,7 @@ jobs:
       - name: Update PHP Laravel deployment image tag and change cause
         run: |
          sed -i "s|image: .*|image: ${{ env.LARAVEL_IMAGE }}|" k8s/overlays/dev/kustomization.yaml
-         sed -i "s|kubernetes.io/change-cause: .*|kubernetes.io/change-cause: Update to ${{ env.LARAVEL_IMAGE }} - ${{ env.COMMIT_MESSAGE }} (by ${{ env.ACTOR }})|" k8s/overlays/dev/kustomization.yaml
+         sed -i "s|kubernetes.io/change-cause: .*|kubernetes.io/change-cause: Update to ${{ env.LARAVEL_IMAGE }} |" k8s/overlays/dev/kustomization.yaml
 
       - name: Commit and Push Changes
         run: |
