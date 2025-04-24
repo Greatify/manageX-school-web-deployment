@@ -25,7 +25,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:6de6eb1deeba57db78bb5570f71e5c933cab0eb3-Ge-9817-addon-feepayment-fail--pushed-by-vinothgreat
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:567e5724bc28fd55fd7a79c9653af7eb1562e2b6-Remove-CICD-workflow-for-Manag-pushed-by-surya1005
 
   - target:
       kind: Deployment
@@ -43,11 +43,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:6de6eb1deeba57db78bb5570f71e5c933cab0eb3-Ge-9817-addon-feepayment-fail--pushed-by-vinothgreat 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:567e5724bc28fd55fd7a79c9653af7eb1562e2b6-Remove-CICD-workflow-for-Manag-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:6de6eb1deeba57db78bb5570f71e5c933cab0eb3-Ge-9817-addon-feepayment-fail--pushed-by-vinothgreat
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:567e5724bc28fd55fd7a79c9653af7eb1562e2b6-Remove-CICD-workflow-for-Manag-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
