@@ -246,7 +246,7 @@ jobs:
           git pull origin main
           git config --local user.email "suriyanarayanan.s@greatify.ai"
           git config --local user.name "surya1005"
-          git add -f k8s/base/deployment/base-deploy.yaml k8s/base/deployment/base-cronjob.yaml
+          git add -f k8s/base/deployment/base-deploy.yaml k8s/base/cronjob/base-cronjob.yaml
           git commit -m "Update deployment image and change cause [Automated] For Stage Environment"
           git push origin main
 
