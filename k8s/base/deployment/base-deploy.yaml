@@ -19,7 +19,7 @@ spec:
       labels:
         app: managex-school
       annotations:
-        kubernetes.io/change-cause: "Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:2c48a3fa1cc26a290522c4d2de9c1af4e12b4dcd-GE-9823-IDcard-issue-PR2070"
+        kubernetes.io/change-cause: "Updated to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:bc24dea733f16074d9fe0d4a1040bb68438b5d80-GE-9823-IDcard-Fix-PR2070"
     spec:
       serviceAccountName: school-service
       volumes:
@@ -58,7 +58,7 @@ spec:
             claimName: managex-school-pvc
       containers:
         - name: managex-school
-          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:2c48a3fa1cc26a290522c4d2de9c1af4e12b4dcd-GE-9823-IDcard-issue-PR2070
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:bc24dea733f16074d9fe0d4a1040bb68438b5d80-GE-9823-IDcard-Fix-PR2070
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
