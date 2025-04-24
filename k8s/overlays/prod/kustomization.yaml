@@ -40,19 +40,10 @@ patches:
       kind: Deployment
       metadata:
         name: school
-        labels:
-          app: managex-school
-      spec:
-        selector:
-          matchLabels:
-            app: managex-school
       spec:
         template:
-          metadata:
-            labels:
-              app: managex-school
           spec:
-           volumes:
+            volumes:
               - name: school-secrets
                 csi:
                   driver: secrets-store.csi.k8s.io
