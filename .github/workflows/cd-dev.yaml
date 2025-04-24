@@ -48,7 +48,7 @@ jobs:
           git config --local user.email "suriyanarayanan.s@greatify.ai"
           git config --local user.name "surya1005"
           git add -f k8s/overlays/dev/kustomization.yaml
-          git commit -m "Update deployment image and change cause for ${{ env.COMMIT_SHA }} [Automated]"
+          git commit -m "Update deployment image and change cause [Automated] For Dev Environment"
           git push origin main
 
       - name: Configure AWS credentials
