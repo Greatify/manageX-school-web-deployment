@@ -47,7 +47,7 @@ jobs:
           git pull origin main
           git config --local user.email "suriyanarayanan.s@greatify.ai"
           git config --local user.name "surya1005"
-          git add -f k8s/overlays/dev/deployment/school-dev-deploy.yaml k8s/overlays/dev/deployment/school-dev-cronjob.yaml
+          git add -f k8s/overlays/dev/kustomization.yaml
           git commit -m "Update deployment image and change cause for ${{ env.COMMIT_SHA }} [Automated]"
           git push origin main
 
