@@ -23,15 +23,15 @@ patches:
               metadata:
                 labels:
                   app: school-cronjob
-            spec:
-              serviceAccountName: viewsonic-secrets-sa
-              volumes:
-                - name: school-secrets
-                  csi:
-                    driver: secrets-store.csi.k8s.io
-                    readOnly: true
-                    volumeAttributes:
-                      secretProviderClass: viewsonic-school-secrets-production
+              spec:
+                serviceAccountName: viewsonic-secrets-sa
+                volumes:
+                  - name: school-secrets
+                    csi:
+                      driver: secrets-store.csi.k8s.io
+                      readOnly: true
+                      volumeAttributes:
+                        secretProviderClass: viewsonic-school-secrets-production
 
   - target:
       kind: Deployment
@@ -43,10 +43,6 @@ patches:
         name: school
         labels:
           app: managex-school
-      spec:
-        selector:
-          matchLabels:
-            app: managex-school
       spec:
         template:
           metadata:
@@ -64,15 +60,9 @@ patches:
               - name: school-server-configuration
                 configMap:
                   name: viewsonic-school-server-config-production
-                  items:
-                    - key: default
-                      path: default
               - name: school-nginx-configuration
                 configMap:
                   name: viewsonic-school-nginx-config-production
-                  items:
-                    - key: nginx.conf
-                      path: nginx.conf
               - name: efs-storage
                 persistentVolumeClaim:
                   claimName: viewsonic-production-pvc
