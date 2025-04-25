@@ -274,9 +274,9 @@ jobs:
           channel: managex-school
           username: manageX-school
           text: |
-            :rocket: "*Deployment Job* - *${{ job.status }} (School Stage Environment)*"
+            ${{ job.status == 'success' && ':rocket: *Deployment Job* - *${{ job.status }} (School Stage Environment)*' || ':x: *Deployment Job* - *${{ job.status }} (School Stage Environment)*' }}
             *Author:* `${{ github.actor }}`
-            *Deployment for commit* *${{ env.COMMIT_SHA }}* *pushed by* *@${{ github.actor }}* has *${{ job.status }}* in *School Stage Environment*.
+            *Deployment for commit* *${{ steps.get-commit-sha.outputs.commit_sha }}* *pushed by* *@${{ github.actor }}* has *${{ job.status }}* in *School Stage Environment*.
 
             *Commit Message:* *${{ github.event.inputs.stage_tag }}*
 
