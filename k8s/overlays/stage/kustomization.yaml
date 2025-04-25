@@ -1,10 +1,19 @@
+# Kustomization configuration for staging environment
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: stage-managex-school
 namePrefix: managex-
 resources:
   - ../../base
+labels:
+  - pairs:
+      environment: staging
+    includeSelectors: false
+    includeTemplates: true
+
+# Patches for different Kubernetes resources
 patches:
+  # Patch for Deployment configuration
   - target:
       kind: Deployment
       name: school
@@ -31,6 +40,7 @@ patches:
                     cpu: "1"
                     memory: 1Gi
 
+  # Patch for Ingress configuration
   - target:
       kind: Ingress
       name: school-ingress
@@ -47,6 +57,7 @@ patches:
               - greatifystg.school
             secretName: tls-secret
 
+  # Patch for SecretProviderClass configuration
   - target:
       kind: SecretProviderClass
       name: school-secrets

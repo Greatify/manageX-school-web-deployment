@@ -1,10 +1,19 @@
+# Kustomization configuration for development environment
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: dev-managex-school
 namePrefix: managex-
+labels:
+  - pairs:
+      environment: development
+    includeSelectors: false
+    includeTemplates: true
 resources:
   - ../../base
+
+# Patches for different Kubernetes resources
 patches:
+  # Patch for CronJob configuration
   - target:
       kind: CronJob
       name: school-cronjob
@@ -27,6 +36,7 @@ patches:
                   - name: school-cronjob
                     image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:0062119ca6379e62e8751f7dbd4744602552a723-GE-9770bugHealth-info-2074-pushed-by-Pugazh09
 
+  # Patch for Deployment configuration
   - target:
       kind: Deployment
       name: school
@@ -56,6 +66,7 @@ patches:
                     cpu: 500m
                     memory: 700Mi
 
+  # Patch for Ingress configuration
   - target:
       kind: Ingress
       name: school-ingress
@@ -82,6 +93,7 @@ patches:
               - greatifydev.school
             secretName: tls-secret
 
+  # Patch for SecretProviderClass configuration
   - target:
       kind: SecretProviderClass
       name: school-secrets
