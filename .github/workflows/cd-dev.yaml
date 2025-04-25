@@ -85,10 +85,10 @@ jobs:
           channel: managex-school
           username: manageX-school
           text: |
-            ${{ job.status == 'success' && ':rocket: *Deployment Job* - *${{ job.status }} (School Dev Environment)*' || ':x: *Deployment Job* - *${{ job.status }} (School Dev Environment)*' }}
+            ${{ format('{0} *Deployment Job* - *{1} (School Dev Environment)*', job.status == 'success' && ':rocket:' || ':x:', job.status) }}
             *Author:* `${{ env.ACTOR }}`
             *Deployment for commit* *${{ env.COMMIT_SHA }}* *pushed by* @${{ env.ACTOR }} has ${{ job.status }} in *School Dev Environment*.
-            *Commit Message:* *${{ env.COMMIT_MESSAGE }}*
+            *Message:* *${{ env.COMMIT_MESSAGE }}*
             ${{ job.status == 'success' && 'Your changes have been successfully deployed to the *School Dev environment*. Please verify the changes on the server.' || 'Deployment failed. Please check the logs for more details.' }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
