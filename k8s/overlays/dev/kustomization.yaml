@@ -34,7 +34,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:1a63f0dc05331ae875833760f488252d60f34580-bug-fixes--2077-pushed-by-Pugazh09
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3ffd4ff1881ab143ff78922b41ee58fdaf82abcb-GE-9800-2080-pushed-by-GopiGreatify
 
   # Patch for Deployment configuration
   - target:
@@ -53,11 +53,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:1a63f0dc05331ae875833760f488252d60f34580-bug-fixes--2077-pushed-by-Pugazh09 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3ffd4ff1881ab143ff78922b41ee58fdaf82abcb-GE-9800-2080-pushed-by-GopiGreatify 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:1a63f0dc05331ae875833760f488252d60f34580-bug-fixes--2077-pushed-by-Pugazh09
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3ffd4ff1881ab143ff78922b41ee58fdaf82abcb-GE-9800-2080-pushed-by-GopiGreatify
                 resources:
                   requests:
                     cpu: 400m
