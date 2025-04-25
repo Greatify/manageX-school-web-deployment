@@ -218,7 +218,7 @@ patches:
 
               # Error handling configuration
               fastcgi_intercept_errors off;
-              proxy_intercept_errors 0ff;
+              proxy_intercept_errors off;
 
               # Virtual host configuration includes
               include /etc/nginx/conf.d/*.conf;
