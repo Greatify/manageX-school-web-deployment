@@ -85,7 +85,7 @@ jobs:
           channel: managex-school
           username: manageX-school
           text: |
-            :rocket: "*Deployment Job* - *${{ job.status }} (School Dev Environment)*"
+            ${{ job.status == 'success' && ':rocket: *Deployment Job* - *${{ job.status }} (School Dev Environment)*' || ':x: *Deployment Job* - *${{ job.status }} (School Dev Environment)*' }}
             *Author:* `${{ env.ACTOR }}`
             *Deployment for commit* *${{ env.COMMIT_SHA }}* *pushed by* @${{ env.ACTOR }} has ${{ job.status }} in *School Dev Environment*.
             *Commit Message:* *${{ env.COMMIT_MESSAGE }}*
