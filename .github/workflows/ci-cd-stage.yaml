@@ -76,7 +76,9 @@ jobs:
       matrix:
         node-version: [18.x]
       max-parallel: 4
-      fail-fast: true   
+      fail-fast: true
+    outputs:
+      commit_sha: ${{ steps.get-commit-sha.outputs.commit_sha }}   
     steps:
       - name: Checkout CodeBase
         uses: actions/checkout@v4
