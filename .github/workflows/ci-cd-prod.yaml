@@ -225,6 +225,16 @@ jobs:
           ref: 'main'
           fetch-depth: 0
 
+      - name: Download image tag files
+        uses: actions/download-artifact@v4
+        with:
+          name: image-tags
+          path: .
+  
+      - name: Set image tags as environment variables
+        run: |
+          echo "LARAVEL_IMAGE=$(<laravel_image_tag.txt)" >> $GITHUB_ENV
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
@@ -297,6 +307,16 @@ jobs:
         with:
           ref: 'main'
           fetch-depth: 0
+
+      - name: Download image tag files
+        uses: actions/download-artifact@v4
+        with:
+          name: image-tags
+          path: .
+  
+      - name: Set image tags as environment variables
+        run: |
+          echo "LARAVEL_IMAGE=$(<laravel_image_tag.txt)" >> $GITHUB_ENV
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
