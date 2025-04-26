@@ -177,7 +177,7 @@ jobs:
         with:
           name: image-tags
           path: |
-            laravel_image_tag.txt
+            laravel_image_tag.txtx
           retention-days: 1
           if-no-files-found: error
 
@@ -212,7 +212,8 @@ jobs:
     env:
       CLOUDFRONT_DISTRIBUTION: EV7RYXZUJNYDY
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
           ref: 'main'
           fetch-depth: 0
@@ -268,7 +269,7 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
-          fields: repo,commit,author,action,eventName,ref,workflow
+          fields: author,action,eventName,ref,workflow
           author_name: School Stage Deployment Status
           mention: ${{ github.actor }}
           if_mention: success,failure
