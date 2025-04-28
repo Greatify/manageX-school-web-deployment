@@ -19,7 +19,7 @@ spec:
       labels:
         app: managex-school
       annotations:
-        kubernetes.io/change-cause: "Updated to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:235acf068e5ae041aeea7d6f905f02f6565ed2b5-GE-9800-PR2096"
+        kubernetes.io/change-cause: "Updated to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:1b780906737f03d24b1edc459c044f9b40bb4231-Cancelfee-invoice-Date-Format-PR2106"
     spec:
       serviceAccountName: school-service
       volumes:
@@ -58,7 +58,7 @@ spec:
             claimName: managex-school-pvc
       containers:
         - name: managex-school
-          image: "399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:235acf068e5ae041aeea7d6f905f02f6565ed2b5-GE-9800-PR2096"
+          image: "399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:1b780906737f03d24b1edc459c044f9b40bb4231-Cancelfee-invoice-Date-Format-PR2106"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
