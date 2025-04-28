@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3dee58843f7e31d6e2564a13270b570f5957773b-Changes-in-Cancel-Fee-is-Not-W-pushed-by-GopiGreatify
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:5231f53881193210de2f3859ad9bf0809619c77a-Payment-Gateway-Updates-2107-pushed-by-vinothgreat
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3dee58843f7e31d6e2564a13270b570f5957773b-Changes-in-Cancel-Fee-is-Not-W-pushed-by-GopiGreatify 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:5231f53881193210de2f3859ad9bf0809619c77a-Payment-Gateway-Updates-2107-pushed-by-vinothgreat 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3dee58843f7e31d6e2564a13270b570f5957773b-Changes-in-Cancel-Fee-is-Not-W-pushed-by-GopiGreatify
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:5231f53881193210de2f3859ad9bf0809619c77a-Payment-Gateway-Updates-2107-pushed-by-vinothgreat
                 resources:
                   requests:
                     cpu: 400m
