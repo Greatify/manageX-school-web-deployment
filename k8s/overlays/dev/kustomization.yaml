@@ -34,7 +34,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:930b11460488a75c6a03118eac60fcfa782455a4-GE-9863bug-2087-pushed-by-Pugazh09
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:20e8ca41ac5c1da598419d041e65250e92356858-GE-9802bugRoll-no-updating-err-pushed-by-Pugazh09
 
   # Patch for Deployment configuration
   - target:
@@ -53,11 +53,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:930b11460488a75c6a03118eac60fcfa782455a4-GE-9863bug-2087-pushed-by-Pugazh09 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:20e8ca41ac5c1da598419d041e65250e92356858-GE-9802bugRoll-no-updating-err-pushed-by-Pugazh09 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:930b11460488a75c6a03118eac60fcfa782455a4-GE-9863bug-2087-pushed-by-Pugazh09
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:20e8ca41ac5c1da598419d041e65250e92356858-GE-9802bugRoll-no-updating-err-pushed-by-Pugazh09
                 resources:
                   requests:
                     cpu: 400m
