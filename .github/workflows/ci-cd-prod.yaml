@@ -14,7 +14,7 @@ on:
         type: string
 
       prod_tag:
-        description: 'Tag for the image [e.g: Version-1.0 , Hotfix-GE-3643]'
+        description: 'Tag for the image [e.g: Version-1.0 , HotFix-MNX8]'
         required: true
         type: string
 
@@ -28,6 +28,10 @@ on:
         required: false
         type: boolean
         default: false
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:        
   Authentication:
