@@ -6,6 +6,9 @@ namePrefix: viewsonic-
 nameSuffix: -production
 resources:
   - ../../base
+  - storage/sc.yaml
+  - storage/pv.yaml
+  - storage/pvc.yaml
 labels:
   - pairs:
       environment: viewsonic-production

@@ -4,7 +4,7 @@ metadata:
   name: viewsonic-production-pv
 spec:
   capacity:
-    storage: 5Gi
+    storage: 20Gi
   accessModes:
     - ReadWriteMany
   storageClassName: viewsonic-production-storage-class

@@ -4,7 +4,7 @@ metadata:
   name: managex-school-prod-pv
 spec:
   capacity:
-    storage: 5Gi
+    storage: 20Gi
   accessModes:
     - ReadWriteMany
   storageClassName: prod-school-efs-sc

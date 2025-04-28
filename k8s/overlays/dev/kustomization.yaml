@@ -10,6 +10,9 @@ labels:
     includeTemplates: true
 resources:
   - ../../base
+  - storage/sc.yaml
+  - storage/pv.yaml
+  - storage/pvc.yaml
 
 # Patches for different Kubernetes resources
 patches:
