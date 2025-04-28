@@ -3,16 +3,14 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: stage-managex-school
 namePrefix: managex-
-resources:
-  - ../../base
-  - storage/sc.yaml
-  - storage/pv.yaml
-  - storage/pvc.yaml
 labels:
   - pairs:
       environment: staging
     includeSelectors: false
     includeTemplates: true
+
+resources:
+  - ../../base
 
 # Patches for different Kubernetes resources
 patches:

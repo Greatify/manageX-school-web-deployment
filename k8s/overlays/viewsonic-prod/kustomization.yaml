@@ -4,16 +4,14 @@ kind: Kustomization
 namespace: viewsonic-production
 namePrefix: viewsonic-
 nameSuffix: -production
-resources:
-  - ../../base
-  - storage/sc.yaml
-  - storage/pv.yaml
-  - storage/pvc.yaml
 labels:
   - pairs:
       environment: viewsonic-production
     includeSelectors: false
     includeTemplates: true
+
+resources:
+  - ../../base
 
 # Patches for different Kubernetes resources
 patches:
