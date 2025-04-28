@@ -9,9 +9,10 @@ labels:
       environment: production
     includeSelectors: false
     includeTemplates: true
+    
 resources:
   - ../../base
-
+  
 # Patches for different Kubernetes resources
 patches:
   # Patch for CronJob configuration

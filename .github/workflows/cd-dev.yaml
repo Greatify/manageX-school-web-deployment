@@ -77,7 +77,7 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
-          fields: repo,commit,author,workflow
+          fields: author,action,eventName,ref,workflow
           author_name: School Dev Deployment Status
           mention: ${{ github.event.inputs.actor }}
           if_mention: success,failure

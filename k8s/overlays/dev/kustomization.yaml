@@ -8,6 +8,7 @@ labels:
       environment: development
     includeSelectors: false
     includeTemplates: true
+
 resources:
   - ../../base
 
