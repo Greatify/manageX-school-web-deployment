@@ -177,7 +177,7 @@ jobs:
         with:
           name: image-tags
           path: |
-            laravel_image_tag.txtx
+            laravel_image_tag.txt
           retention-days: 1
           if-no-files-found: error
 
