@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:1a6b79a0978db028b0112b627f63630ba094f6a4-timetable-get-list-based-on-cu-pushed-by-GopiGreatify
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:37a70d653cbde0e1eec8d4eea51c51d12170ee23-Configure-PHP-FPM-with-dedicat-pushed-by-hari-14rs
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:1a6b79a0978db028b0112b627f63630ba094f6a4-timetable-get-list-based-on-cu-pushed-by-GopiGreatify 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:37a70d653cbde0e1eec8d4eea51c51d12170ee23-Configure-PHP-FPM-with-dedicat-pushed-by-hari-14rs 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:1a6b79a0978db028b0112b627f63630ba094f6a4-timetable-get-list-based-on-cu-pushed-by-GopiGreatify
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:37a70d653cbde0e1eec8d4eea51c51d12170ee23-Configure-PHP-FPM-with-dedicat-pushed-by-hari-14rs
                 resources:
                   requests:
                     cpu: 400m
