@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:37a70d653cbde0e1eec8d4eea51c51d12170ee23-Configure-PHP-FPM-with-dedicat-pushed-by-hari-14rs
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:282e0f8d9b40df139d640ac964dd9ca752e0336d-Dev-to-Stage-deployment-confli-pushed-by-GopiGreatify
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:37a70d653cbde0e1eec8d4eea51c51d12170ee23-Configure-PHP-FPM-with-dedicat-pushed-by-hari-14rs 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:282e0f8d9b40df139d640ac964dd9ca752e0336d-Dev-to-Stage-deployment-confli-pushed-by-GopiGreatify 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:37a70d653cbde0e1eec8d4eea51c51d12170ee23-Configure-PHP-FPM-with-dedicat-pushed-by-hari-14rs
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:282e0f8d9b40df139d640ac964dd9ca752e0336d-Dev-to-Stage-deployment-confli-pushed-by-GopiGreatify
                 resources:
                   requests:
                     cpu: 400m
