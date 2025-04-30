@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:e77754d97b86a2c3984d7e56cf36e301950668e5-GE-9548---Community-wise-Repor-pushed-by-Pugazh09
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:264a71cb2d2736dcf531362462410bed2999f4eb-Replace-PHP-obfuscation-with-c-pushed-by-hari-14rs
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:e77754d97b86a2c3984d7e56cf36e301950668e5-GE-9548---Community-wise-Repor-pushed-by-Pugazh09 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:264a71cb2d2736dcf531362462410bed2999f4eb-Replace-PHP-obfuscation-with-c-pushed-by-hari-14rs 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:e77754d97b86a2c3984d7e56cf36e301950668e5-GE-9548---Community-wise-Repor-pushed-by-Pugazh09
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:264a71cb2d2736dcf531362462410bed2999f4eb-Replace-PHP-obfuscation-with-c-pushed-by-hari-14rs
                 resources:
                   requests:
                     cpu: 400m
