@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:05b831d8cff9731114a29bd2e9b22f2ea87c25a5-Remove-USER-directive-to-fix-s-pushed-by-hari-14rs
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3b3830be58575f6efdd4230a2673d1af4488e743-Simplify-PHP-FPM-configuration-pushed-by-hari-14rs
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:05b831d8cff9731114a29bd2e9b22f2ea87c25a5-Remove-USER-directive-to-fix-s-pushed-by-hari-14rs 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3b3830be58575f6efdd4230a2673d1af4488e743-Simplify-PHP-FPM-configuration-pushed-by-hari-14rs 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:05b831d8cff9731114a29bd2e9b22f2ea87c25a5-Remove-USER-directive-to-fix-s-pushed-by-hari-14rs
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3b3830be58575f6efdd4230a2673d1af4488e743-Simplify-PHP-FPM-configuration-pushed-by-hari-14rs
                 resources:
                   requests:
                     cpu: 400m
