@@ -19,7 +19,7 @@ spec:
       labels:
         app: managex-school
       annotations:
-        kubernetes.io/change-cause: "Updated to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:8409a0e17bb8d8e219336d70a3a6bb4098ea2386-GE-9881---Add-a-roll-in-Student-ID-Card"
+        kubernetes.io/change-cause: "Updated to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:d2a00a6841560e4d357f6b900481add167dfa3f4-GE-9962-PR2138"
     spec:
       serviceAccountName: school-service
       volumes:
@@ -58,7 +58,7 @@ spec:
             claimName: managex-school-pvc
       containers:
         - name: managex-school
-          image: "399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:8409a0e17bb8d8e219336d70a3a6bb4098ea2386-GE-9881---Add-a-roll-in-Student-ID-Card"
+          image: "399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:d2a00a6841560e4d357f6b900481add167dfa3f4-GE-9962-PR2138"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
