@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:068f3f5bbe91cf493c4b793e92536bd9eae53666-GE-9511-ID-Card-Creation-for-I-pushed-by-Pugazh09
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dfd6bd31b44fcfc83d8b8381a41e3dbc3301d1fe-GE-9448Course-plan-and-content-pushed-by-Pugazh09
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:068f3f5bbe91cf493c4b793e92536bd9eae53666-GE-9511-ID-Card-Creation-for-I-pushed-by-Pugazh09 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dfd6bd31b44fcfc83d8b8381a41e3dbc3301d1fe-GE-9448Course-plan-and-content-pushed-by-Pugazh09 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:068f3f5bbe91cf493c4b793e92536bd9eae53666-GE-9511-ID-Card-Creation-for-I-pushed-by-Pugazh09
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dfd6bd31b44fcfc83d8b8381a41e3dbc3301d1fe-GE-9448Course-plan-and-content-pushed-by-Pugazh09
                 resources:
                   requests:
                     cpu: 400m
