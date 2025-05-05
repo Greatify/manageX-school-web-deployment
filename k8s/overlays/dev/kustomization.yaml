@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:a2eca81ccb877f1d9f42aee156c14cd7c1327e09-Enhance-Dockerfile-by-adding-P-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:46698b8e13f8a6098ca60691ceaa4deb4366edf5-Update-Dockerfile-to-include-a-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:a2eca81ccb877f1d9f42aee156c14cd7c1327e09-Enhance-Dockerfile-by-adding-P-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:46698b8e13f8a6098ca60691ceaa4deb4366edf5-Update-Dockerfile-to-include-a-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:a2eca81ccb877f1d9f42aee156c14cd7c1327e09-Enhance-Dockerfile-by-adding-P-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:46698b8e13f8a6098ca60691ceaa4deb4366edf5-Update-Dockerfile-to-include-a-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
