@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:c513d1ad909e98f8d10baecc8ae5b12ab46d2035-Update-Dockerfile-to-correct-P-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:428de1438960e41afb18f9679b61d90a5a289dc8-Update-Dockerfile-to-set-non-r-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:c513d1ad909e98f8d10baecc8ae5b12ab46d2035-Update-Dockerfile-to-correct-P-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:428de1438960e41afb18f9679b61d90a5a289dc8-Update-Dockerfile-to-set-non-r-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:c513d1ad909e98f8d10baecc8ae5b12ab46d2035-Update-Dockerfile-to-correct-P-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:428de1438960e41afb18f9679b61d90a5a289dc8-Update-Dockerfile-to-set-non-r-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
