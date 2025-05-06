@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3dc950b584fc0c9df107f99f2e8bf7cd4685c565-GE-10012---School---Parent-App-pushed-by-Rafik-dev
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:37136329d5f8747ed3c1250a4ecdec5dd7766655-Add-new-directory-for-supervis-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3dc950b584fc0c9df107f99f2e8bf7cd4685c565-GE-10012---School---Parent-App-pushed-by-Rafik-dev 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:37136329d5f8747ed3c1250a4ecdec5dd7766655-Add-new-directory-for-supervis-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3dc950b584fc0c9df107f99f2e8bf7cd4685c565-GE-10012---School---Parent-App-pushed-by-Rafik-dev
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:37136329d5f8747ed3c1250a4ecdec5dd7766655-Add-new-directory-for-supervis-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
