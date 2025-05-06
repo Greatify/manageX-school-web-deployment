@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:e304438b1899de47e26d759d0feb01bf1fbb612b-Update-Dockerfile-and-supervis-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:362d29a20fb88ec7e85118ce4170a5fd33779676-Update-supervisord-configurati-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:e304438b1899de47e26d759d0feb01bf1fbb612b-Update-Dockerfile-and-supervis-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:362d29a20fb88ec7e85118ce4170a5fd33779676-Update-supervisord-configurati-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:e304438b1899de47e26d759d0feb01bf1fbb612b-Update-Dockerfile-and-supervis-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:362d29a20fb88ec7e85118ce4170a5fd33779676-Update-supervisord-configurati-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
