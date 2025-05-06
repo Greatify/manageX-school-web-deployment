@@ -19,7 +19,7 @@ spec:
       labels:
         app: managex-school
       annotations:
-        kubernetes.io/change-cause: "Updated to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:99608de2d5ad55ae8c8708ebb2e3309d4e3d07c5-MNX-13-CoursePlan-BugFix-PR2157"
+        kubernetes.io/change-cause: "Updated to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:29b8c3ffb55b5b9f5e5daa6f32e542ff4da232dd-Ge-9527-discount-PR2161"
     spec:
       serviceAccountName: school-service
       volumes:
@@ -58,7 +58,7 @@ spec:
             claimName: managex-school-pvc
       containers:
         - name: managex-school
-          image: "399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:99608de2d5ad55ae8c8708ebb2e3309d4e3d07c5-MNX-13-CoursePlan-BugFix-PR2157"
+          image: "399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:29b8c3ffb55b5b9f5e5daa6f32e542ff4da232dd-Ge-9527-discount-PR2161"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
