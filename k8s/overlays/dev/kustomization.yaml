@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:f0ed9a6274c4faba197978bb343a38a398ea6788-Refactor-Dockerfile-to-improve-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ce8aff137032d12184374b64c87c35bcf1ee3305-GE-9895FearureBook-2182-pushed-by-Pugazh09
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:f0ed9a6274c4faba197978bb343a38a398ea6788-Refactor-Dockerfile-to-improve-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ce8aff137032d12184374b64c87c35bcf1ee3305-GE-9895FearureBook-2182-pushed-by-Pugazh09 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:f0ed9a6274c4faba197978bb343a38a398ea6788-Refactor-Dockerfile-to-improve-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ce8aff137032d12184374b64c87c35bcf1ee3305-GE-9895FearureBook-2182-pushed-by-Pugazh09
                 resources:
                   requests:
                     cpu: 400m
