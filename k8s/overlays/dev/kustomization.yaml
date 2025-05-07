@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:a012645d18bc1093ab00cc81a88368e7ce0779c3-Enhance-Dockerfile-for-Laravel-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:5db1a52d096f418e4a035007457dba6287854018-Comment-out-laravel-worker-and-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:a012645d18bc1093ab00cc81a88368e7ce0779c3-Enhance-Dockerfile-for-Laravel-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:5db1a52d096f418e4a035007457dba6287854018-Comment-out-laravel-worker-and-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:a012645d18bc1093ab00cc81a88368e7ce0779c3-Enhance-Dockerfile-for-Laravel-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:5db1a52d096f418e4a035007457dba6287854018-Comment-out-laravel-worker-and-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
