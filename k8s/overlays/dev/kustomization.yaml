@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:f50acc3a960056235325c595fe72f5315022dafe-GE-8620Principal-Teachers-Work-pushed-by-Rafik-dev
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:5e52c4b842241d36c424cce62cb3c417909e3277-Update-Dockerfile-to-correct-l-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:f50acc3a960056235325c595fe72f5315022dafe-GE-8620Principal-Teachers-Work-pushed-by-Rafik-dev 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:5e52c4b842241d36c424cce62cb3c417909e3277-Update-Dockerfile-to-correct-l-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:f50acc3a960056235325c595fe72f5315022dafe-GE-8620Principal-Teachers-Work-pushed-by-Rafik-dev
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:5e52c4b842241d36c424cce62cb3c417909e3277-Update-Dockerfile-to-correct-l-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
