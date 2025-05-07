@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:8daf09aba7fdd8bde66c746b038d5d54a3bdfb0f-Update-Dockerfile-to-include-l-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d1247ebc7b5875c64ff08de8207d527cbd201a49-Remove-Nginx-configuration-cop-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:8daf09aba7fdd8bde66c746b038d5d54a3bdfb0f-Update-Dockerfile-to-include-l-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d1247ebc7b5875c64ff08de8207d527cbd201a49-Remove-Nginx-configuration-cop-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:8daf09aba7fdd8bde66c746b038d5d54a3bdfb0f-Update-Dockerfile-to-include-l-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d1247ebc7b5875c64ff08de8207d527cbd201a49-Remove-Nginx-configuration-cop-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
