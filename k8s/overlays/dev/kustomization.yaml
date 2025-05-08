@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:4b704647ac41722a7e2746068259ea0f58280d1b-GE-10015-2198-pushed-by-vinothgreat
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dbc82e38c03d24b3a87a48e17ebbf9d1c53e2968-Add-supervisord-logging-config-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:4b704647ac41722a7e2746068259ea0f58280d1b-GE-10015-2198-pushed-by-vinothgreat 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dbc82e38c03d24b3a87a48e17ebbf9d1c53e2968-Add-supervisord-logging-config-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:4b704647ac41722a7e2746068259ea0f58280d1b-GE-10015-2198-pushed-by-vinothgreat
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dbc82e38c03d24b3a87a48e17ebbf9d1c53e2968-Add-supervisord-logging-config-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
