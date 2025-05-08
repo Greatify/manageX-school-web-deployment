@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:58025dba55b5be9bbc1928e26a93cb19efaf2c9b-Add-musl-loader-and-remove-deb-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:47021f04b52217a36072c3d73368169513ffc56b-GE-8620Workload-2187-pushed-by-Pugazh09
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:58025dba55b5be9bbc1928e26a93cb19efaf2c9b-Add-musl-loader-and-remove-deb-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:47021f04b52217a36072c3d73368169513ffc56b-GE-8620Workload-2187-pushed-by-Pugazh09 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:58025dba55b5be9bbc1928e26a93cb19efaf2c9b-Add-musl-loader-and-remove-deb-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:47021f04b52217a36072c3d73368169513ffc56b-GE-8620Workload-2187-pushed-by-Pugazh09
                 resources:
                   requests:
                     cpu: 400m
