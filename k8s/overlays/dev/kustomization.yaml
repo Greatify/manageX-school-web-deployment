@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:374fd147782b49fc0811dd15f8ed070f078c2896-Remove-supervisord-logging-and-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:00593c5d27cafe757eee149e9f4282d2dbd28325-GE-9536---School---RazorPay-We-pushed-by-Pugazh09
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:374fd147782b49fc0811dd15f8ed070f078c2896-Remove-supervisord-logging-and-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:00593c5d27cafe757eee149e9f4282d2dbd28325-GE-9536---School---RazorPay-We-pushed-by-Pugazh09 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:374fd147782b49fc0811dd15f8ed070f078c2896-Remove-supervisord-logging-and-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:00593c5d27cafe757eee149e9f4282d2dbd28325-GE-9536---School---RazorPay-We-pushed-by-Pugazh09
                 resources:
                   requests:
                     cpu: 400m
