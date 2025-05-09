@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:7576075c55542cd84740fd70e5d0df51c04fcfd5-GE-9498-bug-fix-2203-pushed-by-Pugazh09
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:c8b225c7a8210e2afc0d5f5c7664eb3427f1e309-GE-10023-2206-pushed-by-Rafik-dev
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:7576075c55542cd84740fd70e5d0df51c04fcfd5-GE-9498-bug-fix-2203-pushed-by-Pugazh09 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:c8b225c7a8210e2afc0d5f5c7664eb3427f1e309-GE-10023-2206-pushed-by-Rafik-dev 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:7576075c55542cd84740fd70e5d0df51c04fcfd5-GE-9498-bug-fix-2203-pushed-by-Pugazh09
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:c8b225c7a8210e2afc0d5f5c7664eb3427f1e309-GE-10023-2206-pushed-by-Rafik-dev
                 resources:
                   requests:
                     cpu: 400m
