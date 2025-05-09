@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:eb9c41acd51e694cc793fd7dbb492a90e11c522d-Ge-9851-mark-display-class-tea-pushed-by-Pugazh09
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:7e991c29a2d226640e2fc933334ad97f71129005-GE-9536---School---RazorPay-We-pushed-by-Pugazh09
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:eb9c41acd51e694cc793fd7dbb492a90e11c522d-Ge-9851-mark-display-class-tea-pushed-by-Pugazh09 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:7e991c29a2d226640e2fc933334ad97f71129005-GE-9536---School---RazorPay-We-pushed-by-Pugazh09 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:eb9c41acd51e694cc793fd7dbb492a90e11c522d-Ge-9851-mark-display-class-tea-pushed-by-Pugazh09
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:7e991c29a2d226640e2fc933334ad97f71129005-GE-9536---School---RazorPay-We-pushed-by-Pugazh09
                 resources:
                   requests:
                     cpu: 400m
