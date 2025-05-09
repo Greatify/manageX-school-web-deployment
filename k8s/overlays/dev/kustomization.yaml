@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ad17a21aad60d158d09049d11846c233637636ff-Ge-10017-academic-year-change--pushed-by-Rafik-dev
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3b9452424f56db155779267e6c06b38c2badf25e-Update-CI-workflow-and-Docker--pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ad17a21aad60d158d09049d11846c233637636ff-Ge-10017-academic-year-change--pushed-by-Rafik-dev 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3b9452424f56db155779267e6c06b38c2badf25e-Update-CI-workflow-and-Docker--pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ad17a21aad60d158d09049d11846c233637636ff-Ge-10017-academic-year-change--pushed-by-Rafik-dev
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3b9452424f56db155779267e6c06b38c2badf25e-Update-CI-workflow-and-Docker--pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
