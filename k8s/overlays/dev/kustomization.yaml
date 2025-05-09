@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:f308e30dcf31fb2225b04b60650c01803ecd8541-Add---no-ansi-flag-to-queue-wo-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:043dd55a50c2d06c1815013125699f0759c28c36-Disable-Laravel-queue-worker-i-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:f308e30dcf31fb2225b04b60650c01803ecd8541-Add---no-ansi-flag-to-queue-wo-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:043dd55a50c2d06c1815013125699f0759c28c36-Disable-Laravel-queue-worker-i-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:f308e30dcf31fb2225b04b60650c01803ecd8541-Add---no-ansi-flag-to-queue-wo-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:043dd55a50c2d06c1815013125699f0759c28c36-Disable-Laravel-queue-worker-i-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
