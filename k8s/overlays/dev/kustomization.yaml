@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:24781dfc3714a76cad6048aacb8f03cfe94cf7db-GE-9536-School-RazorPay-Webhoo-pushed-by-Rafik-dev
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d219ba1a671e601ed7d953734e3d73aed2c47a17-GE-9536-School-RazorPay-Webhoo-pushed-by-Rafik-dev
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:24781dfc3714a76cad6048aacb8f03cfe94cf7db-GE-9536-School-RazorPay-Webhoo-pushed-by-Rafik-dev 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d219ba1a671e601ed7d953734e3d73aed2c47a17-GE-9536-School-RazorPay-Webhoo-pushed-by-Rafik-dev 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:24781dfc3714a76cad6048aacb8f03cfe94cf7db-GE-9536-School-RazorPay-Webhoo-pushed-by-Rafik-dev
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d219ba1a671e601ed7d953734e3d73aed2c47a17-GE-9536-School-RazorPay-Webhoo-pushed-by-Rafik-dev
                 resources:
                   requests:
                     cpu: 400m
