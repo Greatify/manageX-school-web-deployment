@@ -26,7 +26,7 @@ spec:
                   secretProviderClass: managex-school-secrets
           containers:
             - name: school-cronjob
-              image: "399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:c7de7688a500d0ba5acd1edcda2b381ca47d6896-Stage-to-Production-Deployment-PR2213"
+              image: "399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:84da0d253735fb5441a71a61e48bcef965b1f9fa-GE-10051-GE-9536-PR2220"
               command: ["php", "/var/www/html/artisan", "schedule:run"]
               volumeMounts:
                 - name: school-secrets
