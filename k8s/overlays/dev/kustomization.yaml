@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:077c13943a08a1abb3488d5b492a1c96a6e2f349-Fee-Config-for-Student-Identit-pushed-by-GopiGreatify
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ea628469e6028443252567825edcf954060986ba-unread-count-changes-in-parent-pushed-by-Pugazh09
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:077c13943a08a1abb3488d5b492a1c96a6e2f349-Fee-Config-for-Student-Identit-pushed-by-GopiGreatify 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ea628469e6028443252567825edcf954060986ba-unread-count-changes-in-parent-pushed-by-Pugazh09 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:077c13943a08a1abb3488d5b492a1c96a6e2f349-Fee-Config-for-Student-Identit-pushed-by-GopiGreatify
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ea628469e6028443252567825edcf954060986ba-unread-count-changes-in-parent-pushed-by-Pugazh09
                 resources:
                   requests:
                     cpu: 400m
