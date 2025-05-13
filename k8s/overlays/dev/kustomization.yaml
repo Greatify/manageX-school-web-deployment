@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d1a2954ddb2e6d5eacac69173d628f74f9a59e36-ci-update-workflow-branch-from-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:5fc2991e09d1d597d254f3b2cc2297b968d288b8-GE-10065---Errors-in-CSV-file--pushed-by-Pugazh09
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d1a2954ddb2e6d5eacac69173d628f74f9a59e36-ci-update-workflow-branch-from-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:5fc2991e09d1d597d254f3b2cc2297b968d288b8-GE-10065---Errors-in-CSV-file--pushed-by-Pugazh09 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d1a2954ddb2e6d5eacac69173d628f74f9a59e36-ci-update-workflow-branch-from-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:5fc2991e09d1d597d254f3b2cc2297b968d288b8-GE-10065---Errors-in-CSV-file--pushed-by-Pugazh09
                 resources:
                   requests:
                     cpu: 400m
