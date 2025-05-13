@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:eff0147809e53ade1f622eced3db65bdce925754-Ge-10053-manage-class-academic-pushed-by-GopiGreatify
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:4d59dfdbe27b69b78898cc03210b25f00c9b4c62-GE-9927TeacherWeb-HomeworkAssi-pushed-by-Pugazh09
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:eff0147809e53ade1f622eced3db65bdce925754-Ge-10053-manage-class-academic-pushed-by-GopiGreatify 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:4d59dfdbe27b69b78898cc03210b25f00c9b4c62-GE-9927TeacherWeb-HomeworkAssi-pushed-by-Pugazh09 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:eff0147809e53ade1f622eced3db65bdce925754-Ge-10053-manage-class-academic-pushed-by-GopiGreatify
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:4d59dfdbe27b69b78898cc03210b25f00c9b4c62-GE-9927TeacherWeb-HomeworkAssi-pushed-by-Pugazh09
                 resources:
                   requests:
                     cpu: 400m
