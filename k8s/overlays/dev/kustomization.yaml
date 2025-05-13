@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:e141dbe8109cfc9a92b85fb6850d55e194dffc66-Bug-Fixes-of-Fee-Configuration-pushed-by-GopiGreatify
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d1a2954ddb2e6d5eacac69173d628f74f9a59e36-ci-update-workflow-branch-from-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:e141dbe8109cfc9a92b85fb6850d55e194dffc66-Bug-Fixes-of-Fee-Configuration-pushed-by-GopiGreatify 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d1a2954ddb2e6d5eacac69173d628f74f9a59e36-ci-update-workflow-branch-from-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:e141dbe8109cfc9a92b85fb6850d55e194dffc66-Bug-Fixes-of-Fee-Configuration-pushed-by-GopiGreatify
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d1a2954ddb2e6d5eacac69173d628f74f9a59e36-ci-update-workflow-branch-from-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
