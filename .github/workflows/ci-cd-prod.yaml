@@ -161,32 +161,47 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      - name: Build and push PHP Laravel image to ECR
-        if: github.event.inputs.viewsonic_choice == 'true'
-        id: build-and-push
+      - name: Set build variables
+        id: set-vars
+        run: |
+          # Base image tag that will be used for all images
+          BASE_TAG="${{ steps.get-commit-sha.outputs.commit_sha }}-${{ steps.sanitize-tag.outputs.sanitized_tag }}"
+          echo "BASE_TAG=${BASE_TAG}" >> $GITHUB_ENV
+          
+      # Build once, load to Docker daemon
+      - name: Build Docker image
+        id: build-image
         uses: docker/build-push-action@v6
         with:
           context: .
-          push: true
+          push: false
+          load: true
           tags: |
-            ${{ steps.login-ecr.outputs.registry }}/managex_school_production:${{ steps.get-commit-sha.outputs.commit_sha }}-${{ steps.sanitize-tag.outputs.sanitized_tag }}
-            ${{ steps.login-ecr.outputs.registry }}/viewsonic:${{ steps.get-commit-sha.outputs.commit_sha }}-${{ steps.sanitize-tag.outputs.sanitized_tag }}
+            app-image:${{ env.BASE_TAG }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
           platforms: linux/amd64
           build-args: |
             BUILDKIT_INLINE_CACHE=1
-
+      
+      # Move cache for future builds
       - name: Move new cache to cache directory
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
-      - name: Save image tag to file
+      # Push to Greatify ECR
+      - name: Tag and push image to Greatify ECR
         run: |
-          echo "${{ steps.login-ecr.outputs.registry }}/managex_school_production:${{ steps.get-commit-sha.outputs.commit_sha }}-${{ steps.sanitize-tag.outputs.sanitized_tag }}" > laravel_image_tag.txt
-
-      - name: Upload image tag files
+          docker tag app-image:${{ env.BASE_TAG }} ${{ steps.login-ecr.outputs.registry }}/managex_school_production:${{ env.BASE_TAG }}
+          docker push ${{ steps.login-ecr.outputs.registry }}/managex_school_production:${{ env.BASE_TAG }}
+          
+      # Save Greatify image tag  
+      - name: Save Greatify image tag to file
+        run: |
+          echo "${{ steps.login-ecr.outputs.registry }}/managex_school_production:${{ env.BASE_TAG }}" > laravel_image_tag.txt
+          
+      - name: Upload Greatify image tag file
         uses: actions/upload-artifact@v4
         with:
           name: image-tags
@@ -195,7 +210,8 @@ jobs:
           retention-days: 1
           if-no-files-found: error
 
-      - name: Configure AWS credentials for viewsonic
+      # ViewSonic Push Section
+      - name: Configure AWS credentials for ViewSonic
         if: github.event.inputs.viewsonic_choice == 'true'
         uses: aws-actions/configure-aws-credentials@v3
         with:
@@ -203,19 +219,32 @@ jobs:
           aws-secret-access-key: ${{ secrets.VIEWSONIC_AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.VIEWSONIC_AWS_REGION }}
 
-      - name: Save image tag to file for viewsonic
+      - name: Login to ViewSonic ECR
+        if: github.event.inputs.viewsonic_choice == 'true'
+        id: login-viewsonic-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      # Push to ViewSonic ECR
+      - name: Tag and push image to ViewSonic ECR
         if: github.event.inputs.viewsonic_choice == 'true'
         run: |
-          echo "${{ steps.login-ecr.outputs.registry }}/viewsonic:${{ steps.get-commit-sha.outputs.commit_sha }}-${{ steps.sanitize-tag.outputs.sanitized_tag }}" > viewsonic_laravel_image_tag.txt
+          docker tag app-image:${{ env.BASE_TAG }} ${{ steps.login-viewsonic-ecr.outputs.registry }}/viewsonic:${{ env.BASE_TAG }}
+          docker push ${{ steps.login-viewsonic-ecr.outputs.registry }}/viewsonic:${{ env.BASE_TAG }}
 
-      - name: Upload image tag files
+      - name: Save ViewSonic image tag to file
+        if: github.event.inputs.viewsonic_choice == 'true'
+        run: |
+          echo "${{ steps.login-viewsonic-ecr.outputs.registry }}/viewsonic:${{ env.BASE_TAG }}" > viewsonic_laravel_image_tag.txt
+
+      - name: Upload ViewSonic image tag file
+        if: github.event.inputs.viewsonic_choice == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: image-tags
           path: |
             viewsonic_laravel_image_tag.txt
           retention-days: 1
-          if-no-files-found: error
+          if-no-files-found: warn
 
       - name: Notify on Docker Build Failure
         if: failure()
@@ -233,7 +262,7 @@ jobs:
             ❌ Docker build failed for commit **${{ steps.get-commit-sha.outputs.commit_sha }}** pushed by @${{ github.actor }} in School Production environment.
             *Author:* `${{ github.actor }}`
             Commit ID: ${{ steps.get-commit-sha.outputs.commit_sha }}
-            Error: ${{ steps.build-and-push.outputs.error }}
+            Error: ${{ steps.build-image.outputs.error }}
             Error message: ${{ steps.run-tests.outputs.error-message }}
             Please fix the issue and push the changes again. Note: Code is not deployed.
             @${{ github.actor }}, your changes are not deployed because of this issue.
@@ -342,7 +371,7 @@ jobs:
     
       - name: Set image tags as environment variables
         run: |
-          echo "LARAVEL_IMAGE=$(<viewsonic_laravel_image_tag.txt)" >> $GITHUB_ENV
+          echo "VIEWSONIC_LARAVEL_IMAGE=$(<viewsonic_laravel_image_tag.txt)" >> $GITHUB_ENV
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -356,8 +385,8 @@ jobs:
       
       - name: Update PHP Laravel deployment image tag and change cause
         run: |
-          sed -i "s|image: .*|image: ${{ env.LARAVEL_IMAGE }}|" k8s/overlays/viewsonic/kustomization.yaml
-          sed -i "s|kubernetes.io/change-cause: .*|kubernetes.io/change-cause: Update to ${{ env.LARAVEL_IMAGE }} |" k8s/overlays/viewsonic/kustomization.yaml
+          sed -i "s|image: .*|image: ${{ env.VIEWSONIC_LARAVEL_IMAGE }}|" k8s/overlays/viewsonic/kustomization.yaml
+          sed -i "s|kubernetes.io/change-cause: .*|kubernetes.io/change-cause: Update to ${{ env.VIEWSONIC_LARAVEL_IMAGE }} |" k8s/overlays/viewsonic/kustomization.yaml
 
       - name: Commit and Push Image Tags
         run: |
