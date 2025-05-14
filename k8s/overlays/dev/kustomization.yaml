@@ -61,11 +61,41 @@ patches:
                 image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:70c9a65fe65059ccaac70ea55ed932e2b4590849-GE-10087-2243Co-authored-by-Aa-pushed-by-Pugazh09
                 resources:
                   requests:
-                    cpu: 400m
-                    memory: 600Mi
+                    cpu: 200m
+                    memory: 300Mi
                   limits:
-                    cpu: 500m
-                    memory: 700Mi
+                    cpu: 250m
+                    memory: 350Mi
+
+    # Patch for Queue Worker Deployment configuration
+  - target:
+      kind: Deployment
+      name: school-queue
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: school-queue
+        labels:
+          app: managex-school-queue
+      spec:
+        template:
+          metadata:
+            labels:
+              app: managex-school-queue
+            annotations:
+              kubernetes.io/change-cause: "Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d1a2954ddb2e6d5eacac69173d628f74f9a59e36-ci-update-workflow-branch-from-pushed-by-surya1005"
+          spec:
+            containers:
+              - name: managex-school-queue
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d1a2954ddb2e6d5eacac69173d628f74f9a59e36-ci-update-workflow-branch-from-pushed-by-surya1005
+                resources:
+                  requests:
+                    cpu: 250m  
+                    memory: 350Mi
+                  limits:
+                    cpu: 300m
+                    memory: 400Mi
 
   # Patch for Ingress configuration
   - target:

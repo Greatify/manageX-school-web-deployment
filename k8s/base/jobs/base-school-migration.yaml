@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: school-migration
+  labels:
+    app: managex-school-migration
+spec:
+  backoffLimit: 2 
+  completions: 1  
+  parallelism: 1
+  ttlSecondsAfterFinished: 300  
+  template:
+    metadata:
+      labels:
+        app: managex-school-migration
+      annotations:
+        kubernetes.io/change-cause: "Run migration for managex-school with image 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d1a2954ddb2e6d5eacac69173d628f74f9a59e36-ci-update-workflow-branch-from-pushed-by-surya1005"
+    spec:
+      serviceAccountName: school-service
+      restartPolicy: OnFailure  # Retry on failure, controlled by backoffLimit
+      volumes:
+        - name: school-secrets
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: managex-school-secrets
+      containers:
+        - name: school-migration
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d1a2954ddb2e6d5eacac69173d628f74f9a59e36-ci-update-workflow-branch-from-pushed-by-surya1005
+          imagePullPolicy: IfNotPresent
+          command: ["php"]
+          args: ["/var/www/html/artisan", "mysql:execute-migration"]
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: "500m"
+              memory: 1Gi
+          volumeMounts:
+            - name: school-secrets
+              mountPath: var/www/html/.env
+              subPath: .env
+              readOnly: true

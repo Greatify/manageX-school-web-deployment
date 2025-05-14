@@ -77,6 +77,35 @@ patches:
                     cpu: 2
                     memory: 8Gi
 
+    # Patch for Queue Worker Deployment configuration
+  - target:
+      kind: Deployment
+      name: school-queue
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: school-queue
+      spec:
+        template:
+          spec:
+            volumes:
+              - name: school-secrets
+                csi:
+                  driver: secrets-store.csi.k8s.io
+                  readOnly: true
+                  volumeAttributes:
+                    secretProviderClass: managex-school-secrets-production
+            containers:
+              - name: managex-school-queue
+                resources:
+                  requests:
+                    cpu: 800m
+                    memory: 1Gi
+                  limits:
+                    cpu: 1
+                    memory: 2Gi
+
   # Patch for Ingress configuration
   - target:
       kind: Ingress
@@ -103,6 +132,22 @@ patches:
           - hosts:
               - heycampus.app
             secretName: tls-secret
+
+  # Patch for Queue Worker HorizontalPodAutoscaler configuration
+  - target:
+      kind: HorizontalPodAutoscaler
+      name: school-queue-autoscaler
+    patch: |-
+      apiVersion: autoscaling/v2
+      kind: HorizontalPodAutoscaler
+      metadata:
+        name: school-queue-autoscaler
+      spec:
+        scaleTargetRef:
+          name: managex-school-queue-production
+        behavior:
+          scaleDown:
+            stabilizationWindowSeconds: 60
 
   # Patch for HorizontalPodAutoscaler configuration
   - target:

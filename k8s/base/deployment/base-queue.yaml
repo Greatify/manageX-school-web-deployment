@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: school-queue
+  labels:
+    app: managex-school-queue
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: managex-school-queue
+  template:
+    metadata:
+      labels:
+        app: managex-school-queue
+      annotations:
+        kubernetes.io/change-cause: "Queue worker for managex-school with image 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d1a2954ddb2e6d5eacac69173d628f74f9a59e36-ci-update-workflow-branch-from-pushed-by-surya1005"
+    spec:
+      serviceAccountName: school-service
+      volumes:
+        - name: school-secrets
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: managex-school-secrets
+        - name: cache
+          emptyDir: {}
+        - name: sessions
+          emptyDir: {}
+        - name: views
+          emptyDir: {}
+        - name: tcpdf
+          emptyDir: {}
+        - name: pending-files
+          emptyDir: {}
+        - name: efs-storage
+          persistentVolumeClaim:
+            claimName: managex-school-pvc
+      containers:
+        - name: managex-school-queue
+          image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d1a2954ddb2e6d5eacac69173d628f74f9a59e36-ci-update-workflow-branch-from-pushed-by-surya1005
+          imagePullPolicy: IfNotPresent
+          command: ["php"]
+          args: ["/var/www/html/artisan", "queue:work", "--timeout=600", "--sleep=3", "--tries=1", "--verbose"]
+          resources:
+            requests:
+              cpu: 250m  
+              memory: 512Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
+          volumeMounts:
+            - name: cache
+              mountPath: /var/www/html/storage/framework/cache
+            - name: sessions
+              mountPath: /var/www/html/storage/framework/sessions
+            - name: views
+              mountPath: /var/www/html/storage/framework/views
+            - name: tcpdf
+              mountPath: /var/www/html/storage/app/tcpdf
+            - name: pending-files
+              mountPath: /var/www/html/resources/pending-files
+            - name: efs-storage
+              mountPath: /var/www/html/storage/app/efs
+              subPath: efs
+            - name: efs-storage
+              mountPath: /var/www/html/storage/app/public
+              subPath: public
+            - name: school-secrets
+              mountPath: "/var/www/html/.env"
+              subPath: ".env"
+              readOnly: true
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - ps aux | grep "[q]ueue:work"
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            timeoutSeconds: 2
+            failureThreshold: 3
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - ps aux | grep "[q]ueue:work"
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
