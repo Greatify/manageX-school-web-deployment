@@ -204,7 +204,7 @@ jobs:
       - name: Upload Greatify image tag file
         uses: actions/upload-artifact@v4
         with:
-          name: image-tags
+          name: greatify-image-tags
           path: |
             laravel_image_tag.txt
           retention-days: 1
@@ -240,7 +240,7 @@ jobs:
         if: github.event.inputs.viewsonic_choice == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: image-tags
+          name: viewsonic-image-tags
           path: |
             viewsonic_laravel_image_tag.txt
           retention-days: 1
@@ -285,7 +285,7 @@ jobs:
       - name: Download image tag files
         uses: actions/download-artifact@v4
         with:
-          name: image-tags
+          name: greatify-image-tags
           path: .
   
       - name: Set image tags as environment variables
@@ -366,7 +366,7 @@ jobs:
       - name: Download image tag files
         uses: actions/download-artifact@v4
         with:
-          name: image-tags
+          name: viewsonic-image-tags
           path: .
     
       - name: Set image tags as environment variables
