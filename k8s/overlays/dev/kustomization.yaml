@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:152eb91547641001a36be07a4ea6140c96f27979-GE-10087---Adding-House-Featur-pushed-by-Pugazh09
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:7ea8f7e3ce72f5d6dc86bfbf7e41fa329c49989a-GE-10065-Errors-in-CSV-file----pushed-by-vinothgreat
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:152eb91547641001a36be07a4ea6140c96f27979-GE-10087---Adding-House-Featur-pushed-by-Pugazh09 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:7ea8f7e3ce72f5d6dc86bfbf7e41fa329c49989a-GE-10065-Errors-in-CSV-file----pushed-by-vinothgreat 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:152eb91547641001a36be07a4ea6140c96f27979-GE-10087---Adding-House-Featur-pushed-by-Pugazh09
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:7ea8f7e3ce72f5d6dc86bfbf7e41fa329c49989a-GE-10065-Errors-in-CSV-file----pushed-by-vinothgreat
                 resources:
                   requests:
                     cpu: 400m
