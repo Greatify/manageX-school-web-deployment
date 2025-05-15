@@ -29,6 +29,12 @@ on:
         type: boolean
         default: false
 
+      full_deploy:
+        description: 'Build New Image and Deploy to Production & ViewSonic'
+        required: false
+        type: boolean
+        default: false
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -39,7 +45,6 @@ jobs:
     steps:
       - name: Verify deployment password
         id: password-check
-        continue-on-error: true
         run: |
           CORRECT_PASSWORD="${{ secrets.DEPLOY_PASSWORD }}"
           INPUT_PASSWORD="${{ github.event.inputs.deploy_password }}"
@@ -72,15 +77,10 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      - name: Final Password Check
-        if: steps.password-check.outcome == 'failure'
-        run: |
-          echo "::error::Authentication failed - Deployment blocked"
-          exit 1 
-
   Docker-Build:
     runs-on: ubuntu-latest
     needs: [Authentication]
+    if: github.event.inputs.full_deploy == 'true'
     environment: production
     timeout-minutes: 30
     strategy:
@@ -133,9 +133,9 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          aws-region: ${{ secrets.AWS_REGION_PROD }}
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -167,7 +167,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.login-ecr.outputs.registry }}/managex_school_production:${{ steps.get-commit-sha.outputs.commit_sha }}-${{ steps.sanitize-tag.outputs.sanitized_tag }}
+          tags: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_PROD }}:${{ steps.get-commit-sha.outputs.commit_sha }}-${{ steps.sanitize-tag.outputs.sanitized_tag }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
           platforms: linux/amd64
@@ -181,7 +181,7 @@ jobs:
 
       - name: Save image tag to file
         run: |
-          echo "${{ steps.login-ecr.outputs.registry }}/managex_school_production:${{ steps.get-commit-sha.outputs.commit_sha }}-${{ steps.sanitize-tag.outputs.sanitized_tag }}" > laravel_image_tag.txt
+          echo "${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_PROD }}:${{ steps.get-commit-sha.outputs.commit_sha }}-${{ steps.sanitize-tag.outputs.sanitized_tag }}" > laravel_image_tag.txt
 
       - name: Upload image tag files
         uses: actions/upload-artifact@v4
@@ -218,9 +218,10 @@ jobs:
   Deploy-to-Production:
     needs: [Docker-Build]
     runs-on: ubuntu-latest
+    if: always() && (github.event.inputs.full_deploy == 'false' || needs.Docker-Build.result == 'success') && github.event.inputs.prod_choice == 'true'
     environment: production
     env:
-      CLOUDFRONT_DISTRIBUTION: ENT69MYLPGTUJ
+      CLOUDFRONT_DISTRIBUTION: ${{ secrets.PROD_CLOUDFRONT_DISTRIBUTION }} 
     steps:
 
       - name: Checkout code
@@ -231,31 +232,24 @@ jobs:
 
       - name: Download image tag files
         uses: actions/download-artifact@v4
+        if: github.event.inputs.full_deploy == 'true'
         with:
           name: image-tags
           path: .
   
       - name: Set image tags as environment variables
+        if: github.event.inputs.full_deploy == 'true'
         run: |
           echo "LARAVEL_IMAGE=$(<laravel_image_tag.txt)" >> $GITHUB_ENV
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v3
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: Update kube config
-        run: aws eks update-kubeconfig --name greatify-production-cluster --region ap-south-1
-
       - name: Update PHP Laravel deployment image tag and change cause
+        if: github.event.inputs.full_deploy == 'true'
         run: |
           yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' k8s/base/deployment/base-deploy.yaml
           yq -i '.spec.template.metadata.annotations."kubernetes.io/change-cause" = "Updated to ${{ env.LARAVEL_IMAGE }}"' k8s/base/deployment/base-deploy.yaml
           yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' k8s/base/cronjob/base-cronjob.yaml
 
       - name: Commit and Push Image Tags
+        if: github.event.inputs.full_deploy == 'true'
         run: |
           git pull origin main
           git config --local user.email "suriyanarayanan.s@greatify.ai"
@@ -263,6 +257,16 @@ jobs:
           git add k8s/base/deployment/base-deploy.yaml k8s/base/cronjob/base-cronjob.yaml
           git commit -m "Update deployment image and change cause [Automated] For Production Environment"
           git push origin main
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          aws-region: ${{ secrets.AWS_REGION_PROD }}
+
+      - name: Update kube config
+        run: aws eks update-kubeconfig --name ${{ secrets.PROD_CLUSTER_NAME }} --region ${{ secrets.AWS_REGION_PROD }}
 
       - name: Apply K8s Manifests To Production With Validation
         run: |
@@ -299,12 +303,12 @@ jobs:
           SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
 
   Deploy-to-Viewsonic:
-    if: github.event.inputs.viewsonic_choice == 'true'
-    needs: [Docker-Build, Deploy-to-Production]
+    if: always() && (github.event.inputs.full_deploy == 'false' || needs.Docker-Build.result == 'success') && github.event.inputs.viewsonic_choice == 'true'
+    needs: [Docker-Build]
     runs-on: ubuntu-latest
-    environment: production
+    environment: viewsonic-production
     env:
-      CLOUDFRONT_DISTRIBUTION: EYW7M7FFROBZN
+      CLOUDFRONT_DISTRIBUTION: ${{ secrets.VIEWSONIC_CLOUDFRONT_DISTRIBUTION }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -315,12 +319,12 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.VIEWSONIC_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.VIEWSONIC_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.VIEWSONIC_AWS_REGION }}
 
       - name: Update kube config
-        run: aws eks update-kubeconfig --name greatify-production-cluster --region ap-south-1
+        run: aws eks update-kubeconfig --name ${{ secrets.VIEWSONIC_CLUSTER_NAME }} --region ${{ secrets.VIEWSONIC_AWS_REGION }}
 
       - name: Apply K8s Manifests To ViewSonic Production With Validation
         run: |

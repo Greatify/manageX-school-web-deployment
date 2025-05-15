@@ -22,7 +22,7 @@ jobs:
     environment: dev
     timeout-minutes: 20
     env:
-      CLOUDFRONT_DISTRIBUTION: E31U53GJ2LNL56
+      CLOUDFRONT_DISTRIBUTION: ${{ secrets.DEV_CLOUDFRONT_DISTRIBUTION }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -59,7 +59,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Update kube config
-        run: aws eks update-kubeconfig --name dev-stg-cluster --region ap-south-1
+        run: aws eks update-kubeconfig --name ${{ secrets.DEV_CLUSTER_NAME }} --region ${{ secrets.AWS_REGION }}
 
       - name: Apply K8s manifests to Dev Environment With Validation
         run: |
