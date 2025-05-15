@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:8a7a1a49e6cff2cc34500500a1f6cbfbf7e3d4f9-Ge-10131-add-maximum-mark-repo-pushed-by-GopiGreatify
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:10dbf460eec5c1093f2356e53dab05f6522fa3c0-Ge-9887bugstudent-mark-2255-pushed-by-Pugazh09
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:8a7a1a49e6cff2cc34500500a1f6cbfbf7e3d4f9-Ge-10131-add-maximum-mark-repo-pushed-by-GopiGreatify 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:10dbf460eec5c1093f2356e53dab05f6522fa3c0-Ge-9887bugstudent-mark-2255-pushed-by-Pugazh09 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:8a7a1a49e6cff2cc34500500a1f6cbfbf7e3d4f9-Ge-10131-add-maximum-mark-repo-pushed-by-GopiGreatify
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:10dbf460eec5c1093f2356e53dab05f6522fa3c0-Ge-9887bugstudent-mark-2255-pushed-by-Pugazh09
                 resources:
                   requests:
                     cpu: 400m
