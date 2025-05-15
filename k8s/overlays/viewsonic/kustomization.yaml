@@ -97,7 +97,7 @@ patches:
       metadata:
         name: school-ingress
         annotations:
-          alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:399600302704:certificate/3fdde8ff-9c5c-40d1-a63e-371718df2174
+          alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:225989355798:certificate/6e7b1839-609b-4d8e-b061-71d1d88991aa
       spec:
         rules:
           - http:
@@ -142,7 +142,7 @@ patches:
       spec:
         parameters:
           objects: |
-            - objectName: arn:aws:secretsmanager:ap-south-1:399600302704:secret:Viewsonic-Live-ZZIlzy
+            - objectName: arn:aws:secretsmanager:ap-south-1:225989355798:secret:ViewSonic-Secrets-vFeS9x
               objectAlias: ".env"
               objectType: "secretsmanager"
 
