@@ -308,7 +308,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     env:
-      CLOUDFRONT_DISTRIBUTION: EYW7M7FFROBZN
+      CLOUDFRONT_DISTRIBUTION: E13C0NAU6O2SGR
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
