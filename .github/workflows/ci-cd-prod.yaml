@@ -7,6 +7,12 @@ on:
         description: 'Enter deployment password'
         required: true
         type: string
+
+      re_tag:
+        description: 'Enter a new tag to re-tag the staging Docker image for production deploy'
+        required: false
+        type: string
+
       prod_choice:
         description: 'Deploy To School Production'
         required: false
@@ -17,12 +23,20 @@ on:
         required: false
         type: boolean
         default: false
-
       full_deploy:
         description: 'Build New Image and Deploy to Production & ViewSonic'
         required: false
         type: boolean
         default: false
+      deploy_branch:
+        description: 'Enter branch name to deploy'
+        required: false
+        type: string
+      prod_tag:
+        description: 'Tag for the image [e.g: Version-1.0 , HotFix-MNX8]'
+        required: false
+        type: string
+
 
       deploy_branch:
         description: 'Enter branch name to deploy'
@@ -214,15 +228,72 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-  Deploy-to-Production:
-    needs: [Docker-Build]
+  ReTag-Image:
     runs-on: ubuntu-latest
-    if: always() && (github.event.inputs.full_deploy == 'false' || needs.Docker-Build.result == 'success') && github.event.inputs.prod_choice == 'true'
+    needs: [Authentication]
+    if: github.event.inputs.full_deploy == 'false' && github.event.inputs.re_tag != ''
+    environment: production
+    outputs:
+      retagged_image: ${{ steps.retag-image.outputs.retagged_image }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: 'main'
+          fetch-depth: 0
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          aws-region: ${{ secrets.AWS_REGION_PROD }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Sanitize re_tag
+        id: sanitize-retag
+        run: |
+          SANITIZED_TAG=$(echo "${{ github.event.inputs.re_tag }}" | tr ' ' '-' | tr -cd 'a-zA-Z0-9-.')
+          echo "sanitized_retag=${SANITIZED_TAG}" >> $GITHUB_OUTPUT
+
+      - name: Get existing image from deployment
+        id: get-existing-image
+        run: |
+          EXISTING_IMAGE=$(yq '.spec.template.spec.containers[0].image' k8s/base/deployment/base-deploy.yaml)
+          echo "existing_image=${EXISTING_IMAGE}" >> $GITHUB_OUTPUT
+
+      - name: Re-tag and push image to ECR
+        id: retag-image
+        run: |
+          NEW_TAG="${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_PROD }}:${{ steps.sanitize-retag.outputs.sanitized_retag }}"
+          docker pull ${{ steps.get-existing-image.outputs.existing_image }}
+          docker tag ${{ steps.get-existing-image.outputs.existing_image }} ${NEW_TAG}
+          docker push ${NEW_TAG}
+          echo "retagged_image=${NEW_TAG}" >> $GITHUB_OUTPUT
+
+      - name: Save retagged image to file
+        run: |
+          echo "${{ steps.retag-image.outputs.retagged_image }}" > laravel_image_tag.txt
+
+      - name: Upload retagged image tag file
+        uses: actions/upload-artifact@v4
+        with:
+          name: image-tags
+          path: laravel_image_tag.txt
+          retention-days: 1
+          if-no-files-found: error
+
+  Deploy-to-Production:
+    needs: [Docker-Build, ReTag-Image]
+    runs-on: ubuntu-latest
+    if: always() && (github.event.inputs.full_deploy == 'false' || needs.Docker-Build.result == 'success' || needs.ReTag-Image.result == 'success') && github.event.inputs.prod_choice == 'true'
     environment: production
     env:
       CLOUDFRONT_DISTRIBUTION: ${{ secrets.PROD_CLOUDFRONT_DISTRIBUTION }} 
     steps:
-
       - name: Checkout code
         uses: actions/checkout@v4
         with:
@@ -231,24 +302,23 @@ jobs:
 
       - name: Download image tag files
         uses: actions/download-artifact@v4
-        if: github.event.inputs.full_deploy == 'true'
+        if: github.event.inputs.full_deploy == 'true' || github.event.inputs.re_tag != ''
         with:
           name: image-tags
           path: .
   
       - name: Set image tags as environment variables
-        if: github.event.inputs.full_deploy == 'true'
+        if: github.event.inputs.full_deploy == 'true' || github.event.inputs.re_tag != ''
         run: |
           echo "LARAVEL_IMAGE=$(<laravel_image_tag.txt)" >> $GITHUB_ENV
+
       - name: Update PHP Laravel deployment image tag and change cause
-        if: github.event.inputs.full_deploy == 'true'
         run: |
           yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' k8s/base/deployment/base-deploy.yaml
           yq -i '.spec.template.metadata.annotations."kubernetes.io/change-cause" = "Updated to ${{ env.LARAVEL_IMAGE }}"' k8s/base/deployment/base-deploy.yaml
           yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' k8s/base/cronjob/base-cronjob.yaml
 
       - name: Commit and Push Image Tags
-        if: github.event.inputs.full_deploy == 'true'
         run: |
           git pull origin main
           git config --local user.email "suriyanarayanan.s@greatify.ai"
@@ -293,7 +363,8 @@ jobs:
           text: |
             ${{ job.status == 'success' && format(':rocket: Deployment to School Production environment triggered by @{0} is {1}.', github.actor, job.status) || format(':x: Deployment to School Production environment triggered by @{0} is {1}.', github.actor, job.status) }}
             *Author:* `${{ github.actor }}`
-            *Deployment for commit* *${{ github.event.inputs.full_deploy == 'true' && needs.Docker-Build.outputs.commit_sha || 'Staging Image' }}* *pushed by* *@${{ github.actor }}* has *${{ job.status }}* in *School Production Environment*.
+            *Deployment for commit* *${{ github.event.inputs.full_deploy == 'true' && needs.Docker-Build.outputs.commit_sha || github.event.inputs.re_tag != '' && needs.ReTag-Image.outputs.retagged_image }}* *pushed by* *@${{ github.actor }}* has *${{ job.status }}* in *School Production Environment*.
+
             *Workflow Run:* ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
             *Message:* *${{ github.event.inputs.prod_tag }}*
             ${{ job.status == 'success' && 'The code has been deployed to School Production Environment. Please check the deployment and verify the changes on the server.' || 'The code has not been deployed to School Production Environment due to failure. Please check the deployment logs for more details.' }}
@@ -302,8 +373,8 @@ jobs:
           SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
 
   Deploy-to-Viewsonic:
-    needs: [Docker-Build]
-    if: always() && (github.event.inputs.full_deploy == 'false' || needs.Docker-Build.result == 'success') && github.event.inputs.viewsonic_choice == 'true'
+    needs: [Docker-Build, ReTag-Image]
+    if: always() && (github.event.inputs.full_deploy == 'false' || needs.Docker-Build.result == 'success' || needs.ReTag-Image.result == 'success') && github.event.inputs.viewsonic_choice == 'true'
     runs-on: ubuntu-latest
     environment: viewsonic-production
     env:
@@ -325,7 +396,7 @@ jobs:
       - name: Update kube config
         run: aws eks update-kubeconfig --name ${{ secrets.VIEWSONIC_CLUSTER_NAME }} --region ${{ secrets.VIEWSONIC_AWS_REGION }}
 
-      - name: Apply K8s Manifests To ViewSonic Production With Validation
+      - name: Apply K8s he Manifests To ViewSonic Production With Validation
         run: |
           kubectl apply -k k8s/overlays/viewsonic --validate=true
           kubectl rollout status deployment/viewsonic-school-production -n viewsonic-production --timeout=300s
@@ -351,7 +422,8 @@ jobs:
           text: |
             ${{ job.status == 'success' && format(':rocket: Deployment to ViewSonic Production environment triggered by @{0} is {1}.', github.actor, job.status) || format(':x: Deployment to ViewSonic Production environment triggered by @{0} is {1}.', github.actor, job.status) }}
             *Author:* `${{ github.actor }}`
-            *Deployment for commit* *${{ github.event.inputs.full_deploy == 'true' && needs.Docker-Build.outputs.commit_sha || 'Staging Image' }}* *pushed by* *@${{ github.actor }}* has *${{ job.status }}* in *ViewSonic Production Environment*.
+            *Deployment for commit* *${{ github.event.inputs.full_deploy == 'true' && needs.Docker-Build.outputs.commit_sha || github.event.inputs.re_tag != '' && needs.ReTag-Image.outputs.retagged_image }}* *pushed by* *@${{ github.actor }}* has *${{ job.status }}* in *ViewSonic Production Environment*.
+
             *Workflow Run:* ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
             *Message:* *${{ github.event.inputs.prod_tag }}*
             ${{ job.status == 'success' && 'The code has been deployed to ViewSonic Production Environment. Please check the deployment and verify the changes on the server.' || 'The code has not been deployed to ViewSonic Production Environment due to failure. Please check the deployment logs for more details.' }}
