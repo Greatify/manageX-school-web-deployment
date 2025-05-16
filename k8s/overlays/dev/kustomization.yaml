@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:fd37ff5c4882b706fab224cf952f92dfe3522949-GE-9887Bug-student-mark-2260Co-pushed-by-Pugazh09
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:a2721492ab206454abec5b116471dcd190983ce7-remove-code-rabbit-suggestion--pushed-by-Pugazh09
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:fd37ff5c4882b706fab224cf952f92dfe3522949-GE-9887Bug-student-mark-2260Co-pushed-by-Pugazh09 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:a2721492ab206454abec5b116471dcd190983ce7-remove-code-rabbit-suggestion--pushed-by-Pugazh09 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:fd37ff5c4882b706fab224cf952f92dfe3522949-GE-9887Bug-student-mark-2260Co-pushed-by-Pugazh09
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:a2721492ab206454abec5b116471dcd190983ce7-remove-code-rabbit-suggestion--pushed-by-Pugazh09
                 resources:
                   requests:
                     cpu: 400m
