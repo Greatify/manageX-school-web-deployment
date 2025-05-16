@@ -7,10 +7,12 @@ on:
         description: 'Enter deployment password'
         required: true
         type: string
+
       re_tag:
         description: 'Enter a new tag to re-tag the staging Docker image for production deploy'
         required: false
         type: string
+
       prod_choice:
         description: 'Deploy To School Production'
         required: false
@@ -35,6 +37,16 @@ on:
         required: false
         type: string
 
+
+      deploy_branch:
+        description: 'Enter branch name to deploy'
+        required: true
+        type: string
+
+      prod_tag:
+        description: 'Tag for the image [e.g: Version-1.0 , HotFix-MNX8]'
+        required: true
+        type: string
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -352,6 +364,7 @@ jobs:
             ${{ job.status == 'success' && format(':rocket: Deployment to School Production environment triggered by @{0} is {1}.', github.actor, job.status) || format(':x: Deployment to School Production environment triggered by @{0} is {1}.', github.actor, job.status) }}
             *Author:* `${{ github.actor }}`
             *Deployment for commit* *${{ github.event.inputs.full_deploy == 'true' && needs.Docker-Build.outputs.commit_sha || github.event.inputs.re_tag != '' && needs.ReTag-Image.outputs.retagged_image }}* *pushed by* *@${{ github.actor }}* has *${{ job.status }}* in *School Production Environment*.
+
             *Workflow Run:* ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
             *Message:* *${{ github.event.inputs.prod_tag }}*
             ${{ job.status == 'success' && 'The code has been deployed to School Production Environment. Please check the deployment and verify the changes on the server.' || 'The code has not been deployed to School Production Environment due to failure. Please check the deployment logs for more details.' }}
@@ -410,6 +423,7 @@ jobs:
             ${{ job.status == 'success' && format(':rocket: Deployment to ViewSonic Production environment triggered by @{0} is {1}.', github.actor, job.status) || format(':x: Deployment to ViewSonic Production environment triggered by @{0} is {1}.', github.actor, job.status) }}
             *Author:* `${{ github.actor }}`
             *Deployment for commit* *${{ github.event.inputs.full_deploy == 'true' && needs.Docker-Build.outputs.commit_sha || github.event.inputs.re_tag != '' && needs.ReTag-Image.outputs.retagged_image }}* *pushed by* *@${{ github.actor }}* has *${{ job.status }}* in *ViewSonic Production Environment*.
+
             *Workflow Run:* ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
             *Message:* *${{ github.event.inputs.prod_tag }}*
             ${{ job.status == 'success' && 'The code has been deployed to ViewSonic Production Environment. Please check the deployment and verify the changes on the server.' || 'The code has not been deployed to ViewSonic Production Environment due to failure. Please check the deployment logs for more details.' }}
