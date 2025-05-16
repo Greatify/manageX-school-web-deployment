@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:a2721492ab206454abec5b116471dcd190983ce7-remove-code-rabbit-suggestion--pushed-by-Pugazh09
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:84c7786811545d40c103834da3f736bda3095768-Code-rabit-suggestion-update-a-pushed-by-vinothgreat
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:a2721492ab206454abec5b116471dcd190983ce7-remove-code-rabbit-suggestion--pushed-by-Pugazh09 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:84c7786811545d40c103834da3f736bda3095768-Code-rabit-suggestion-update-a-pushed-by-vinothgreat 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:a2721492ab206454abec5b116471dcd190983ce7-remove-code-rabbit-suggestion--pushed-by-Pugazh09
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:84c7786811545d40c103834da3f736bda3095768-Code-rabit-suggestion-update-a-pushed-by-vinothgreat
                 resources:
                   requests:
                     cpu: 400m
