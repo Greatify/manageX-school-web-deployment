@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:b4eb4b90c2a6c819cc596f1f9cf1d4f9c6f8484b-GE-9896-bulkupload-reopen-2265-pushed-by-GopiGreatify
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:9b5e8edb30f4e9d7177b0a515ba467b20173731c-MNX-70MNX-71MNX-75--Teacher-Da-pushed-by-Rafik-dev
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:b4eb4b90c2a6c819cc596f1f9cf1d4f9c6f8484b-GE-9896-bulkupload-reopen-2265-pushed-by-GopiGreatify 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:9b5e8edb30f4e9d7177b0a515ba467b20173731c-MNX-70MNX-71MNX-75--Teacher-Da-pushed-by-Rafik-dev 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:b4eb4b90c2a6c819cc596f1f9cf1d4f9c6f8484b-GE-9896-bulkupload-reopen-2265-pushed-by-GopiGreatify
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:9b5e8edb30f4e9d7177b0a515ba467b20173731c-MNX-70MNX-71MNX-75--Teacher-Da-pushed-by-Rafik-dev
                 resources:
                   requests:
                     cpu: 400m
