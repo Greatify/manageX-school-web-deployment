@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:84c7786811545d40c103834da3f736bda3095768-Code-rabit-suggestion-update-a-pushed-by-vinothgreat
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:0012617b76f8e3b16dbb51f42baced4acbd3a333-Dev-to-Stage-Conflict-resolve--pushed-by-Pugazh09
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:84c7786811545d40c103834da3f736bda3095768-Code-rabit-suggestion-update-a-pushed-by-vinothgreat 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:0012617b76f8e3b16dbb51f42baced4acbd3a333-Dev-to-Stage-Conflict-resolve--pushed-by-Pugazh09 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:84c7786811545d40c103834da3f736bda3095768-Code-rabit-suggestion-update-a-pushed-by-vinothgreat
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:0012617b76f8e3b16dbb51f42baced4acbd3a333-Dev-to-Stage-Conflict-resolve--pushed-by-Pugazh09
                 resources:
                   requests:
                     cpu: 400m
