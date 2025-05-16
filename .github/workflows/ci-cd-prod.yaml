@@ -38,15 +38,7 @@ on:
         type: string
 
 
-      deploy_branch:
-        description: 'Enter branch name to deploy'
-        required: true
-        type: string
 
-      prod_tag:
-        description: 'Tag for the image [e.g: Version-1.0 , HotFix-MNX8]'
-        required: true
-        type: string
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
