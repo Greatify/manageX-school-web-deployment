@@ -7,8 +7,8 @@ spec:
     storage: 20Gi
   accessModes:
     - ReadWriteMany
-  storageClassName: viewsonic-production-storage-class
+  storageClassName: viewsonic-production-sc
   nfs:
     path: /
-    server: fs-05ba2e44144eb13b8.efs.ap-south-1.amazonaws.com
+    server: fs-0c9ce0e7d9dc58f44.efs.ap-south-1.amazonaws.com
   persistentVolumeReclaimPolicy: Retain

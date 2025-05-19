@@ -8,4 +8,4 @@ spec:
   resources:
     requests:
       storage: 20Gi
-  storageClassName: viewsonic-production-storage-class
+  storageClassName: viewsonic-production-sc
