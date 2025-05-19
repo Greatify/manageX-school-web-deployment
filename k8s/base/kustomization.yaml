@@ -6,7 +6,11 @@ resources:
 - configmap/base-server-configmap.yaml
 - cronjob/base-cronjob.yaml
 - deployment/base-deploy.yaml
+- deployment/base-queue.yaml
 - hpa/base-pod-autoscaler.yaml
+- hpa/base-queue-autoscaler.yaml
 - ingress/base-ingress.yaml
+# - jobs/base-school-migration.yaml
+# - jobs/base-superadmin-migration.yaml
 - secretproviderclass/base-secretprovider.yaml
 - service/base-service.yaml

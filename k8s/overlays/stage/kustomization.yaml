@@ -41,6 +41,33 @@ patches:
                     cpu: "1"
                     memory: 1Gi
 
+    # Patch for Queue Worker Deployment configuration
+  - target:
+      kind: Deployment
+      name: school-queue
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: school-queue
+        labels:
+          app: managex-school-queue
+      spec:
+        template:
+          metadata:
+            labels:
+              app: managex-school-queue
+          spec:
+            containers:
+              - name: managex-school-queue
+                resources:
+                  requests:
+                    cpu: 400m
+                    memory: 400Mi
+                  limits:
+                    cpu: 500m
+                    memory: 500Mi
+
   # Patch for Ingress configuration
   - target:
       kind: Ingress
