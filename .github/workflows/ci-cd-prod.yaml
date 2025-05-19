@@ -9,7 +9,7 @@ on:
         type: string
 
       re_tag:
-        description: 'Enter a new tag to re-tag the staging Docker image for production deploy'
+        description: 'Enter a new tag to re-tag the staging Docker image for production deployment'
         required: false
         type: string
 
@@ -281,7 +281,11 @@ jobs:
   Deploy-to-Production:
     needs: [Docker-Build, ReTag-Image]
     runs-on: ubuntu-latest
-    if: always() && (github.event.inputs.full_deploy == 'false' || needs.Docker-Build.result == 'success' || needs.ReTag-Image.result == 'success') && github.event.inputs.prod_choice == 'true'
+    if: |
+      always() && 
+      github.event.inputs.prod_choice == 'true' && 
+      ((github.event.inputs.full_deploy == 'true' && (needs.Docker-Build.result == 'success' )) ||
+       (github.event.inputs.re_tag != '' && (needs.ReTag-Image.result == 'success')))
     environment: production
     env:
       CLOUDFRONT_DISTRIBUTION: ${{ secrets.PROD_CLOUDFRONT_DISTRIBUTION }} 
@@ -366,7 +370,11 @@ jobs:
 
   Deploy-to-Viewsonic:
     needs: [Docker-Build, ReTag-Image]
-    if: always() && (github.event.inputs.full_deploy == 'false' || needs.Docker-Build.result == 'success' || needs.ReTag-Image.result == 'success') && github.event.inputs.viewsonic_choice == 'true'
+    if: |
+      always() && 
+      github.event.inputs.viewsonic_choice == 'true' && 
+      ((github.event.inputs.full_deploy == 'true' && (needs.Docker-Build.result == 'success' )) ||
+       (github.event.inputs.re_tag != '' && (needs.ReTag-Image.result == 'success')))
     runs-on: ubuntu-latest
     environment: viewsonic-production
     env:
