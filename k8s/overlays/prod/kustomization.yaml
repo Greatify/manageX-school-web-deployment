@@ -208,7 +208,7 @@ patches:
 
 
             # Enhance security with rate limiting (Uncomment to enable)
-            limit_req zone=mylimit burst=10 nodelay;
+            # limit_req zone=mylimit burst=10 nodelay;
             
             # Enable gzip compression (Uncomment to enable)
             gzip on;
