@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:9f4a0d5c3eee4ba23798b3316f49ca5a4103853c-GE-10154-TeacherDashboard-2291-pushed-by-Pugazh09
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:e93ec90126834664ad9bf4dedaa7c78179463570-GE-10056---Adding-Blood-group--pushed-by-Pugazh09
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:9f4a0d5c3eee4ba23798b3316f49ca5a4103853c-GE-10154-TeacherDashboard-2291-pushed-by-Pugazh09 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:e93ec90126834664ad9bf4dedaa7c78179463570-GE-10056---Adding-Blood-group--pushed-by-Pugazh09 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:9f4a0d5c3eee4ba23798b3316f49ca5a4103853c-GE-10154-TeacherDashboard-2291-pushed-by-Pugazh09
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:e93ec90126834664ad9bf4dedaa7c78179463570-GE-10056---Adding-Blood-group--pushed-by-Pugazh09
                 resources:
                   requests:
                     cpu: 400m
