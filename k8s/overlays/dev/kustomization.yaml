@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d3a833e8e003f15798074bb20ead7aa78aeaee01-Ge-10154bugteacher-dashboard-2-pushed-by-Pugazh09
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:addcdfeb7149af6e1cb0278415a2aeba99caf057-MNX-84teacher-dashboard-2289-pushed-by-Pugazh09
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d3a833e8e003f15798074bb20ead7aa78aeaee01-Ge-10154bugteacher-dashboard-2-pushed-by-Pugazh09 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:addcdfeb7149af6e1cb0278415a2aeba99caf057-MNX-84teacher-dashboard-2289-pushed-by-Pugazh09 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d3a833e8e003f15798074bb20ead7aa78aeaee01-Ge-10154bugteacher-dashboard-2-pushed-by-Pugazh09
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:addcdfeb7149af6e1cb0278415a2aeba99caf057-MNX-84teacher-dashboard-2289-pushed-by-Pugazh09
                 resources:
                   requests:
                     cpu: 400m
