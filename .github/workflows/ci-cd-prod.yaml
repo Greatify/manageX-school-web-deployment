@@ -226,6 +226,7 @@ jobs:
     if: github.event.inputs.full_deploy == 'false' && github.event.inputs.re_tag != ''
     environment: production
     outputs:
+      commit_sha: ${{ steps.get-commit-sha.outputs.commit_sha }}
       retagged_image: ${{ steps.retag-image.outputs.retagged_image }}
     steps:
       - name: Checkout code
@@ -233,6 +234,20 @@ jobs:
         with:
           ref: 'main'
           fetch-depth: 0
+          
+      - name: Get Commit SHA from existing image
+        id: get-commit-sha
+        run: |
+          # Extract commit SHA from the existing image tag
+          EXISTING_IMAGE=$(yq '.spec.template.spec.containers[0].image' k8s/base/deployment/base-deploy.yaml)
+          # Extract the commit SHA part from the image tag (format: registry/repo:commit_sha-tag)
+          COMMIT_SHA=$(echo "$EXISTING_IMAGE" | grep -oE '([0-9a-f]{40})' | head -1)
+          if [ -z "$COMMIT_SHA" ]; then
+            echo "::error::Could not extract commit SHA from image tag: $EXISTING_IMAGE"
+            exit 1
+          fi
+          echo "commit_sha=$COMMIT_SHA" >> $GITHUB_OUTPUT
+          echo "Using commit SHA: $COMMIT_SHA"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -260,7 +275,8 @@ jobs:
       - name: Re-tag and push image to ECR
         id: retag-image
         run: |
-          NEW_TAG="${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_PROD }}:${{ steps.sanitize-retag.outputs.sanitized_retag }}"
+          # Use the commit SHA from the existing image and the new sanitized tag
+          NEW_TAG="${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_PROD }}:${{ steps.get-commit-sha.outputs.commit_sha }}-${{ steps.sanitize-retag.outputs.sanitized_retag }}"
           docker pull ${{ steps.get-existing-image.outputs.existing_image }}
           docker tag ${{ steps.get-existing-image.outputs.existing_image }} ${NEW_TAG}
           docker push ${NEW_TAG}
