@@ -197,28 +197,28 @@ jobs:
           retention-days: 1
           if-no-files-found: error
 
-      - name: Notify on Docker Build Failure
-        if: failure()
-        uses: 8398a7/action-slack@v3
-        with:
-          status: failure
-          fields: repo,message,commit,author,action,eventName,ref
-          author_name: 🐳 Docker Build Failed (School Production Environment)
-          mention: ${{ github.actor }}
-          if_mention: failure
-          job_name: Docker Build
-          channel: managex-school
-          username: manageX-school
-          text: |
-            ❌ Docker build failed for commit **${{ steps.get-commit-sha.outputs.commit_sha }}** pushed by @${{ github.actor }} in School Production environment.
-            *Author:* `${{ github.actor }}`
-            Commit ID: ${{ steps.get-commit-sha.outputs.commit_sha }}
-            Error: ${{ steps.build-and-push.outputs.error }}
-            Error message: ${{ steps.run-tests.outputs.error-message }}
-            Please fix the issue and push the changes again. Note: Code is not deployed.
-            @${{ github.actor }}, your changes are not deployed because of this issue.
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      # - name: Notify on Docker Build Failure
+      #   if: failure()
+      #   uses: 8398a7/action-slack@v3
+      #   with:
+      #     status: failure
+      #     fields: repo,message,commit,author,action,eventName,ref
+      #     author_name: 🐳 Docker Build Failed (School Production Environment)
+      #     mention: ${{ github.actor }}
+      #     if_mention: failure
+      #     job_name: Docker Build
+      #     channel: managex-school
+      #     username: manageX-school
+      #     text: |
+      #       ❌ Docker build failed for commit **${{ steps.get-commit-sha.outputs.commit_sha }}** pushed by @${{ github.actor }} in School Production environment.
+      #       *Author:* `${{ github.actor }}`
+      #       Commit ID: ${{ steps.get-commit-sha.outputs.commit_sha }}
+      #       Error: ${{ steps.build-and-push.outputs.error }}
+      #       Error message: ${{ steps.run-tests.outputs.error-message }}
+      #       Please fix the issue and push the changes again. Note: Code is not deployed.
+      #       @${{ github.actor }}, your changes are not deployed because of this issue.
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
   ReTag-Image:
     runs-on: ubuntu-latest
@@ -349,40 +349,40 @@ jobs:
       - name: Update kube config
         run: aws eks update-kubeconfig --name ${{ secrets.PROD_CLUSTER_NAME }} --region ${{ secrets.AWS_REGION_PROD }}
 
-      - name: Apply K8s Manifests To Production With Validation
-        run: |
-          kubectl apply -k k8s/overlays/prod --validate=true
-          kubectl rollout status deployment/managex-school-production -n managex-school-production --timeout=300s
+      # - name: Apply K8s Manifests To Production With Validation
+      #   run: |
+      #     kubectl apply -k k8s/overlays/prod --validate=true
+      #     kubectl rollout status deployment/managex-school-production -n managex-school-production --timeout=300s
 
-      - name: CloudFront Invalidation
-        run: |
-          INVALIDATION_ID=$(aws cloudfront create-invalidation --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION }} --paths "/*" --query 'Invalidation.Id' --output text)
-          echo "Created invalidation: $INVALIDATION_ID"
-          aws cloudfront wait invalidation-completed --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION }} --id $INVALIDATION_ID
+      # - name: CloudFront Invalidation
+      #   run: |
+      #     INVALIDATION_ID=$(aws cloudfront create-invalidation --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION }} --paths "/*" --query 'Invalidation.Id' --output text)
+      #     echo "Created invalidation: $INVALIDATION_ID"
+      #     aws cloudfront wait invalidation-completed --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION }} --id $INVALIDATION_ID
           
-      - name: Slack Notification On Deployment Status
-        if: always()
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          fields: author,action,eventName,ref,workflow
-          author_name: School Production Deployment Status
-          mention: ${{ github.actor }}
-          if_mention: success,failure
-          job_name: Deploy-to-Production
-          channel: managex-school
-          username: manageX-school
-          text: |
-            ${{ job.status == 'success' && format(':rocket: Deployment to School Production environment triggered by @{0} is {1}.', github.actor, job.status) || format(':x: Deployment to School Production environment triggered by @{0} is {1}.', github.actor, job.status) }}
-            *Author:* `${{ github.actor }}`
-            *Deployment for commit* *${{ github.event.inputs.full_deploy == 'true' && needs.Docker-Build.outputs.commit_sha || github.event.inputs.re_tag != '' && needs.ReTag-Image.outputs.retagged_image }}* *pushed by* *@${{ github.actor }}* has *${{ job.status }}* in *School Production Environment*.
+      # - name: Slack Notification On Deployment Status
+      #   if: always()
+      #   uses: 8398a7/action-slack@v3
+      #   with:
+      #     status: ${{ job.status }}
+      #     fields: author,action,eventName,ref,workflow
+      #     author_name: School Production Deployment Status
+      #     mention: ${{ github.actor }}
+      #     if_mention: success,failure
+      #     job_name: Deploy-to-Production
+      #     channel: managex-school
+      #     username: manageX-school
+      #     text: |
+      #       ${{ job.status == 'success' && format(':rocket: Deployment to School Production environment triggered by @{0} is {1}.', github.actor, job.status) || format(':x: Deployment to School Production environment triggered by @{0} is {1}.', github.actor, job.status) }}
+      #       *Author:* `${{ github.actor }}`
+      #       *Deployment for commit* *${{ github.event.inputs.full_deploy == 'true' && needs.Docker-Build.outputs.commit_sha || github.event.inputs.re_tag != '' && needs.ReTag-Image.outputs.retagged_image }}* *pushed by* *@${{ github.actor }}* has *${{ job.status }}* in *School Production Environment*.
 
-            *Workflow Run:* ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-            *Message:* *${{ github.event.inputs.prod_tag }}*
-            ${{ job.status == 'success' && 'The code has been deployed to School Production Environment. Please check the deployment and verify the changes on the server.' || 'The code has not been deployed to School Production Environment due to failure. Please check the deployment logs for more details.' }}
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
+      #       *Workflow Run:* ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      #       *Message:* *${{ github.event.inputs.prod_tag }}*
+      #       ${{ job.status == 'success' && 'The code has been deployed to School Production Environment. Please check the deployment and verify the changes on the server.' || 'The code has not been deployed to School Production Environment due to failure. Please check the deployment logs for more details.' }}
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #     SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
 
   Deploy-to-Viewsonic:
     needs: [Docker-Build, ReTag-Image]
@@ -412,37 +412,37 @@ jobs:
       - name: Update kube config
         run: aws eks update-kubeconfig --name ${{ secrets.VIEWSONIC_CLUSTER_NAME }} --region ${{ secrets.VIEWSONIC_AWS_REGION }}
 
-      - name: Apply K8s he Manifests To ViewSonic Production With Validation
-        run: |
-          kubectl apply -k k8s/overlays/viewsonic --validate=true
-          kubectl rollout status deployment/viewsonic-school-production -n viewsonic-production --timeout=300s
+      # - name: Apply K8s he Manifests To ViewSonic Production With Validation
+      #   run: |
+      #     kubectl apply -k k8s/overlays/viewsonic --validate=true
+      #     kubectl rollout status deployment/viewsonic-school-production -n viewsonic-production --timeout=300s
 
-      - name: CloudFront Invalidation
-        run: |
-          INVALIDATION_ID=$(aws cloudfront create-invalidation --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION }} --paths "/*" --query 'Invalidation.Id' --output text)
-          echo "Created invalidation: $INVALIDATION_ID"
-          aws cloudfront wait invalidation-completed --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION }} --id $INVALIDATION_ID
+      # - name: CloudFront Invalidation
+      #   run: |
+      #     INVALIDATION_ID=$(aws cloudfront create-invalidation --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION }} --paths "/*" --query 'Invalidation.Id' --output text)
+      #     echo "Created invalidation: $INVALIDATION_ID"
+      #     aws cloudfront wait invalidation-completed --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION }} --id $INVALIDATION_ID
           
-      - name: Slack Notification On Deployment Status
-        if: always()
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          fields: author,action,eventName,ref,workflow
-          author_name: ViewSonic Production Deployment Status
-          mention: ${{ github.actor }}
-          if_mention: success,failure
-          job_name: Deploy-to-Viewsonic
-          channel: managex-school
-          username: manageX-school
-          text: |
-            ${{ job.status == 'success' && format(':rocket: Deployment to ViewSonic Production environment triggered by @{0} is {1}.', github.actor, job.status) || format(':x: Deployment to ViewSonic Production environment triggered by @{0} is {1}.', github.actor, job.status) }}
-            *Author:* `${{ github.actor }}`
-            *Deployment for commit* *${{ github.event.inputs.full_deploy == 'true' && needs.Docker-Build.outputs.commit_sha || github.event.inputs.re_tag != '' && needs.ReTag-Image.outputs.retagged_image }}* *pushed by* *@${{ github.actor }}* has *${{ job.status }}* in *ViewSonic Production Environment*.
+      # - name: Slack Notification On Deployment Status
+      #   if: always()
+      #   uses: 8398a7/action-slack@v3
+      #   with:
+      #     status: ${{ job.status }}
+      #     fields: author,action,eventName,ref,workflow
+      #     author_name: ViewSonic Production Deployment Status
+      #     mention: ${{ github.actor }}
+      #     if_mention: success,failure
+      #     job_name: Deploy-to-Viewsonic
+      #     channel: managex-school
+      #     username: manageX-school
+      #     text: |
+      #       ${{ job.status == 'success' && format(':rocket: Deployment to ViewSonic Production environment triggered by @{0} is {1}.', github.actor, job.status) || format(':x: Deployment to ViewSonic Production environment triggered by @{0} is {1}.', github.actor, job.status) }}
+      #       *Author:* `${{ github.actor }}`
+      #       *Deployment for commit* *${{ github.event.inputs.full_deploy == 'true' && needs.Docker-Build.outputs.commit_sha || github.event.inputs.re_tag != '' && needs.ReTag-Image.outputs.retagged_image }}* *pushed by* *@${{ github.actor }}* has *${{ job.status }}* in *ViewSonic Production Environment*.
 
-            *Workflow Run:* ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-            *Message:* *${{ github.event.inputs.prod_tag }}*
-            ${{ job.status == 'success' && 'The code has been deployed to ViewSonic Production Environment. Please check the deployment and verify the changes on the server.' || 'The code has not been deployed to ViewSonic Production Environment due to failure. Please check the deployment logs for more details.' }}
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
+      #       *Workflow Run:* ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      #       *Message:* *${{ github.event.inputs.prod_tag }}*
+      #       ${{ job.status == 'success' && 'The code has been deployed to ViewSonic Production Environment. Please check the deployment and verify the changes on the server.' || 'The code has not been deployed to ViewSonic Production Environment due to failure. Please check the deployment logs for more details.' }}
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #     SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
