@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:caf71f5d2fd2e2953166239f36bc7a517c50e238-Mnx-103-cloud-url-change-2300-pushed-by-GopiGreatify
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:80d859c9ba2d0dc1bb2c688c008f378b279ea059-GE---9896-bugs-bulkupload-2302-pushed-by-Pugazh09
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:caf71f5d2fd2e2953166239f36bc7a517c50e238-Mnx-103-cloud-url-change-2300-pushed-by-GopiGreatify 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:80d859c9ba2d0dc1bb2c688c008f378b279ea059-GE---9896-bugs-bulkupload-2302-pushed-by-Pugazh09 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:caf71f5d2fd2e2953166239f36bc7a517c50e238-Mnx-103-cloud-url-change-2300-pushed-by-GopiGreatify
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:80d859c9ba2d0dc1bb2c688c008f378b279ea059-GE---9896-bugs-bulkupload-2302-pushed-by-Pugazh09
                 resources:
                   requests:
                     cpu: 400m
