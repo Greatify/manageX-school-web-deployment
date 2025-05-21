@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:098227906222115415c8ffc2bc1a56cb8ca83e81-MNX-112-Route-were-not-mapping-pushed-by-Pugazh09
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:08131d63ff4831ac2a52a13e320d8592c9992a9a-GE-10025staffwise-report-2308-pushed-by-Pugazh09
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:098227906222115415c8ffc2bc1a56cb8ca83e81-MNX-112-Route-were-not-mapping-pushed-by-Pugazh09 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:08131d63ff4831ac2a52a13e320d8592c9992a9a-GE-10025staffwise-report-2308-pushed-by-Pugazh09 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:098227906222115415c8ffc2bc1a56cb8ca83e81-MNX-112-Route-were-not-mapping-pushed-by-Pugazh09
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:08131d63ff4831ac2a52a13e320d8592c9992a9a-GE-10025staffwise-report-2308-pushed-by-Pugazh09
                 resources:
                   requests:
                     cpu: 400m
