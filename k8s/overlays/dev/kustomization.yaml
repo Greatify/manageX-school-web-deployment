@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:fe883e60bef3a237dbbb7c75e86341cfbe5f7498-Ge-10162-id-card-2328-pushed-by-Rafik-dev
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:57fc6bb186a1e7daa385d3b9d8efd3249a190041-Mnx-148-display-invoice-no-dai-pushed-by-vinothgreat
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:fe883e60bef3a237dbbb7c75e86341cfbe5f7498-Ge-10162-id-card-2328-pushed-by-Rafik-dev 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:57fc6bb186a1e7daa385d3b9d8efd3249a190041-Mnx-148-display-invoice-no-dai-pushed-by-vinothgreat 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:fe883e60bef3a237dbbb7c75e86341cfbe5f7498-Ge-10162-id-card-2328-pushed-by-Rafik-dev
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:57fc6bb186a1e7daa385d3b9d8efd3249a190041-Mnx-148-display-invoice-no-dai-pushed-by-vinothgreat
                 resources:
                   requests:
                     cpu: 400m
