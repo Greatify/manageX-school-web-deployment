@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:8424cb5baae6a674af6ba2a0133eed8c42eaecdd-Predev-Fee
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:eef06384f9d2438473e11ca0b517d1a966b1d111-GST-Changes
 
 
   # Patch for Deployment configuration
@@ -55,11 +55,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:8424cb5baae6a674af6ba2a0133eed8c42eaecdd-Predev-Fee 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:eef06384f9d2438473e11ca0b517d1a966b1d111-GST-Changes 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:8424cb5baae6a674af6ba2a0133eed8c42eaecdd-Predev-Fee
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:eef06384f9d2438473e11ca0b517d1a966b1d111-GST-Changes
                 resources:
                   requests:
                     cpu: 400m
