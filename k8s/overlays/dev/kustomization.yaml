@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ab0ef82d3cb9650ebf165952392091ce352e4f02-GE--10182-idcard-issue-2324-pushed-by-Pugazh09
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:f4bc4684a7bf0ace2ae47edb4cbb3f1e1bbcf84c-remove-first-in-bloodgroup-232-pushed-by-Pugazh09
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ab0ef82d3cb9650ebf165952392091ce352e4f02-GE--10182-idcard-issue-2324-pushed-by-Pugazh09 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:f4bc4684a7bf0ace2ae47edb4cbb3f1e1bbcf84c-remove-first-in-bloodgroup-232-pushed-by-Pugazh09 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ab0ef82d3cb9650ebf165952392091ce352e4f02-GE--10182-idcard-issue-2324-pushed-by-Pugazh09
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:f4bc4684a7bf0ace2ae47edb4cbb3f1e1bbcf84c-remove-first-in-bloodgroup-232-pushed-by-Pugazh09
                 resources:
                   requests:
                     cpu: 400m
