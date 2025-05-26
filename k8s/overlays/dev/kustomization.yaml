@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:2901f2e5cdd101c572a158546311968929e125ca-add-validation-for-duplication-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:8a3b1d652c95ae86073bfde78f7573f498768f61-GE-9524-admission-log-bug-fix--pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:2901f2e5cdd101c572a158546311968929e125ca-add-validation-for-duplication-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:8a3b1d652c95ae86073bfde78f7573f498768f61-GE-9524-admission-log-bug-fix--pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:2901f2e5cdd101c572a158546311968929e125ca-add-validation-for-duplication-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:8a3b1d652c95ae86073bfde78f7573f498768f61-GE-9524-admission-log-bug-fix--pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
