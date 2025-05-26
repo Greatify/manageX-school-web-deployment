@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ed85b22bf7968f7a4569c65755e5532cf5e31730-fix-alignment-in-pdf--xlxs-236-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d1c6f9b0c222d68bf1069ae7ba2789f4e6a6fd2b-GE-10172-books-2362-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ed85b22bf7968f7a4569c65755e5532cf5e31730-fix-alignment-in-pdf--xlxs-236-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d1c6f9b0c222d68bf1069ae7ba2789f4e6a6fd2b-GE-10172-books-2362-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ed85b22bf7968f7a4569c65755e5532cf5e31730-fix-alignment-in-pdf--xlxs-236-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d1c6f9b0c222d68bf1069ae7ba2789f4e6a6fd2b-GE-10172-books-2362-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
