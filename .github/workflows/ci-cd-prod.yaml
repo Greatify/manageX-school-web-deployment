@@ -385,13 +385,18 @@ jobs:
           SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
 
   Deploy-to-Viewsonic:
-    needs: [Docker-Build, ReTag-Image, Deploy-to-Production]
+    needs: 
+      - Docker-Build
+      - ReTag-Image
+      - Deploy-to-Production
     if: |
       always() && 
       github.event.inputs.viewsonic_choice == 'true' && 
       ((github.event.inputs.full_deploy == 'true' && (needs.Docker-Build.result == 'success' )) ||
        (github.event.inputs.re_tag != '' && (needs.ReTag-Image.result == 'success'))) &&
-      (needs.Deploy-to-Production.result == 'success')
+      (github.event.inputs.prod_choice != 'true' || (needs.Deploy-to-Production.result == 'success'))
+    # When prod_choice is false, the Deploy-to-Production job won't run,
+    # so we only check its result when prod_choice is true
     runs-on: ubuntu-latest
     environment: viewsonic-production
     env:
@@ -403,34 +408,43 @@ jobs:
           ref: 'main'
           fetch-depth: 0
 
-      # - name: Download image tag files
-      #   uses: actions/download-artifact@v4
-      #   if: github.event.inputs.full_deploy == 'true' || github.event.inputs.re_tag != '' && github.event.inputs.viewsonic_choice == 'true' && github.event.inputs.prod_choice == 'false'
-      #   with:
-      #     name: image-tags
-      #     path: .
+      # These steps are only needed when deploying to Viewsonic without Production
+      - name: Download image tag files (Viewsonic Only)
+        uses: actions/download-artifact@v4
+        if: (github.event.inputs.full_deploy == 'true' || github.event.inputs.re_tag != '') && 
+            github.event.inputs.viewsonic_choice == 'true' && 
+            github.event.inputs.prod_choice != 'true'
+        with:
+          name: image-tags
+          path: .
     
-      # - name: Set image tags as environment variables
-      #   if: github.event.inputs.full_deploy == 'true' || github.event.inputs.re_tag != '' && github.event.inputs.viewsonic_choice == 'true' && github.event.inputs.prod_choice == 'false'
-      #   run: |
-      #     echo "LARAVEL_IMAGE=$(<laravel_image_tag.txt)" >> $GITHUB_ENV
+      - name: Set image tags as environment variables (Viewsonic Only)
+        if: (github.event.inputs.full_deploy == 'true' || github.event.inputs.re_tag != '') && 
+            github.event.inputs.viewsonic_choice == 'true' && 
+            github.event.inputs.prod_choice != 'true'
+        run: |
+          echo "LARAVEL_IMAGE=$(<laravel_image_tag.txt)" >> $GITHUB_ENV
   
-      # - name: Update PHP Laravel deployment image tag and change cause
-      #   if: github.event.inputs.full_deploy == 'true' || github.event.inputs.re_tag != '' && github.event.inputs.viewsonic_choice == 'true' && github.event.inputs.prod_choice == 'false'
-      #   run: |
-      #     yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' k8s/base/deployment/base-deploy.yaml
-      #     yq -i '.spec.template.metadata.annotations."kubernetes.io/change-cause" = "Updated to ${{ env.LARAVEL_IMAGE }}"' k8s/base/deployment/base-deploy.yaml
-      #     yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' k8s/base/cronjob/base-cronjob.yaml
+      - name: Update PHP Laravel deployment image tag and change cause (Viewsonic Only)
+        if: (github.event.inputs.full_deploy == 'true' || github.event.inputs.re_tag != '') && 
+            github.event.inputs.viewsonic_choice == 'true' && 
+            github.event.inputs.prod_choice != 'true'
+        run: |
+          yq -i '.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' k8s/base/deployment/base-deploy.yaml
+          yq -i '.spec.template.metadata.annotations."kubernetes.io/change-cause" = "Updated to ${{ env.LARAVEL_IMAGE }}"' k8s/base/deployment/base-deploy.yaml
+          yq -i '.spec.jobTemplate.spec.template.spec.containers[0].image = "${{ env.LARAVEL_IMAGE }}"' k8s/base/cronjob/base-cronjob.yaml
   
-      # - name: Commit and Push Image Tags
-      #   if: github.event.inputs.full_deploy == 'true' || github.event.inputs.re_tag != '' && github.event.inputs.viewsonic_choice == 'true' && github.event.inputs.prod_choice == 'false'
-      #   run: |
-      #     git pull origin main
-      #     git config --local user.email "suriyanarayanan.s@greatify.ai"
-      #     git config --local user.name "surya1005"
-      #     git add k8s/base/deployment/base-deploy.yaml k8s/base/cronjob/base-cronjob.yaml
-      #     git commit -m "Update deployment image and change cause [Automated] For Production Environment"
-      #     git push origin main
+      - name: Commit and Push Image Tags (Viewsonic Only)
+        if: (github.event.inputs.full_deploy == 'true' || github.event.inputs.re_tag != '') && 
+            github.event.inputs.viewsonic_choice == 'true' && 
+            github.event.inputs.prod_choice != 'true'
+        run: |
+          git pull origin main
+          git config --local user.email "suriyanarayanan.s@greatify.ai"
+          git config --local user.name "surya1005"
+          git add k8s/base/deployment/base-deploy.yaml k8s/base/cronjob/base-cronjob.yaml
+          git commit -m "Update deployment image and change cause [Automated] For Viewsonic Only"
+          git push origin main
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
