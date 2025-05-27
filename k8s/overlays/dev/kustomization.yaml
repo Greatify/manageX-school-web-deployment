@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:656569527b565085520b80968fb304b95df33728-GE-10057---Staff-Free-Period-R-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d7f4e702c93812c4c0f1d5f3b2661dbbbfc2e82e-Bug-rename-and-alignment-in-re-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:656569527b565085520b80968fb304b95df33728-GE-10057---Staff-Free-Period-R-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d7f4e702c93812c4c0f1d5f3b2661dbbbfc2e82e-Bug-rename-and-alignment-in-re-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:656569527b565085520b80968fb304b95df33728-GE-10057---Staff-Free-Period-R-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d7f4e702c93812c4c0f1d5f3b2661dbbbfc2e82e-Bug-rename-and-alignment-in-re-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
