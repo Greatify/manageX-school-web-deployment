@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:57231bfd53457fbb56525baa0c5c54a88ab09988-GE-10193-remove-student-duplic-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:1afadccf541ab40fa70491f6729127a610321522-GE-10193-remove-student-duplic-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:57231bfd53457fbb56525baa0c5c54a88ab09988-GE-10193-remove-student-duplic-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:1afadccf541ab40fa70491f6729127a610321522-GE-10193-remove-student-duplic-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:57231bfd53457fbb56525baa0c5c54a88ab09988-GE-10193-remove-student-duplic-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:1afadccf541ab40fa70491f6729127a610321522-GE-10193-remove-student-duplic-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
