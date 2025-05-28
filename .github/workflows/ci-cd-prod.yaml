@@ -6,7 +6,7 @@ on:
       deploy_password:
         description: 'Enter deployment password'
         required: true
-        type: string
+        type: string 
 
       re_tag:
         description: 'Enter a new tag to re-tag the staging Docker image for production deployment'
