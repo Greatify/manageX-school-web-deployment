@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:386f855fe232012b5f8058439a16c6324be65420-Feepaid-Cosmetic-Changes
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:cb6686270f1437fe327b93eaee1f0ea991d5a30e-PaymentMode-Changes
 
 
   # Patch for Deployment configuration
@@ -55,11 +55,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:386f855fe232012b5f8058439a16c6324be65420-Feepaid-Cosmetic-Changes 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:cb6686270f1437fe327b93eaee1f0ea991d5a30e-PaymentMode-Changes 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:386f855fe232012b5f8058439a16c6324be65420-Feepaid-Cosmetic-Changes
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:cb6686270f1437fe327b93eaee1f0ea991d5a30e-PaymentMode-Changes
                 resources:
                   requests:
                     cpu: 400m
