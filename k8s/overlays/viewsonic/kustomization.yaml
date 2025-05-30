@@ -99,7 +99,7 @@ patches:
         annotations:
           alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:225989355798:certificate/6e7b1839-609b-4d8e-b061-71d1d88991aa
           alb.ingress.kubernetes.io/cors-allow-origin: >-
-            https://greatifydev.school,https://www.greatifydev.school,https://*.greatifydev.school
+            https://greatify.dev,https://www.greatify.dev,https://*.greatify.dev
       spec:
         rules:
           - http:
