@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:7c74798a09ff890e4d725237337f1393bf50f782-MNX-219-2430-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:6c4a7a4bb746b3a0df1e9560f9b4534214e4b32d--GE-9548---fix-alignment-issue-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:7c74798a09ff890e4d725237337f1393bf50f782-MNX-219-2430-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:6c4a7a4bb746b3a0df1e9560f9b4534214e4b32d--GE-9548---fix-alignment-issue-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:7c74798a09ff890e4d725237337f1393bf50f782-MNX-219-2430-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:6c4a7a4bb746b3a0df1e9560f9b4534214e4b32d--GE-9548---fix-alignment-issue-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
