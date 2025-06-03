@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3ad96c9cfadfd4761436ecaae05e228d358bdceb-BugFixes
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3765581dece416bea9678439c01714f82a80e8fd-Fee-Reciept-BugFixes
 
 
   # Patch for Deployment configuration
@@ -55,11 +55,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3ad96c9cfadfd4761436ecaae05e228d358bdceb-BugFixes 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3765581dece416bea9678439c01714f82a80e8fd-Fee-Reciept-BugFixes 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3ad96c9cfadfd4761436ecaae05e228d358bdceb-BugFixes
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3765581dece416bea9678439c01714f82a80e8fd-Fee-Reciept-BugFixes
                 resources:
                   requests:
                     cpu: 400m
