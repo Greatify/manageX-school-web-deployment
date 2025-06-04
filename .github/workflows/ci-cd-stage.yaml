@@ -264,26 +264,26 @@ jobs:
           echo "Created invalidation: $INVALIDATION_ID"
           aws cloudfront wait invalidation-completed --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION }} --id $INVALIDATION_ID
 
-      # - name: Slack Notification on Deployment Status
-      #   if: always()
-      #   uses: 8398a7/action-slack@v3
-      #   with:
-      #     status: ${{ job.status }}
-      #     fields: author,action,eventName,ref,workflow
-      #     author_name: School Stage Deployment Status
-      #     mention: ${{ github.actor }}
-      #     if_mention: success,failure
-      #     job_name: Deploy-to-Stage
-      #     channel: managex-school
-      #     username: manageX-school
-      #     text: |
-      #       ${{ format('{0} *Deployment Job* - *{1} (School Stage Environment)*', job.status == 'success' && ':rocket:' || ':x:', job.status) }}
-      #       *Author:* `${{ github.actor }}`
-      #       *Deployment for commit* *${{ needs.Docker-Build.outputs.commit_sha }}* *pushed by* *@${{ github.actor }}* has *${{ job.status }}* in *School Stage Environment*.
+      - name: Slack Notification on Deployment Status
+        if: always()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: author,action,eventName,ref,workflow
+          author_name: School Stage Deployment Status
+          mention: ${{ github.actor }}
+          if_mention: success,failure
+          job_name: Deploy-to-Stage
+          channel: managex-school
+          username: manageX-school
+          text: |
+            ${{ format('{0} *Deployment Job* - *{1} (School Stage Environment)*', job.status == 'success' && ':rocket:' || ':x:', job.status) }}
+            *Author:* `${{ github.actor }}`
+            *Deployment for commit* *${{ needs.Docker-Build.outputs.commit_sha }}* *pushed by* *@${{ github.actor }}* has *${{ job.status }}* in *School Stage Environment*.
 
-      #       *Commit Message:* *${{ github.event.inputs.stage_tag }}*
+            *Commit Message:* *${{ github.event.inputs.stage_tag }}*
 
-      #       ${{ job.status == 'success' && 'Your changes have been successfully deployed to the *School Stage environment*. Please verify the changes on the server.' || 'Deployment failed. Please check the logs for more details.' }}
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      #     SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
+            ${{ job.status == 'success' && 'Your changes have been successfully deployed to the *School Stage environment*. Please verify the changes on the server.' || 'Deployment failed. Please check the logs for more details.' }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
