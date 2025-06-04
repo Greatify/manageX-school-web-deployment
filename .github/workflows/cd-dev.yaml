@@ -72,24 +72,24 @@ jobs:
           echo "Created invalidation: $INVALIDATION_ID"
           aws cloudfront wait invalidation-completed --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION }} --id $INVALIDATION_ID
 
-      - name: Slack Notification on Deployment Status
-        if: always()
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          fields: author,action,eventName,ref,workflow
-          author_name: School Dev Deployment Status
-          mention: ${{ github.event.inputs.actor }}
-          if_mention: success,failure
-          job_name: Deploy-to-Dev
-          channel: managex-school
-          username: manageX-school
-          text: |
-            ${{ format('{0} *Deployment Job* - *{1} (School Dev Environment)*', job.status == 'success' && ':rocket:' || ':x:', job.status) }}
-            *Author:* `${{ env.ACTOR }}`
-            *Deployment for commit* *${{ env.COMMIT_SHA }}* *pushed by* @${{ env.ACTOR }} has ${{ job.status }} in *School Dev Environment*.
-            *Message:* *${{ env.COMMIT_MESSAGE }}*
-            ${{ job.status == 'success' && 'Your changes have been successfully deployed to the *School Dev environment*. Please verify the changes on the server.' || 'Deployment failed. Please check the logs for more details.' }}
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
+      # - name: Slack Notification on Deployment Status
+      #   if: always()
+      #   uses: 8398a7/action-slack@v3
+      #   with:
+      #     status: ${{ job.status }}
+      #     fields: author,action,eventName,ref,workflow
+      #     author_name: School Dev Deployment Status
+      #     mention: ${{ github.event.inputs.actor }}
+      #     if_mention: success,failure
+      #     job_name: Deploy-to-Dev
+      #     channel: managex-school
+      #     username: manageX-school
+      #     text: |
+      #       ${{ format('{0} *Deployment Job* - *{1} (School Dev Environment)*', job.status == 'success' && ':rocket:' || ':x:', job.status) }}
+      #       *Author:* `${{ env.ACTOR }}`
+      #       *Deployment for commit* *${{ env.COMMIT_SHA }}* *pushed by* @${{ env.ACTOR }} has ${{ job.status }} in *School Dev Environment*.
+      #       *Message:* *${{ env.COMMIT_MESSAGE }}*
+      #       ${{ job.status == 'success' && 'Your changes have been successfully deployed to the *School Dev environment*. Please verify the changes on the server.' || 'Deployment failed. Please check the logs for more details.' }}
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #     SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
