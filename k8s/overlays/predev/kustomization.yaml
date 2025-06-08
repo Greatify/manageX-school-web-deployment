@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:c34da3321a6fbac9a0c1afdbae955056d09a8124-Slack-Integration-Test
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3c42a007f5d0aed8343f1a3281cf0fb7ea3022ae-BugFixes-Enhancements
 
 
   # Patch for Deployment configuration
@@ -55,11 +55,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:c34da3321a6fbac9a0c1afdbae955056d09a8124-Slack-Integration-Test 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3c42a007f5d0aed8343f1a3281cf0fb7ea3022ae-BugFixes-Enhancements 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:c34da3321a6fbac9a0c1afdbae955056d09a8124-Slack-Integration-Test
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3c42a007f5d0aed8343f1a3281cf0fb7ea3022ae-BugFixes-Enhancements
                 resources:
                   requests:
                     cpu: 400m
