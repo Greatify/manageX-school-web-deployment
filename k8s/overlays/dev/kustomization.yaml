@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:39f48bf12666d637a6e32899a7259b251a1dfca0-MNX-298-2507-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:5caf8f81a9b697c594409b966ac1c58f50d9a743-MNX-111-spell-error-2509-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:39f48bf12666d637a6e32899a7259b251a1dfca0-MNX-298-2507-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:5caf8f81a9b697c594409b966ac1c58f50d9a743-MNX-111-spell-error-2509-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:39f48bf12666d637a6e32899a7259b251a1dfca0-MNX-298-2507-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:5caf8f81a9b697c594409b966ac1c58f50d9a743-MNX-111-spell-error-2509-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
