@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:db94ea6278b4641e3e224d46fc300eb61865c6c1-substitution-workflow
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:b007c7f05dbd71bebfaf6a63b9727eb30d11b886-substitution-workflow-IPS
 
 
   # Patch for Deployment configuration
@@ -55,11 +55,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:db94ea6278b4641e3e224d46fc300eb61865c6c1-substitution-workflow 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:b007c7f05dbd71bebfaf6a63b9727eb30d11b886-substitution-workflow-IPS 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:db94ea6278b4641e3e224d46fc300eb61865c6c1-substitution-workflow
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:b007c7f05dbd71bebfaf6a63b9727eb30d11b886-substitution-workflow-IPS
                 resources:
                   requests:
                     cpu: 400m
