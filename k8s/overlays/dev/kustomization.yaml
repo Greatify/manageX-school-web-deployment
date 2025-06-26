@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:0fb88cd53aeeb89c810e8ffd9ec49c803e07b6fc-MNX-433--2605-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:42fcb46fafbc989ffc7ec813155435c5cef55f11-Mnx-360-holiday-period-config--pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:0fb88cd53aeeb89c810e8ffd9ec49c803e07b6fc-MNX-433--2605-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:42fcb46fafbc989ffc7ec813155435c5cef55f11-Mnx-360-holiday-period-config--pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:0fb88cd53aeeb89c810e8ffd9ec49c803e07b6fc-MNX-433--2605-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:42fcb46fafbc989ffc7ec813155435c5cef55f11-Mnx-360-holiday-period-config--pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
