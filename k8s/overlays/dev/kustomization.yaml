@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:8e9eaf4bd1d83a78831b6313361d13131aca9acc-MNX-471-2644-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:9a40e45dee67deeb55382b386b5c3b8d20cee387-MNX-226-transdocument-uplaod-2-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:8e9eaf4bd1d83a78831b6313361d13131aca9acc-MNX-471-2644-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:9a40e45dee67deeb55382b386b5c3b8d20cee387-MNX-226-transdocument-uplaod-2-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:8e9eaf4bd1d83a78831b6313361d13131aca9acc-MNX-471-2644-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:9a40e45dee67deeb55382b386b5c3b8d20cee387-MNX-226-transdocument-uplaod-2-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
