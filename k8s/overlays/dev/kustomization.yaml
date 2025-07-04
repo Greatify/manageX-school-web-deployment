@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ca5f267a0267b018e3df395b4d9a9b09eb5f09df-Reopenbugsclass-activity-2679-pushed-by-hari-14rs
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:91d59b823e16cbb7ba6d159451fbfe3eb358a380-MNX-491-student-community-2678-pushed-by-hari-14rs
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ca5f267a0267b018e3df395b4d9a9b09eb5f09df-Reopenbugsclass-activity-2679-pushed-by-hari-14rs 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:91d59b823e16cbb7ba6d159451fbfe3eb358a380-MNX-491-student-community-2678-pushed-by-hari-14rs 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:ca5f267a0267b018e3df395b4d9a9b09eb5f09df-Reopenbugsclass-activity-2679-pushed-by-hari-14rs
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:91d59b823e16cbb7ba6d159451fbfe3eb358a380-MNX-491-student-community-2678-pushed-by-hari-14rs
                 resources:
                   requests:
                     cpu: 400m
