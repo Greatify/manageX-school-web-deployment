@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:b6d474e21e01809755120e316f27ce6b6727b288-MNX-504-fee-payment-error-2682-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:475012300eafe32a99945738db864a1789fb0f3b-MNX-504-fee-payment-error-v2-2-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:b6d474e21e01809755120e316f27ce6b6727b288-MNX-504-fee-payment-error-2682-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:475012300eafe32a99945738db864a1789fb0f3b-MNX-504-fee-payment-error-v2-2-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:b6d474e21e01809755120e316f27ce6b6727b288-MNX-504-fee-payment-error-2682-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:475012300eafe32a99945738db864a1789fb0f3b-MNX-504-fee-payment-error-v2-2-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
