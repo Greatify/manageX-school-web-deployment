@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:5518b737aec40c23e3512ff16aa94b800a99877f-feat-upgrade-PHP-version-to-8.-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3493d41939222fe173ad966942180f349119de5c-MNX-279---staff-report-to-mult-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:5518b737aec40c23e3512ff16aa94b800a99877f-feat-upgrade-PHP-version-to-8.-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3493d41939222fe173ad966942180f349119de5c-MNX-279---staff-report-to-mult-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:5518b737aec40c23e3512ff16aa94b800a99877f-feat-upgrade-PHP-version-to-8.-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:3493d41939222fe173ad966942180f349119de5c-MNX-279---staff-report-to-mult-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
