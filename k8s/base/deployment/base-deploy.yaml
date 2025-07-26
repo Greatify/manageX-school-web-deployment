@@ -19,7 +19,7 @@ spec:
       labels:
         app: managex-school
       annotations:
-        kubernetes.io/change-cause: "Updated to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:ceac6f98515e340d7702e2aca776d6f549970465-GE-10325-REOPENPDF-has-Alignment-issues-and-CSV-date-format-needs-to-be-changed"
+        kubernetes.io/change-cause: "Updated to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:79e989cfb4d322d65bfb8bc67a31b0b112c8e493-MNX-741-PR2884"
     spec:
       serviceAccountName: school-service
       volumes:
@@ -58,7 +58,7 @@ spec:
             claimName: managex-school-pvc
       containers:
         - name: managex-school
-          image: "399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:ceac6f98515e340d7702e2aca776d6f549970465-GE-10325-REOPENPDF-has-Alignment-issues-and-CSV-date-format-needs-to-be-changed"
+          image: "399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:79e989cfb4d322d65bfb8bc67a31b0b112c8e493-MNX-741-PR2884"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
