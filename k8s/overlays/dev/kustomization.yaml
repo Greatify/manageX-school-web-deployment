@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:b2eda23d24108433cd12735996ab2c84f014bce5-MNX-750-student-token-update-j-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:45be7387a3b9896ef28b9c6b8117372e83add4c5-old-overduecheckreport-code-co-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:b2eda23d24108433cd12735996ab2c84f014bce5-MNX-750-student-token-update-j-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:45be7387a3b9896ef28b9c6b8117372e83add4c5-old-overduecheckreport-code-co-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:b2eda23d24108433cd12735996ab2c84f014bce5-MNX-750-student-token-update-j-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:45be7387a3b9896ef28b9c6b8117372e83add4c5-old-overduecheckreport-code-co-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
