@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:bd1f61249c7c0e5b1a7cdc48cb2da34f93a9256e-GE-10307-Fees-Invoice-Receipt--pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:e8bbae729b0b21ab5bf85433d9d6ae2815fd19ed-MNX-778-api-response-changes-2-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:bd1f61249c7c0e5b1a7cdc48cb2da34f93a9256e-GE-10307-Fees-Invoice-Receipt--pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:e8bbae729b0b21ab5bf85433d9d6ae2815fd19ed-MNX-778-api-response-changes-2-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:bd1f61249c7c0e5b1a7cdc48cb2da34f93a9256e-GE-10307-Fees-Invoice-Receipt--pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:e8bbae729b0b21ab5bf85433d9d6ae2815fd19ed-MNX-778-api-response-changes-2-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
