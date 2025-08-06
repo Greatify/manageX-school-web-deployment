@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:0e5b91affde8a0043efed9b84f2b0df598bf8e79-New-Extension-Changes
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:1190fab2a14cdb8c88bee90fa3101c1d9e05e66b-Enable-ImageMagick-PHP-extension
 
 
   # Patch for Deployment configuration
@@ -55,11 +55,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:0e5b91affde8a0043efed9b84f2b0df598bf8e79-New-Extension-Changes 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:1190fab2a14cdb8c88bee90fa3101c1d9e05e66b-Enable-ImageMagick-PHP-extension 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:0e5b91affde8a0043efed9b84f2b0df598bf8e79-New-Extension-Changes
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:1190fab2a14cdb8c88bee90fa3101c1d9e05e66b-Enable-ImageMagick-PHP-extension
                 resources:
                   requests:
                     cpu: 400m
