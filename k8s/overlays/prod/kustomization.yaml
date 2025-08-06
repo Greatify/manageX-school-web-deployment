@@ -90,6 +90,10 @@ patches:
           alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:399600302704:certificate/39c09169-0ac4-43ee-9ba7-627391f0f45e
           alb.ingress.kubernetes.io/cors-allow-origin: >-
             https://heycampus.app,https://www.heycampus.app,https://*.heycampus.app
+          alb.ingress.kubernetes.io/load-balancer-attributes: >-
+            access_logs.s3.enabled=true,
+            access_logs.s3.bucket=heycampuslive,
+            access_logs.s3.prefix=ELBLogs  
       spec:
         rules:
           - http:
