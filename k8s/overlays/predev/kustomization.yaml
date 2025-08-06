@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:faa78c36bf388066eb37d56dfa18c22cf05746c7-parent-app-fee-list
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d9d52678c3baa424e78e7f59702838e7e350dc1d-Added-Opcache-settings
 
 
   # Patch for Deployment configuration
@@ -55,11 +55,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:faa78c36bf388066eb37d56dfa18c22cf05746c7-parent-app-fee-list 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d9d52678c3baa424e78e7f59702838e7e350dc1d-Added-Opcache-settings 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:faa78c36bf388066eb37d56dfa18c22cf05746c7-parent-app-fee-list
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:d9d52678c3baa424e78e7f59702838e7e350dc1d-Added-Opcache-settings
                 resources:
                   requests:
                     cpu: 400m
