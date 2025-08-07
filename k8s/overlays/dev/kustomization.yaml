@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:5e613fac4bd538ba377b398fd88e727c0c9f5272-Daily-attendance-report-date-d-pushed-by-hari-14rs
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:6eb6c2fe99f0387ec637c5b6cdf0ae08714be676-Daily-collection-report-sectio-pushed-by-hari-14rs
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:5e613fac4bd538ba377b398fd88e727c0c9f5272-Daily-attendance-report-date-d-pushed-by-hari-14rs 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:6eb6c2fe99f0387ec637c5b6cdf0ae08714be676-Daily-collection-report-sectio-pushed-by-hari-14rs 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:5e613fac4bd538ba377b398fd88e727c0c9f5272-Daily-attendance-report-date-d-pushed-by-hari-14rs
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:6eb6c2fe99f0387ec637c5b6cdf0ae08714be676-Daily-collection-report-sectio-pushed-by-hari-14rs
                 resources:
                   requests:
                     cpu: 400m
