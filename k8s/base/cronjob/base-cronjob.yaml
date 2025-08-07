@@ -26,7 +26,7 @@ spec:
                   secretProviderClass: managex-school-secrets
           containers:
             - name: school-cronjob
-              image: "399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:cddd0a8b7039b2b933c3de628206e594406f74c4-MNX-298---Issue-with-Downloading-Daily-Student-Attendance-Reports-PDF-Format"
+              image: "399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:f89bcd95bdf0ed4cc73498bf924f94f3972b1953-MNX-857-School-Daily-Collection-Report-Select-All-Option-for-Class-Selection"
               command: ["php", "/var/www/html/artisan", "schedule:run"]
               volumeMounts:
                 - name: school-secrets
