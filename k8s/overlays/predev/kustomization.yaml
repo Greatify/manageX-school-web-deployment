@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:c901af52bd4d855bb8bc2b59d996f26977a939ef-Implemented-Optimizations
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:c3142ba036782e52d4d16705619bf20cff3f7dca-Added-imagemagick-settings
 
 
   # Patch for Deployment configuration
@@ -55,11 +55,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:c901af52bd4d855bb8bc2b59d996f26977a939ef-Implemented-Optimizations 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:c3142ba036782e52d4d16705619bf20cff3f7dca-Added-imagemagick-settings 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:c901af52bd4d855bb8bc2b59d996f26977a939ef-Implemented-Optimizations
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:c3142ba036782e52d4d16705619bf20cff3f7dca-Added-imagemagick-settings
                 resources:
                   requests:
                     cpu: 400m
