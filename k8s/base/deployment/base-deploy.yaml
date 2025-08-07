@@ -19,7 +19,7 @@ spec:
       labels:
         app: managex-school
       annotations:
-        kubernetes.io/change-cause: "Updated to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:1d5b23bae704583b4fffb5baf2b1f75d7565131c-MNX-665-MNX-710-PR2988"
+        kubernetes.io/change-cause: "Updated to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:cddd0a8b7039b2b933c3de628206e594406f74c4-MNX-298---Issue-with-Downloading-Daily-Student-Attendance-Reports-PDF-Format"
     spec:
       serviceAccountName: school-service
       volumes:
@@ -58,7 +58,7 @@ spec:
             claimName: managex-school-pvc
       containers:
         - name: managex-school
-          image: "399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:1d5b23bae704583b4fffb5baf2b1f75d7565131c-MNX-665-MNX-710-PR2988"
+          image: "399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school_production:cddd0a8b7039b2b933c3de628206e594406f74c4-MNX-298---Issue-with-Downloading-Daily-Student-Attendance-Reports-PDF-Format"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
