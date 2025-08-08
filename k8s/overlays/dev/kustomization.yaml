@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:00601a15e683ae18fa6ab34f1088181870d64e8e-Mnxt-194-home-assign-3001-pushed-by-hari-14rs
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:25f259efe46d3ac01d5edce4838f997df809525c-MNX-664-Enable-Parent-Communic-pushed-by-hari-14rs
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:00601a15e683ae18fa6ab34f1088181870d64e8e-Mnxt-194-home-assign-3001-pushed-by-hari-14rs 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:25f259efe46d3ac01d5edce4838f997df809525c-MNX-664-Enable-Parent-Communic-pushed-by-hari-14rs 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:00601a15e683ae18fa6ab34f1088181870d64e8e-Mnxt-194-home-assign-3001-pushed-by-hari-14rs
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:25f259efe46d3ac01d5edce4838f997df809525c-MNX-664-Enable-Parent-Communic-pushed-by-hari-14rs
                 resources:
                   requests:
                     cpu: 400m
