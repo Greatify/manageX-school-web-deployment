@@ -145,7 +145,7 @@ patches:
             
             # CORS (Cross-Origin Resource Sharing) headers for API access
             set $cors_origin '';
-            if ($http_origin ~* ^https?://(localhost:[0-9]+|([a-z0-9-]+\.)?greatify\.school(:[0-9]+)?)$) {
+            if ($http_origin ~* ^https?://(localhost:[0-9]+|([a-z0-9-]+\.)?heycampus\.app(:[0-9]+)?)$) {
                 set $cors_origin $http_origin;
             }
             add_header 'Access-Control-Allow-Origin' $cors_origin always;
