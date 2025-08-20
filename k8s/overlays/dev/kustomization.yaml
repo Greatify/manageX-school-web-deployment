@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:7f3f6bc2db1d6fd21d4665d30aaa5bf4f237eed9-Revert-Mnx-1054-sum-report-309-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:10fcb178fbcd7a40886fc63a821fa3cab802cf75-MNX-1131---admit-card-alignmen-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:7f3f6bc2db1d6fd21d4665d30aaa5bf4f237eed9-Revert-Mnx-1054-sum-report-309-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:10fcb178fbcd7a40886fc63a821fa3cab802cf75-MNX-1131---admit-card-alignmen-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:7f3f6bc2db1d6fd21d4665d30aaa5bf4f237eed9-Revert-Mnx-1054-sum-report-309-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:10fcb178fbcd7a40886fc63a821fa3cab802cf75-MNX-1131---admit-card-alignmen-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
