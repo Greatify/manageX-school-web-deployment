@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:25de18392dccfc1c79f2894b06a36e587cd3d95a-MNX-1170---preloader-added-for-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:b6db34914f7e53307bd6c91c79f49f1c4eaf4e9c-MNX-509-Add-notification-templ-pushed-by-surya1005
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:25de18392dccfc1c79f2894b06a36e587cd3d95a-MNX-1170---preloader-added-for-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:b6db34914f7e53307bd6c91c79f49f1c4eaf4e9c-MNX-509-Add-notification-templ-pushed-by-surya1005 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:25de18392dccfc1c79f2894b06a36e587cd3d95a-MNX-1170---preloader-added-for-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:b6db34914f7e53307bd6c91c79f49f1c4eaf4e9c-MNX-509-Add-notification-templ-pushed-by-surya1005
                 resources:
                   requests:
                     cpu: 400m
