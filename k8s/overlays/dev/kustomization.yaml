@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:f3476de34cd5b9528c17670adcfb08ba36ff40fe-MNX-1168-Remove-Grade-Option-f-pushed-by-surya1005
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-b0f0f5048af1effaf3c5adb09e9c3a59b253c5a3-Update-CI-workflow-to-use-dev-
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:f3476de34cd5b9528c17670adcfb08ba36ff40fe-MNX-1168-Remove-Grade-Option-f-pushed-by-surya1005 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-b0f0f5048af1effaf3c5adb09e9c3a59b253c5a3-Update-CI-workflow-to-use-dev- 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:f3476de34cd5b9528c17670adcfb08ba36ff40fe-MNX-1168-Remove-Grade-Option-f-pushed-by-surya1005
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-b0f0f5048af1effaf3c5adb09e9c3a59b253c5a3-Update-CI-workflow-to-use-dev-
                 resources:
                   requests:
                     cpu: 400m
