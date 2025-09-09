@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-90de9348a9b8569d03b256a65e4d1184f55369ca-MNXT-213-3157Co-authored-by-Aa
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-e04ae1a8000aa2da4ca4be7e4abf990e759a7541-MNX-1156-Add-validation-for-do
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-90de9348a9b8569d03b256a65e4d1184f55369ca-MNXT-213-3157Co-authored-by-Aa 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-e04ae1a8000aa2da4ca4be7e4abf990e759a7541-MNX-1156-Add-validation-for-do 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-90de9348a9b8569d03b256a65e4d1184f55369ca-MNXT-213-3157Co-authored-by-Aa
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-e04ae1a8000aa2da4ca4be7e4abf990e759a7541-MNX-1156-Add-validation-for-do
                 resources:
                   requests:
                     cpu: 400m
