@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-7830bf77ac97ec39015986a28db4d4f4ce4c0b69-MNX-1183---School---Admit-Card
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-f45cbd2234d2b76c6f2b19fc225b880b7b621a2a-MNX-1117-Enhance-book-selectio
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-7830bf77ac97ec39015986a28db4d4f4ce4c0b69-MNX-1183---School---Admit-Card 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-f45cbd2234d2b76c6f2b19fc225b880b7b621a2a-MNX-1117-Enhance-book-selectio 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-7830bf77ac97ec39015986a28db4d4f4ce4c0b69-MNX-1183---School---Admit-Card
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-f45cbd2234d2b76c6f2b19fc225b880b7b621a2a-MNX-1117-Enhance-book-selectio
                 resources:
                   requests:
                     cpu: 400m
