@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-e9e492d2842407f0d3aa83f8e4d046b44fbf8634-MNX-1194--Enhance-leave-entry-
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-4b8c8911c307f66c5372181d7665afebd78777bb-MNX-871--3165Co-authored-by-Aa
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-e9e492d2842407f0d3aa83f8e4d046b44fbf8634-MNX-1194--Enhance-leave-entry- 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-4b8c8911c307f66c5372181d7665afebd78777bb-MNX-871--3165Co-authored-by-Aa 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-e9e492d2842407f0d3aa83f8e4d046b44fbf8634-MNX-1194--Enhance-leave-entry-
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-4b8c8911c307f66c5372181d7665afebd78777bb-MNX-871--3165Co-authored-by-Aa
                 resources:
                   requests:
                     cpu: 400m
