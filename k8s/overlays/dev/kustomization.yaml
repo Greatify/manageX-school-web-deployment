@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-886ca45471c30de34e71d82e201b0927e53dfb5f-MNX-509-Refactor-SubstituteMan
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-b291f9523d8d5dab87ece69f758c88adf10b582f-Resolve-dev2stage-conflict-res
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-886ca45471c30de34e71d82e201b0927e53dfb5f-MNX-509-Refactor-SubstituteMan 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-b291f9523d8d5dab87ece69f758c88adf10b582f-Resolve-dev2stage-conflict-res 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-886ca45471c30de34e71d82e201b0927e53dfb5f-MNX-509-Refactor-SubstituteMan
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-b291f9523d8d5dab87ece69f758c88adf10b582f-Resolve-dev2stage-conflict-res
                 resources:
                   requests:
                     cpu: 400m
