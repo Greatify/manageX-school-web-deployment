@@ -43,29 +43,14 @@ jobs:
         if: steps.password-check.outcome == 'failure'
         uses: 8398a7/action-slack@v3
         with:
-          status: ${{ job.status }}
-          fields: repo,message,commit,eventName,ref,workflow
-          author_name: Deployment Security Alert 🚨
-          mention: channel
-          if_mention: always
-          job_name: security-check
+          status: failure
           channel: managex-school
-          username: manageX-school
           text: |
-            🚨 *Unauthorized Deployment Attempt* 
-            *User:* `${{ github.actor }}`
-            *Workflow:* Deploy to Stage
-            *Status:* Failed - Invalid Password
-            
-            This incident has been logged for security monitoring.
+            🚨 *Unauthorized Stage Deployment Attempt*
+            User: @${{ github.actor }} | Status: Failed - Invalid Password
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
-      - name: Final Password Check
-        if: steps.password-check.outcome == 'failure'
-        run: |
-          echo "::error::Authentication failed - Deployment blocked"
-          exit 1 
+  
 
   Docker-Build:
     name: Docker Build
@@ -188,21 +173,12 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: failure
-          fields: repo,message,commit,author,action,eventName,ref
-          author_name: 🐳 Docker Build Failed (School Stage Environment)
-          mention: ${{ github.actor }}
-          if_mention: failure
-          job_name: Docker Build
           channel: managex-school
-          username: manageX-school
+          author_name: School Stage Docker Build Status
           text: |
-            ❌ Docker build failed for commit **${{ steps.get-commit-sha.outputs.commit_sha }}** pushed by @${{ github.actor }} in School Stage environment.
-            *Author:* `${{ github.actor }}`
-            Commit ID: ${{ steps.get-commit-sha.outputs.commit_sha }}
-            Error: ${{ steps.build-and-push.outputs.error }}
-            Error message: ${{ steps.run-tests.outputs.error-message }}
-            Please fix the issue and push the changes again. Note: Code is not deployed.
-            @${{ github.actor }}, your changes are not deployed because of this issue.
+            [❌] School Stage Docker Build: Failed
+            Commit: ${{ steps.get-commit-sha.outputs.commit_sha }} | By: @${{ github.actor }}
+            Message: ${{ github.event.inputs.stage_tag }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
@@ -254,8 +230,13 @@ jobs:
           git config --local user.email "suriyanarayanan.s@greatify.ai"
           git config --local user.name "surya1005"
           git add -f k8s/base/deployment/base-deploy.yaml k8s/base/cronjob/base-cronjob.yaml
-          git commit -m "Update deployment image and change cause [Automated] For Stage Environment"
-          git push origin main
+          if git diff --cached --quiet; then
+            echo "No changes to commit, skipping commit and push"
+          else
+            echo "Changes detected, committing and pushing"
+            git commit -m "Update deployment image and change cause [Automated] For Stage Environment"
+            git push origin main
+          fi
 
       - name: Apply K8s manifests to Stage Environment With Validation
         run: |
@@ -274,6 +255,7 @@ jobs:
         with:
           status: ${{ job.status }}
           channel: managex-school
+          author_name: School Stage Deployment Status
           text: |
             [${{ job.status == 'success' && '✅' || '❌' }}] School Stage Deployment: ${{ job.status }}
             Commit: ${{ needs.Docker-Build.outputs.commit_sha }} | By: @${{ github.actor }}

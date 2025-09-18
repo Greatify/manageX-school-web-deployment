@@ -80,6 +80,7 @@ jobs:
         with:
           status: ${{ job.status }}
           channel: managex-school
+          author_name: School Dev Deployment Status
           text: |
             [${{ job.status == 'success' && '✅' || '❌' }}] School Dev Deployment: ${{ job.status }}
             Commit: ${{ env.COMMIT_SHA }} | By: @${{ env.ACTOR }}

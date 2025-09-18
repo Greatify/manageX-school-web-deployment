@@ -46,6 +46,7 @@ concurrency:
 
 jobs:        
   Authentication:
+    name: Authentication
     runs-on: ubuntu-latest
     steps:
       - name: Verify deployment password
@@ -73,6 +74,7 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
   Docker-Build:
+    name: Docker Build
     runs-on: ubuntu-latest
     needs: [Authentication]
     if: github.event.inputs.full_deploy == 'true'
@@ -194,6 +196,7 @@ jobs:
         with:
           status: failure
           channel: managex-school
+          author_name: School Production Docker Build Status
           text: |
             [❌] School Production Docker Build: Failed
             Commit: ${{ steps.get-commit-sha.outputs.commit_sha }} | By: @${{ github.actor }}
@@ -202,6 +205,7 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
   ReTag-Image:
+    name: ReTag Image
     runs-on: ubuntu-latest
     needs: [Authentication]
     if: github.event.inputs.full_deploy == 'false' && github.event.inputs.re_tag != ''
@@ -276,6 +280,7 @@ jobs:
           if-no-files-found: error
 
   Deploy-to-Production:
+    name: Production Deployment
     needs: [Docker-Build, ReTag-Image]
     runs-on: ubuntu-latest
     if: |
@@ -286,6 +291,7 @@ jobs:
     environment: production
     env:
       CLOUDFRONT_DISTRIBUTION: ${{ secrets.PROD_CLOUDFRONT_DISTRIBUTION }} 
+      URL: ${{ vars.PROD_URL }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -316,9 +322,14 @@ jobs:
           git pull origin main
           git config --local user.email "suriyanarayanan.s@greatify.ai"
           git config --local user.name "surya1005"
-          git add k8s/base/deployment/base-deploy.yaml k8s/base/cronjob/base-cronjob.yaml
-          git commit -m "Update deployment image and change cause [Automated] For Production Environment"
-          git push origin main
+          git add -f k8s/base/deployment/base-deploy.yaml k8s/base/cronjob/base-cronjob.yaml
+          if git diff --cached --quiet; then
+            echo "No changes to commit, skipping commit and push"
+          else
+            echo "Changes detected, committing and pushing"
+            git commit -m "Update deployment image and change cause [Automated] For Production Environment"
+            git push origin main
+          fi
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -347,14 +358,17 @@ jobs:
         with:
           status: ${{ job.status }}
           channel: managex-school
+          author_name: School Production Deployment Status
           text: |
             [${{ job.status == 'success' && '✅' || '❌' }}] School Production Deployment: ${{ job.status }}
             Commit: ${{ github.event.inputs.full_deploy == 'true' && needs.Docker-Build.outputs.commit_sha || needs.ReTag-Image.outputs.commit_sha }} | By: @${{ github.actor }}
             Message: ${{ github.event.inputs.prod_tag }}
+            *URL:* ${{env.URL}}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
   Deploy-to-Viewsonic:
+    name: Viewsonic Production Deployment
     needs: 
       - Docker-Build
       - ReTag-Image
@@ -371,6 +385,7 @@ jobs:
     environment: viewsonic-production
     env:
       CLOUDFRONT_DISTRIBUTION: ${{ secrets.VIEWSONIC_CLOUDFRONT_DISTRIBUTION }}
+      URL: ${{ vars.VIEWSONIC_URL }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -412,9 +427,14 @@ jobs:
           git pull origin main
           git config --local user.email "suriyanarayanan.s@greatify.ai"
           git config --local user.name "surya1005"
-          git add k8s/base/deployment/base-deploy.yaml k8s/base/cronjob/base-cronjob.yaml
-          git commit -m "Update deployment image and change cause [Automated] For Viewsonic Only"
-          git push origin main
+          git add -f k8s/base/deployment/base-deploy.yaml k8s/base/cronjob/base-cronjob.yaml
+          if git diff --cached --quiet; then
+            echo "No changes to commit, skipping commit and push"
+          else
+            echo "Changes detected, committing and pushing"
+            git commit -m "Update deployment image and change cause [Automated] For Viewsonic Only"
+            git push origin main
+          fi
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -443,9 +463,11 @@ jobs:
         with:
           status: ${{ job.status }}
           channel: managex-school
+          author_name: ViewSonic Production Deployment Status
           text: |
             [${{ job.status == 'success' && '✅' || '❌' }}] ViewSonic Production Deployment: ${{ job.status }}
             Commit: ${{ github.event.inputs.full_deploy == 'true' && needs.Docker-Build.outputs.commit_sha || needs.ReTag-Image.outputs.commit_sha }} | By: @${{ github.actor }}
             Message: ${{ github.event.inputs.prod_tag }}
+            *URL:* ${{env.URL}}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
