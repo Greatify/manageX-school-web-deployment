@@ -50,8 +50,13 @@ jobs:
           git config --local user.email "suriyanarayanan.s@greatify.ai"
           git config --local user.name "surya1005"
           git add -f k8s/overlays/dev/kustomization.yaml
-          git commit -m "Update deployment image and change cause [Automated] For Dev Environment"
-          git push origin main
+          if git diff --cached --quiet; then
+            echo "No changes to commit, skipping commit and push"
+          else
+            echo "Changes detected, committing and pushing"
+            git commit -m "Update deployment image and change cause [Automated] For Dev Environment"
+            git push origin main
+          fi
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
