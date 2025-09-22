@@ -19,7 +19,7 @@ spec:
       labels:
         app: managex-school
       annotations:
-        kubernetes.io/change-cause: "Updated to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:stage-c73052822d3c6cb03aa373fd9ca46b4b351e69b0-MNX-854-add-special-CSV-formatting-for-sibling-report-exports"
+        kubernetes.io/change-cause: "Updated to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:stage-216844b033deff33534d94f9a3e0ce0d597b776a-MNX-675-Enhancements-in-Fee-Discount-Reports"
     spec:
       serviceAccountName: school-service
       volumes:
@@ -58,7 +58,7 @@ spec:
             claimName: managex-school-pvc
       containers:
         - name: managex-school
-          image: "399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:stage-c73052822d3c6cb03aa373fd9ca46b4b351e69b0-MNX-854-add-special-CSV-formatting-for-sibling-report-exports"
+          image: "399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:stage-216844b033deff33534d94f9a3e0ce0d597b776a-MNX-675-Enhancements-in-Fee-Discount-Reports"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
