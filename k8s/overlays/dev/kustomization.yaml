@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-ea3501baa1b902ffe4dc12b6071d9eeec0767017-MNX-854-add-special-CSV-format
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-0ac21f3a231c7c7f4af1233849652f33268c91d6-MNX-1201-enhance-student-bulk-
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-ea3501baa1b902ffe4dc12b6071d9eeec0767017-MNX-854-add-special-CSV-format 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-0ac21f3a231c7c7f4af1233849652f33268c91d6-MNX-1201-enhance-student-bulk- 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-ea3501baa1b902ffe4dc12b6071d9eeec0767017-MNX-854-add-special-CSV-format
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-0ac21f3a231c7c7f4af1233849652f33268c91d6-MNX-1201-enhance-student-bulk-
                 resources:
                   requests:
                     cpu: 400m
