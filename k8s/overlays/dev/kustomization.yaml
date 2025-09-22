@@ -59,13 +59,14 @@ patches:
             containers:
               - name: managex-school
                 image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-9c0d02e48247811ef8ad5ab31b843b55d120b537-MNX-675Reopen-3180
-                resources:
-                  requests:
-                    cpu: 400m
-                    memory: 600Mi
-                  limits:
-                    cpu: 500m
-                    memory: 700Mi
+                resources: null  # Commented out for dev environment
+                # resources:
+                #   requests:
+                #     cpu: 400m
+                #     memory: 600Mi
+                #   limits:
+                #     cpu: 500m
+                #     memory: 700Mi
 
   # Patch for Ingress configuration
   - target:

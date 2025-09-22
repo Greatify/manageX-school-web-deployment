@@ -33,13 +33,14 @@ patches:
           spec:
             containers:
               - name: managex-school
-                resources:
-                  requests:
-                    cpu: 800m
-                    memory: 800Mi
-                  limits:
-                    cpu: "1"
-                    memory: 1Gi
+                resources: null  # Commented out for stage environment
+                # resources:
+                #   requests:
+                #     cpu: 800m
+                #     memory: 800Mi
+                #   limits:
+                #     cpu: "1"
+                #     memory: 1Gi
 
   # Patch for Ingress configuration
   - target:
