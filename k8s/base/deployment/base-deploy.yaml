@@ -19,7 +19,7 @@ spec:
       labels:
         app: managex-school
       annotations:
-        kubernetes.io/change-cause: "Updated to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:prod-a6b7919ece87ea08aeb10ba9ea88ca934639ae96-MNX-1254-Cannot-add-Concession-for-add-on-Fees"
+        kubernetes.io/change-cause: "Updated to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:stage-8cc9036726f47b09e46ad6f0080aea1d08625bbf-MNX-1269-PR3189"
     spec:
       serviceAccountName: school-service
       volumes:
@@ -58,7 +58,7 @@ spec:
             claimName: managex-school-pvc
       containers:
         - name: managex-school
-          image: "399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:prod-a6b7919ece87ea08aeb10ba9ea88ca934639ae96-MNX-1254-Cannot-add-Concession-for-add-on-Fees"
+          image: "399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:stage-8cc9036726f47b09e46ad6f0080aea1d08625bbf-MNX-1269-PR3189"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
