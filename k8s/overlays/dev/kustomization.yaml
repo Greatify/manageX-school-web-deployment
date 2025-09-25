@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-9f119c01aaa9551db628142275d5ab84f0f39bb5-MNX-716-3190Co-authored-by-Aak
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-5c3f384341dbe709a42b0b90dd0f342b32526f4c-MNX-1270-report-card-change-ip
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-9f119c01aaa9551db628142275d5ab84f0f39bb5-MNX-716-3190Co-authored-by-Aak 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-5c3f384341dbe709a42b0b90dd0f342b32526f4c-MNX-1270-report-card-change-ip 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-9f119c01aaa9551db628142275d5ab84f0f39bb5-MNX-716-3190Co-authored-by-Aak
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-5c3f384341dbe709a42b0b90dd0f342b32526f4c-MNX-1270-report-card-change-ip
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
