@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-caf4ad3aacfddf1a6eb5b17e18816764b40b146e-MNX-853-3197Co-authored-by-Aak
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-631c8c3b01352871a9e08e3198bcd3e7622afc29-Update-CI-workflow-to-use-ubun
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-caf4ad3aacfddf1a6eb5b17e18816764b40b146e-MNX-853-3197Co-authored-by-Aak 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-631c8c3b01352871a9e08e3198bcd3e7622afc29-Update-CI-workflow-to-use-ubun 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-caf4ad3aacfddf1a6eb5b17e18816764b40b146e-MNX-853-3197Co-authored-by-Aak
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-631c8c3b01352871a9e08e3198bcd3e7622afc29-Update-CI-workflow-to-use-ubun
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
