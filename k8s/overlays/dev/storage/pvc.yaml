@@ -2,10 +2,11 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: managex-school-pvc
+  namespace: dev-managex-school
 spec:
   accessModes:
     - ReadWriteMany
   resources:
     requests:
       storage: 5Gi
-  storageClassName: dev-school-storage-class
+  storageClassName: dev-school-sc

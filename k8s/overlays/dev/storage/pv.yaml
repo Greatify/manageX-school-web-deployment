@@ -7,8 +7,8 @@ spec:
     storage: 5Gi
   accessModes:
     - ReadWriteMany
-  storageClassName: dev-school-storage-class
-  nfs:
-    path: /
-    server: fs-0fc819519b7960d48.efs.ap-south-1.amazonaws.com
+  storageClassName: dev-school-sc
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: fs-032f2a0c57e607589
   persistentVolumeReclaimPolicy: Retain
