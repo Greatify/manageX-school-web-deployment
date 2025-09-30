@@ -9,4 +9,4 @@ spec:
   resources:
     requests:
       storage: 10Gi
-  storageClassName: stage-school-storage-class
+  storageClassName: stage-school-sc

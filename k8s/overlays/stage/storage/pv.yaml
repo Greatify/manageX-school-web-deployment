@@ -7,8 +7,8 @@ spec:
     storage: 10Gi
   accessModes:
     - ReadWriteMany
-  storageClassName: stage-school-storage-class
-  nfs:
-    path: /
-    server: fs-0756d2f6a4991e303.efs.ap-south-1.amazonaws.com
+  storageClassName: stage-school-sc
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: fs-0dccc93238510e656
   persistentVolumeReclaimPolicy: Retain
