@@ -214,9 +214,11 @@ jobs:
 
       - name: Commit and Push Image Tags
         run: |
-          git pull origin main
           git config --local user.email "suriyanarayanan.s@greatify.ai"
           git config --local user.name "surya1005"
+          git stash push -m "Temporary stash before pull"
+          git pull origin main
+          git stash pop || echo "No stash to pop"
           git add -f k8s/base/deployment/base-deploy.yaml k8s/base/cronjob/base-cronjob.yaml
           if git diff --cached --quiet; then
             echo "No changes to commit, skipping commit and push"
