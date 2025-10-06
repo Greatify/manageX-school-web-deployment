@@ -29,7 +29,7 @@ concurrency:
         
 jobs:        
   Authentication:
-    runs-on: ${{ github.event.inputs.use_self_hosted_runner == 'true' && 'self-hosted' || 'ubuntu-latest' }}
+    runs-on: ${{ github.event.inputs.use_self_hosted_runner == 'true' && 'self-hosted' || 'ubuntu-24.04-arm' }}
     steps:
       - name: Verify deployment password
         id: password-check
@@ -59,7 +59,7 @@ jobs:
 
   Docker-Build:
     name: Docker Build
-    runs-on: ${{ github.event.inputs.use_self_hosted_runner == 'true' && 'self-hosted' || 'ubuntu-latest' }}
+    runs-on: ${{ github.event.inputs.use_self_hosted_runner == 'true' && 'self-hosted' || 'ubuntu-24.04-arm' }}
     needs: [Authentication]
     environment: stage
     timeout-minutes: 30 
@@ -132,7 +132,7 @@ jobs:
           tags: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_STAGE }}:stage-${{ steps.get-commit-sha.outputs.commit_sha }}-${{ steps.sanitize-tag.outputs.sanitized_tag }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
-          platforms: linux/amd64
+          platforms: linux/arm64
           build-args: |
             BUILDKIT_INLINE_CACHE=1
             PHP_VERSION=8.3
@@ -172,7 +172,7 @@ jobs:
 
   Deploy-to-Stage:
     name: Stage Deployment
-    runs-on: ${{ github.event.inputs.use_self_hosted_runner == 'true' && 'self-hosted' || 'ubuntu-latest' }}
+    runs-on: ${{ github.event.inputs.use_self_hosted_runner == 'true' && 'self-hosted' || 'ubuntu-24.04-arm' }}
     needs: [Docker-Build]  
     environment: stage
     timeout-minutes: 20
