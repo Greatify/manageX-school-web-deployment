@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-6acb3a270fa204935176af582a5f9260b3219921-MNX-1202---Transport-Fee-Missi
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-83e159237c8d0cb18f1eeb8d2dc6098b0d611373-MNX-1202-bugs-3210
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-6acb3a270fa204935176af582a5f9260b3219921-MNX-1202---Transport-Fee-Missi 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-83e159237c8d0cb18f1eeb8d2dc6098b0d611373-MNX-1202-bugs-3210 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-6acb3a270fa204935176af582a5f9260b3219921-MNX-1202---Transport-Fee-Missi
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-83e159237c8d0cb18f1eeb8d2dc6098b0d611373-MNX-1202-bugs-3210
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
