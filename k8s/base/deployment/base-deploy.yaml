@@ -99,7 +99,7 @@ spec:
               readOnly: true
           livenessProbe:
             httpGet:
-              path: /
+              path: /api/health/liveness
               port: 80
             initialDelaySeconds: 30
             periodSeconds: 15
@@ -107,7 +107,7 @@ spec:
             failureThreshold: 3
           readinessProbe:
             httpGet:
-              path: /
+              path: /api/health/readiness
               port: 80
             initialDelaySeconds: 15
             periodSeconds: 10
