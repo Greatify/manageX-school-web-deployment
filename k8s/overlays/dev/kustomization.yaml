@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-57d5cf06afe6324ee4bdde25b7222dcdab3bfa99-MNX-1277---Report-Card-Enhance
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-5743f20b0a44b3e2a1ea958e744fd00b4dbe4836-MNX-817---School-Merchandise-W
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-57d5cf06afe6324ee4bdde25b7222dcdab3bfa99-MNX-1277---Report-Card-Enhance 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-5743f20b0a44b3e2a1ea958e744fd00b4dbe4836-MNX-817---School-Merchandise-W 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-57d5cf06afe6324ee4bdde25b7222dcdab3bfa99-MNX-1277---Report-Card-Enhance
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-5743f20b0a44b3e2a1ea958e744fd00b4dbe4836-MNX-817---School-Merchandise-W
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
