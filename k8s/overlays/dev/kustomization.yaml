@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-30b35c2980e6a72ac57dd890fbccf29561d1a257-MNX-1277---Report-Card-Enhance
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-38bc4df4c0797dd8b30a54dc36d62a6677f7b7b4-MNX-1277---Report-Card-Enhance
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-30b35c2980e6a72ac57dd890fbccf29561d1a257-MNX-1277---Report-Card-Enhance 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-38bc4df4c0797dd8b30a54dc36d62a6677f7b7b4-MNX-1277---Report-Card-Enhance 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-30b35c2980e6a72ac57dd890fbccf29561d1a257-MNX-1277---Report-Card-Enhance
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-38bc4df4c0797dd8b30a54dc36d62a6677f7b7b4-MNX-1277---Report-Card-Enhance
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
