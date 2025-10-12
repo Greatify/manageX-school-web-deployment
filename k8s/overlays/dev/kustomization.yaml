@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-cdc6ac6ec965b95d1ec5151da4f7e9be9db6ecb7-MNX-882---Uncaught-Popup-Error
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-1c23ce9ca66cc7fcafcd10965e1b2f01eb089533-Resolve-conflicts-sprint13-oct
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-cdc6ac6ec965b95d1ec5151da4f7e9be9db6ecb7-MNX-882---Uncaught-Popup-Error 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-1c23ce9ca66cc7fcafcd10965e1b2f01eb089533-Resolve-conflicts-sprint13-oct 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-cdc6ac6ec965b95d1ec5151da4f7e9be9db6ecb7-MNX-882---Uncaught-Popup-Error
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-1c23ce9ca66cc7fcafcd10965e1b2f01eb089533-Resolve-conflicts-sprint13-oct
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
