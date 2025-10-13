@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-c3015cf115e4444897f4fe6c8b979144b29aec15-MNX-1362transport-bug-3255
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-4728b3e2cac820e46865acd83dd34d90d1b7093f-MNX-242--Implement-bulk-edit-f
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-c3015cf115e4444897f4fe6c8b979144b29aec15-MNX-1362transport-bug-3255 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-4728b3e2cac820e46865acd83dd34d90d1b7093f-MNX-242--Implement-bulk-edit-f 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-c3015cf115e4444897f4fe6c8b979144b29aec15-MNX-1362transport-bug-3255
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-4728b3e2cac820e46865acd83dd34d90d1b7093f-MNX-242--Implement-bulk-edit-f
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
