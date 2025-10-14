@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-4bada8322b4298d1055569cfc32eb2620c1051c6-MNX-687---select-all-in-fee-ty
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-518f09498097be8739c7daffc5ec29836747f3c4-MNX-687---js-error-in-fee-coll
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-4bada8322b4298d1055569cfc32eb2620c1051c6-MNX-687---select-all-in-fee-ty 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-518f09498097be8739c7daffc5ec29836747f3c4-MNX-687---js-error-in-fee-coll 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-4bada8322b4298d1055569cfc32eb2620c1051c6-MNX-687---select-all-in-fee-ty
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-518f09498097be8739c7daffc5ec29836747f3c4-MNX-687---js-error-in-fee-coll
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
