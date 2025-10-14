@@ -8,5 +8,8 @@ resources:
 - deployment/base-deploy.yaml
 - hpa/base-pod-autoscaler.yaml
 - ingress/base-ingress.yaml
+- ingress/base-ingressclass.yaml
+- ingress/base-ingressclassparams.yaml
 - secretproviderclass/base-secretprovider.yaml
 - service/base-service.yaml
+- pdb/base-pdb.yaml
