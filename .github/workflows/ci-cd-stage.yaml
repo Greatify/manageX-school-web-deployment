@@ -18,7 +18,7 @@ on:
         required: true
         type: string
       use_self_hosted_runner:
-        description: 'Run on self-hosted runner instead of default runner?'
+        description: 'Run on self-hosted runner ?'
         required: true
         type: boolean
         default: false
