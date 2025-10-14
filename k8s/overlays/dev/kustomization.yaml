@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-c1aafed6edc5690347da090ecaa3566a52390fc0--MNX-1201-missing-function-add
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-b5e40bbb9367dcbffb488de283c8c3dd7ced42da-MNX-877-3263--Co-authored-by-A
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-c1aafed6edc5690347da090ecaa3566a52390fc0--MNX-1201-missing-function-add 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-b5e40bbb9367dcbffb488de283c8c3dd7ced42da-MNX-877-3263--Co-authored-by-A 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-c1aafed6edc5690347da090ecaa3566a52390fc0--MNX-1201-missing-function-add
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-b5e40bbb9367dcbffb488de283c8c3dd7ced42da-MNX-877-3263--Co-authored-by-A
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
