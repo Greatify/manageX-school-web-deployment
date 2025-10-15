@@ -57,11 +57,6 @@ jobs:
     if: always()
     environment: viewsonic-production
     timeout-minutes: 30
-    strategy:
-      matrix:
-        node-version: [18.x]
-      max-parallel: 4
-      fail-fast: true
     outputs:
       commit_sha: ${{ steps.get-commit-sha.outputs.commit_sha }} 
     steps:
