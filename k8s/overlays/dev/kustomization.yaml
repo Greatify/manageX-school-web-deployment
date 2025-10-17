@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-6a1d7de971de4fb432f3c1be176e4879b1c15214-MNX-1320---Need-a-due-report-i
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-069bc12de40daacf9982154c2dd612d7d9878076-MNX-1201-Disabled-frontend-val
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-6a1d7de971de4fb432f3c1be176e4879b1c15214-MNX-1320---Need-a-due-report-i 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-069bc12de40daacf9982154c2dd612d7d9878076-MNX-1201-Disabled-frontend-val 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-6a1d7de971de4fb432f3c1be176e4879b1c15214-MNX-1320---Need-a-due-report-i
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-069bc12de40daacf9982154c2dd612d7d9878076-MNX-1201-Disabled-frontend-val
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
