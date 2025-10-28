@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-57f3cebfe7528916e59e8877a09965e59894c293-GE-9450---Report-card-IPS-cate
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-f07096b08cb4e2ca7e254915ff42d92c7706e009-MNX-1460-fee-summary-report-32
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-57f3cebfe7528916e59e8877a09965e59894c293-GE-9450---Report-card-IPS-cate 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-f07096b08cb4e2ca7e254915ff42d92c7706e009-MNX-1460-fee-summary-report-32 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-57f3cebfe7528916e59e8877a09965e59894c293-GE-9450---Report-card-IPS-cate
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-f07096b08cb4e2ca7e254915ff42d92c7706e009-MNX-1460-fee-summary-report-32
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
