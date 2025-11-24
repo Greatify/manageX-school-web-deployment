@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-1e969c0e0a8d0993da8f4f1ff8aa530cd1a8b967-MNX-1473---3325--Co-authored-b
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-71069727bba56362ca839cae547c021de4c5c258-MNX-1559-Student-Sibling-order
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-1e969c0e0a8d0993da8f4f1ff8aa530cd1a8b967-MNX-1473---3325--Co-authored-b 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-71069727bba56362ca839cae547c021de4c5c258-MNX-1559-Student-Sibling-order 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-1e969c0e0a8d0993da8f4f1ff8aa530cd1a8b967-MNX-1473---3325--Co-authored-b
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-71069727bba56362ca839cae547c021de4c5c258-MNX-1559-Student-Sibling-order
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
