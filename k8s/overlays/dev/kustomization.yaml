@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-cb00e664687fa531e4a19f395d58867e941715c8-MNX-1575---adding-api-paramas-
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-f36900ef33378c633fea429f6f526085a860600b-Update-Dockerfile-to-ignore-pl
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-cb00e664687fa531e4a19f395d58867e941715c8-MNX-1575---adding-api-paramas- 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-f36900ef33378c633fea429f6f526085a860600b-Update-Dockerfile-to-ignore-pl 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-cb00e664687fa531e4a19f395d58867e941715c8-MNX-1575---adding-api-paramas-
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-f36900ef33378c633fea429f6f526085a860600b-Update-Dockerfile-to-ignore-pl
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
