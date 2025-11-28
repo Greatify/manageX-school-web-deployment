@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-f36900ef33378c633fea429f6f526085a860600b-Update-Dockerfile-to-ignore-pl
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-70bec39cbb4f8991c439b0aa83d1f3fd26bc8d41-MNX-1581---Admission-Form-stan
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-f36900ef33378c633fea429f6f526085a860600b-Update-Dockerfile-to-ignore-pl 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-70bec39cbb4f8991c439b0aa83d1f3fd26bc8d41-MNX-1581---Admission-Form-stan 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-f36900ef33378c633fea429f6f526085a860600b-Update-Dockerfile-to-ignore-pl
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-70bec39cbb4f8991c439b0aa83d1f3fd26bc8d41-MNX-1581---Admission-Form-stan
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
