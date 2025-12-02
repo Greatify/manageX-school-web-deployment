@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-e7c31c17672abfb149d33b5ecfdec5bfa985f81b-Dev-to-Stage-Branch-Update-334
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-22b6751ccdb57ad5e05b2ffb185e80d0d8e62b86-Report-card-IPS-update-3344
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-e7c31c17672abfb149d33b5ecfdec5bfa985f81b-Dev-to-Stage-Branch-Update-334 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-22b6751ccdb57ad5e05b2ffb185e80d0d8e62b86-Report-card-IPS-update-3344 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-e7c31c17672abfb149d33b5ecfdec5bfa985f81b-Dev-to-Stage-Branch-Update-334
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-22b6751ccdb57ad5e05b2ffb185e80d0d8e62b86-Report-card-IPS-update-3344
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
