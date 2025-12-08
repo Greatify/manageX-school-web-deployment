@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-ff0225bf20bb7fd21525ebac568cca6fdf67b8e5-MNX-1606-add-check-for-school-
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-0b5240ef0fefb54197e510c45bd5c4b9cc29c213-MNX-687-bring-fee-type-selecti
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-ff0225bf20bb7fd21525ebac568cca6fdf67b8e5-MNX-1606-add-check-for-school- 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-0b5240ef0fefb54197e510c45bd5c4b9cc29c213-MNX-687-bring-fee-type-selecti 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-ff0225bf20bb7fd21525ebac568cca6fdf67b8e5-MNX-1606-add-check-for-school-
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-0b5240ef0fefb54197e510c45bd5c4b9cc29c213-MNX-687-bring-fee-type-selecti
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
