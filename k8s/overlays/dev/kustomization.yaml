@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-e007be62cbbe2e615fa19061b19c8e4b8adfa885-MNX-1611---restrict-admission-
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-75708f32b6df6626499550583080832cb447cc4c-MNX-1610-School.---Admission-F
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-e007be62cbbe2e615fa19061b19c8e4b8adfa885-MNX-1611---restrict-admission- 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-75708f32b6df6626499550583080832cb447cc4c-MNX-1610-School.---Admission-F 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-e007be62cbbe2e615fa19061b19c8e4b8adfa885-MNX-1611---restrict-admission-
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-75708f32b6df6626499550583080832cb447cc4c-MNX-1610-School.---Admission-F
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
