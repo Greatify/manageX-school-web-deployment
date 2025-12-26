@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-a98ea1700ba42731042d0907e1022396c15808bd-MNX-1622---vehicle-loading-iss
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-853b66988cfb93584513f23e394f36573136d2a0-MNX-1622-vehicle-dropdown-load
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-a98ea1700ba42731042d0907e1022396c15808bd-MNX-1622---vehicle-loading-iss 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-853b66988cfb93584513f23e394f36573136d2a0-MNX-1622-vehicle-dropdown-load 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-a98ea1700ba42731042d0907e1022396c15808bd-MNX-1622---vehicle-loading-iss
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-853b66988cfb93584513f23e394f36573136d2a0-MNX-1622-vehicle-dropdown-load
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
