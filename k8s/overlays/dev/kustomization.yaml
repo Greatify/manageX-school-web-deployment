@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-0df13fe81be9937e1c6d0466e5637d70d36184bf-MNX-1626-School---Admission-fo
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-d331a6daf26005634d5c32f1de9091ed9140f84a-MNX-1626-application-and-admis
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-0df13fe81be9937e1c6d0466e5637d70d36184bf-MNX-1626-School---Admission-fo 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-d331a6daf26005634d5c32f1de9091ed9140f84a-MNX-1626-application-and-admis 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-0df13fe81be9937e1c6d0466e5637d70d36184bf-MNX-1626-School---Admission-fo
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-d331a6daf26005634d5c32f1de9091ed9140f84a-MNX-1626-application-and-admis
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
