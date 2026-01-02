@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-853b66988cfb93584513f23e394f36573136d2a0-MNX-1622-vehicle-dropdown-load
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-0df13fe81be9937e1c6d0466e5637d70d36184bf-MNX-1626-School---Admission-fo
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-853b66988cfb93584513f23e394f36573136d2a0-MNX-1622-vehicle-dropdown-load 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-0df13fe81be9937e1c6d0466e5637d70d36184bf-MNX-1626-School---Admission-fo 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-853b66988cfb93584513f23e394f36573136d2a0-MNX-1622-vehicle-dropdown-load
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-0df13fe81be9937e1c6d0466e5637d70d36184bf-MNX-1626-School---Admission-fo
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
