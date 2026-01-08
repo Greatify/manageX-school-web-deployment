@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-542bd4676270a94e7d5b658ae88fcdeef059b615-MNX-1106-3256
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-5ca0ba3277c418564728839eae534eb21b9b9892-MNX-1633--3394
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-542bd4676270a94e7d5b658ae88fcdeef059b615-MNX-1106-3256 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-5ca0ba3277c418564728839eae534eb21b9b9892-MNX-1633--3394 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-542bd4676270a94e7d5b658ae88fcdeef059b615-MNX-1106-3256
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-5ca0ba3277c418564728839eae534eb21b9b9892-MNX-1633--3394
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
