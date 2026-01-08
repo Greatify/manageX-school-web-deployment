@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-b1d7cabf75efc93025ba462ca9c859956e45dae1-MNX-1633-add-and-edit-trim-fun
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-9da8c2cf3221fcb357459194210d3b29226ffff6-MNX-712-staff-daily-attendance
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-b1d7cabf75efc93025ba462ca9c859956e45dae1-MNX-1633-add-and-edit-trim-fun 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-9da8c2cf3221fcb357459194210d3b29226ffff6-MNX-712-staff-daily-attendance 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-b1d7cabf75efc93025ba462ca9c859956e45dae1-MNX-1633-add-and-edit-trim-fun
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-9da8c2cf3221fcb357459194210d3b29226ffff6-MNX-712-staff-daily-attendance
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
