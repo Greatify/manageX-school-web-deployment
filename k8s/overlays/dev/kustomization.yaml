@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-ab044705bf3e3f3fff0fec91a5877dcd7fcaaa5c-MNX-1633-field-validation-and-
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-b1d7cabf75efc93025ba462ca9c859956e45dae1-MNX-1633-add-and-edit-trim-fun
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-ab044705bf3e3f3fff0fec91a5877dcd7fcaaa5c-MNX-1633-field-validation-and- 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-b1d7cabf75efc93025ba462ca9c859956e45dae1-MNX-1633-add-and-edit-trim-fun 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-ab044705bf3e3f3fff0fec91a5877dcd7fcaaa5c-MNX-1633-field-validation-and-
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-b1d7cabf75efc93025ba462ca9c859956e45dae1-MNX-1633-add-and-edit-trim-fun
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
