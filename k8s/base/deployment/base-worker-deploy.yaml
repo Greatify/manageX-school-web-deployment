@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: school-worker
+  labels:
+    app: school-worker
+    role: worker
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: school-worker
+      role: worker
+  template:
+    metadata:
+      labels:
+        app: school-worker
+        role: worker
+    spec:
+      serviceAccountName: school-service
+      volumes:
+        - name: school-secrets
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: managex-school-secrets
+        - name: school-server-configuration
+          configMap:
+            name: managex-school-server-config
+            items:
+              - key: default
+                path: default
+        - name: school-nginx-configuration
+          configMap:
+            name: managex-school-nginx-config
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+        - name: cache
+          emptyDir: {}
+        - name: testing
+          emptyDir: {}
+        - name: sessions
+          emptyDir: {}
+        - name: views
+          emptyDir: {}
+        - name: tcpdf
+          emptyDir: {}
+        - name: pending-files
+          emptyDir: {}
+        - name: efs-storage
+          persistentVolumeClaim:
+            claimName: managex-school-pvc
+      containers:
+        - name: school-worker
+          image: "399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-f99c9be72765a8b75e958cea308aec320ebaf845-MNX-1476-Update-API-endpoints-"
+          imagePullPolicy: IfNotPresent
+          command: ["php", "/var/www/html/artisan", "queue:work", "--timeout=600", "--sleep=3", "--tries=1"]
+          volumeMounts:
+            - name: cache
+              mountPath: /var/www/html/storage/framework/cache
+            - name: sessions
+              mountPath: /var/www/html/storage/framework/sessions
+            - name: views
+              mountPath: /var/www/html/storage/framework/views
+            - name: testing
+              mountPath: /var/www/html/storage/framework/testing
+            - name: tcpdf
+              mountPath: /var/www/html/storage/app/tcpdf
+            - name: pending-files
+              mountPath: /var/www/html/resources/pending-files
+            - name: school-server-configuration
+              mountPath: /etc/nginx/sites-available
+            - name: school-nginx-configuration
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+            - name: efs-storage
+              mountPath: /var/www/html/storage/app/efs
+              subPath: efs
+            - name: efs-storage
+              mountPath: /var/www/html/storage/app/public
+              subPath: public
+            - name: school-secrets
+              mountPath: "/var/www/html/.env"
+              subPath: ".env"
+              readOnly: true
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+            limits:
+              cpu: 1
+              memory: 2Gi

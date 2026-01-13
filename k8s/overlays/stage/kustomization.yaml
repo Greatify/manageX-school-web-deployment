@@ -195,3 +195,24 @@ patches:
             - objectName: arn:aws:secretsmanager:ap-south-1:399600302704:secret:ManageX-School-Stage-1JE97f
               objectAlias: ".env"
               objectType: "secretsmanager"
+
+  # patch for Worker Deployment
+  - target:
+      kind: Deployment
+      name: school-worker
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: school-worker
+      spec:
+        replicas: 1
+        template:
+          metadata:
+            annotations:
+              kubernetes.io/change-cause: Stage worker image update
+          spec:
+            containers:
+              - name: school-worker
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-f99c9be72765a8b75e958cea308aec320ebaf845-MNX-1476-Update-API-endpoints-
+                resources: null
