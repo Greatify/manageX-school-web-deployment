@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-733b1ae3e3c651a6cf62df79cc51aaa07d2bfa00-changed-CI-branch
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-52931620ac0b88e7cf5ed96aac0e32d0550a7052-MNX-723-Teachers-data-should-b
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-733b1ae3e3c651a6cf62df79cc51aaa07d2bfa00-changed-CI-branch 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-52931620ac0b88e7cf5ed96aac0e32d0550a7052-MNX-723-Teachers-data-should-b 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-733b1ae3e3c651a6cf62df79cc51aaa07d2bfa00-changed-CI-branch
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-52931620ac0b88e7cf5ed96aac0e32d0550a7052-MNX-723-Teachers-data-should-b
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
