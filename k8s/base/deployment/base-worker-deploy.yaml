@@ -55,9 +55,9 @@ spec:
             claimName: managex-school-pvc
       containers:
         - name: school-worker
-          image: "399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-f99c9be72765a8b75e958cea308aec320ebaf845-MNX-1476-Update-API-endpoints-"
+          image: "399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-733b1ae3e3c651a6cf62df79cc51aaa07d2bfa00-changed-CI-branch"
           imagePullPolicy: IfNotPresent
-          command: ["php", "/var/www/html/artisan", "queue:work", "--timeout=600", "--sleep=3", "--tries=1"]
+          command: ["php", "/var/www/html/artisan", "queue:work", "--timeout=600", "--sleep=3", "--tries=1", "--verbose"]
           volumeMounts:
             - name: cache
               mountPath: /var/www/html/storage/framework/cache
@@ -93,3 +93,4 @@ spec:
             limits:
               cpu: 1
               memory: 2Gi
+              

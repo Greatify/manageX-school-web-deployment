@@ -156,7 +156,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          ref: 'main'
+          ref: 'Added-worker-hpa'
           token: ${{ secrets.PAT_TOKEN }}
 
       - name: Download image tag files
@@ -176,7 +176,7 @@ jobs:
 
       - name: Commit and Push Changes
         run: |
-          git pull origin main
+          git pull origin Added-worker-hpa
           git config --local user.email "suriyanarayanan.s@greatify.ai"
           git config --local user.name "surya1005"
           git add -f k8s/overlays/dev/kustomization.yaml
@@ -185,7 +185,7 @@ jobs:
           else
             echo "Changes detected, committing and pushing"
             git commit -m "Update deployment image and change cause [Automated] For Dev Environment"
-            git push origin main
+            git push origin Added-worker-hpa
           fi
 
       - name: Configure AWS credentials
