@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-733b1ae3e3c651a6cf62df79cc51aaa07d2bfa00-changed-CI-branch
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-c8b3144acdfac3e42f1811d7f4a6e515220da21f-Commented-supervisord-config-q
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-733b1ae3e3c651a6cf62df79cc51aaa07d2bfa00-changed-CI-branch 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-c8b3144acdfac3e42f1811d7f4a6e515220da21f-Commented-supervisord-config-q 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-733b1ae3e3c651a6cf62df79cc51aaa07d2bfa00-changed-CI-branch
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-c8b3144acdfac3e42f1811d7f4a6e515220da21f-Commented-supervisord-config-q
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
@@ -235,11 +235,11 @@ patches:
         template:
           metadata:
             annotations:
-              kubernetes.io/change-cause: Dev worker image update
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-c8b3144acdfac3e42f1811d7f4a6e515220da21f-Commented-supervisord-config-q 
           spec:
             containers:
               - name: school-worker
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-733b1ae3e3c651a6cf62df79cc51aaa07d2bfa00-changed-CI-branch
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-c8b3144acdfac3e42f1811d7f4a6e515220da21f-Commented-supervisord-config-q
                 resources: null
 
              
