@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-307572cd74d7038fc54cf5c3f3fbac2ba4db733c-MNX-1675-subject-ordering-for-
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-23e759dc67cfb70a0f4aaa792c4d747f6eb9cf1c-Mnx-1676MNX-1678MNX-1679-repor
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-307572cd74d7038fc54cf5c3f3fbac2ba4db733c-MNX-1675-subject-ordering-for- 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-23e759dc67cfb70a0f4aaa792c4d747f6eb9cf1c-Mnx-1676MNX-1678MNX-1679-repor 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-307572cd74d7038fc54cf5c3f3fbac2ba4db733c-MNX-1675-subject-ordering-for-
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-23e759dc67cfb70a0f4aaa792c4d747f6eb9cf1c-Mnx-1676MNX-1678MNX-1679-repor
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
@@ -235,11 +235,11 @@ patches:
         template:
           metadata:
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-307572cd74d7038fc54cf5c3f3fbac2ba4db733c-MNX-1675-subject-ordering-for- 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-23e759dc67cfb70a0f4aaa792c4d747f6eb9cf1c-Mnx-1676MNX-1678MNX-1679-repor 
           spec:
             containers:
               - name: school-worker
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-307572cd74d7038fc54cf5c3f3fbac2ba4db733c-MNX-1675-subject-ordering-for-
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-23e759dc67cfb70a0f4aaa792c4d747f6eb9cf1c-Mnx-1676MNX-1678MNX-1679-repor
                 resources: null
 
              
