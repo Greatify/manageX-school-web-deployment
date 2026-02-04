@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-23e759dc67cfb70a0f4aaa792c4d747f6eb9cf1c-Mnx-1676MNX-1678MNX-1679-repor
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-5b566873010e73aa50a946bfb834310879a0f572-MNX-1679-IPS-Report-card-chang
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-23e759dc67cfb70a0f4aaa792c4d747f6eb9cf1c-Mnx-1676MNX-1678MNX-1679-repor 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-5b566873010e73aa50a946bfb834310879a0f572-MNX-1679-IPS-Report-card-chang 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-23e759dc67cfb70a0f4aaa792c4d747f6eb9cf1c-Mnx-1676MNX-1678MNX-1679-repor
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-5b566873010e73aa50a946bfb834310879a0f572-MNX-1679-IPS-Report-card-chang
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
@@ -235,11 +235,11 @@ patches:
         template:
           metadata:
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-23e759dc67cfb70a0f4aaa792c4d747f6eb9cf1c-Mnx-1676MNX-1678MNX-1679-repor 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-5b566873010e73aa50a946bfb834310879a0f572-MNX-1679-IPS-Report-card-chang 
           spec:
             containers:
               - name: school-worker
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-23e759dc67cfb70a0f4aaa792c4d747f6eb9cf1c-Mnx-1676MNX-1678MNX-1679-repor
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-5b566873010e73aa50a946bfb834310879a0f572-MNX-1679-IPS-Report-card-chang
                 resources: null
 
              
