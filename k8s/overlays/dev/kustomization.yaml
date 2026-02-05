@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-e2341cc3a19298dc62b6dbcd0488531a47e7410f-MNX-1681-Exam-group-CRUD-opera
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-3e10b37fea8d381a62d1a70b2b14edc6a694a714-MNX-1680MNX-1681MNX-1682MNX-16
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-e2341cc3a19298dc62b6dbcd0488531a47e7410f-MNX-1681-Exam-group-CRUD-opera 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-3e10b37fea8d381a62d1a70b2b14edc6a694a714-MNX-1680MNX-1681MNX-1682MNX-16 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-e2341cc3a19298dc62b6dbcd0488531a47e7410f-MNX-1681-Exam-group-CRUD-opera
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-3e10b37fea8d381a62d1a70b2b14edc6a694a714-MNX-1680MNX-1681MNX-1682MNX-16
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
@@ -235,11 +235,11 @@ patches:
         template:
           metadata:
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-e2341cc3a19298dc62b6dbcd0488531a47e7410f-MNX-1681-Exam-group-CRUD-opera 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-3e10b37fea8d381a62d1a70b2b14edc6a694a714-MNX-1680MNX-1681MNX-1682MNX-16 
           spec:
             containers:
               - name: school-worker
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-e2341cc3a19298dc62b6dbcd0488531a47e7410f-MNX-1681-Exam-group-CRUD-opera
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-3e10b37fea8d381a62d1a70b2b14edc6a694a714-MNX-1680MNX-1681MNX-1682MNX-16
                 resources: null
 
              
