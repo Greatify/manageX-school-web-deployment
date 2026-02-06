@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-00206737bb70f5b22b94e0cfec5adf26a53d6609-MNX-1684---back-button-in-Teac
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-92b45225f48d9ba1d68b20b685c8c54e1e72e2d3-MNX-1302-pagination-length-dis
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-00206737bb70f5b22b94e0cfec5adf26a53d6609-MNX-1684---back-button-in-Teac 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-92b45225f48d9ba1d68b20b685c8c54e1e72e2d3-MNX-1302-pagination-length-dis 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-00206737bb70f5b22b94e0cfec5adf26a53d6609-MNX-1684---back-button-in-Teac
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-92b45225f48d9ba1d68b20b685c8c54e1e72e2d3-MNX-1302-pagination-length-dis
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
@@ -235,11 +235,11 @@ patches:
         template:
           metadata:
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-00206737bb70f5b22b94e0cfec5adf26a53d6609-MNX-1684---back-button-in-Teac 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-92b45225f48d9ba1d68b20b685c8c54e1e72e2d3-MNX-1302-pagination-length-dis 
           spec:
             containers:
               - name: school-worker
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-00206737bb70f5b22b94e0cfec5adf26a53d6609-MNX-1684---back-button-in-Teac
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-92b45225f48d9ba1d68b20b685c8c54e1e72e2d3-MNX-1302-pagination-length-dis
                 resources: null
 
              
