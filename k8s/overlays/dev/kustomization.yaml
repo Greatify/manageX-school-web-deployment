@@ -35,7 +35,7 @@ patches:
               spec:
                 containers:
                   - name: school-cronjob
-                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-92b45225f48d9ba1d68b20b685c8c54e1e72e2d3-MNX-1302-pagination-length-dis
+                    image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-06a112679ba4f324c65e3fa45f9b8c0ab9d5ddae-MNX-1661-generate-report-card-
 
   # Patch for Deployment configuration
   - target:
@@ -54,11 +54,11 @@ patches:
             labels:
               app: managex-school
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-92b45225f48d9ba1d68b20b685c8c54e1e72e2d3-MNX-1302-pagination-length-dis 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-06a112679ba4f324c65e3fa45f9b8c0ab9d5ddae-MNX-1661-generate-report-card- 
           spec:
             containers:
               - name: managex-school
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-92b45225f48d9ba1d68b20b685c8c54e1e72e2d3-MNX-1302-pagination-length-dis
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-06a112679ba4f324c65e3fa45f9b8c0ab9d5ddae-MNX-1661-generate-report-card-
                 resources: null  # Commented out for dev environment
                 # resources:
                 #   requests:
@@ -235,11 +235,11 @@ patches:
         template:
           metadata:
             annotations:
-              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-92b45225f48d9ba1d68b20b685c8c54e1e72e2d3-MNX-1302-pagination-length-dis 
+              kubernetes.io/change-cause: Update to 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-06a112679ba4f324c65e3fa45f9b8c0ab9d5ddae-MNX-1661-generate-report-card- 
           spec:
             containers:
               - name: school-worker
-                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-92b45225f48d9ba1d68b20b685c8c54e1e72e2d3-MNX-1302-pagination-length-dis
+                image: 399600302704.dkr.ecr.ap-south-1.amazonaws.com/managex_school:dev-06a112679ba4f324c65e3fa45f9b8c0ab9d5ddae-MNX-1661-generate-report-card-
                 resources: null
 
              
